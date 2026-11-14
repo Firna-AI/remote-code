@@ -1,7 +1,7 @@
 import { afterAll, beforeAll, expect, it } from 'vitest'
+import type { BranchChangedFile } from '../../src/shared/generated/BranchChangedFile'
+import type { FileEntry } from '../../src/shared/generated/FileEntry'
 import { parseChanges } from '../../src/files/api/parse-changes'
-
-import type { BranchChangedFile, FileEntry } from '../../src/shared/files'
 import { recordedRunnerFileEvents } from '../../src/test-support/recorded-files'
 import { FilesState } from './state'
 import {

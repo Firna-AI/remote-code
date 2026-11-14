@@ -25,8 +25,12 @@ the change that keeps a turn open for background work.
   a workspace accepts, and what a refused runner and its turns get.
   [The version pin](version-pins.md#the-version-pin) states the lowest
   version that each workspace accepts.
-- Each build of the org image installs the newest runner. Reason: a stopped
-  sandbox can resume weeks later with an old runner.
+- Each build of the org image installs the newest runner. Each sandbox then
+  updates its runner itself at a later start, as
+  [Updates](sandbox-software.md#updates) says. Reason: a fix of the runner
+  then reaches each sandbox with no new workspace.
+- A sandbox runs its older runner until its update applies. A stopped
+  sandbox can also resume weeks later with an old runner.
 - A connection to the runner through a Boat port address was rejected,
   because it ties the runner to Boat.
 - The runner numbers each event, and keeps it until the Durable Object

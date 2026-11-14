@@ -1,3 +1,4 @@
+import type { DeviceCommandRecord } from '../../src/shared/generated/DeviceCommandRecord.js'
 import { EventEmitter } from 'node:events'
 import { onTestFinished, vi } from 'vitest'
 import { WebSocket } from 'ws'
@@ -7,10 +8,7 @@ import {
   DEVICE_HEARTBEAT_MS,
   DEVICE_OUTPUT_LIMIT_BYTES,
 } from '../../src/shared/device.ts'
-import type {
-  DeviceCommandRecord,
-  WorkerToDevice,
-} from '../../src/shared/device.ts'
+import type { WorkerToDevice } from '../../src/shared/device.ts'
 import { createDeviceConnection } from '../src/device/connection.js'
 import { createPermissionStore } from '../src/device/permissions.js'
 import type { ProcessEvents } from '../src/device/process.js'

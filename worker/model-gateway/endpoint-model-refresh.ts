@@ -1,4 +1,4 @@
-import type { Agent } from '../../src/shared/agents'
+import type { Agent } from '../../src/shared/generated/Agent'
 import { decryptAgentLogin } from '../chat/queries'
 import type { AppDependencies, AppEnv } from '../env'
 import {

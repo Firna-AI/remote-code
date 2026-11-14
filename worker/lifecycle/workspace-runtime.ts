@@ -1,6 +1,7 @@
+import type { StartStep } from '../../src/shared/generated/StartStep'
+import type { WorkspaceStart } from '../../src/shared/generated/WorkspaceStart'
 import type { User } from '../../src/shared/api'
 import type { SendMessageRequest } from '../../src/shared/messages'
-import type { StartStep, WorkspaceStart } from '../../src/shared/workspaces'
 import type { AppDependencies, AppEnv } from '../env'
 import type { DurableLifecycleState } from './durable-types'
 import type { MaskedStartLog } from './masked-start-log'

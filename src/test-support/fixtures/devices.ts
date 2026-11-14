@@ -1,3 +1,6 @@
+import type { DeviceCommandRecord } from '../../shared/generated/DeviceCommandRecord'
+import type { DeviceCommandResult } from '../../shared/generated/DeviceCommandResult'
+import type { DevicePairing } from '../../shared/generated/DevicePairing'
 import {
   alwaysAllowed,
   safariByFile,
@@ -9,9 +12,6 @@ import {
 } from '../../../docs/mockups/src/fixtures/mac'
 import { checkoutAutocomplete } from '../../../docs/mockups/src/fixtures/workspaces'
 import type {
-  DeviceCommandRecord,
-  DeviceCommandResult,
-  DevicePairing,
   DeviceSettings,
   DeviceSettingsOutcome,
   DeviceSettingsResponse,

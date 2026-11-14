@@ -1,4 +1,4 @@
-import type { AgentChoice } from '../../src/shared/agents'
+import type { AgentChoice } from '../../src/shared/generated/AgentChoice'
 import type { AppDependencies, AppEnv } from '../env'
 import { HttpError } from '../http'
 import { updateWorkspaceTitle } from '../chat/queries'

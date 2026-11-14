@@ -1,0 +1,23 @@
+---
+source: crates/cnd-runner-interface/tests/wire_4.rs
+assertion_line: 17
+description: Current protocol JSON. Optional fields stay absent; nullable fields stay null.
+expression: message
+---
+{
+  "type": "event",
+  "streamId": "stream-1",
+  "eventNumber": 9007199254740991,
+  "occurredAt": 1730000000000,
+  "event": {
+    "type": "turn.failed",
+    "sessionId": "session-1",
+    "turnId": "turn-1",
+    "error": {
+      "code": "agent_failed",
+      "message": "Agent failed."
+    },
+    "retryMessageId": "message-1",
+    "durationMs": 1000
+  }
+}

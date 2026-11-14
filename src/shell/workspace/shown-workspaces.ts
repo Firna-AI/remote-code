@@ -1,3 +1,4 @@
+import type { Workspace } from '../../shared/generated/Workspace'
 import type { AppModel } from '../../app/app-model'
 import type { ArchiveModel } from '../../app/archive-model'
 import type { OrgModel } from '../../app/org-model'
@@ -8,7 +9,7 @@ import { ChatController } from '../../chat/state/controller'
 import type { ChatSources } from '../../chat/state/sources'
 import type { SubscribeToWorkspace } from '../../chat/stream/workspace-stream'
 import type { WorkspaceFiles } from '../../files/model/files-store'
-import type { Workspace } from '../../shared/workspaces'
+
 import { createWorkspaceFiles } from './files/files-store'
 import { HeaderNotices } from './header-notices'
 import { ToolEvents } from './tools/tool-events'

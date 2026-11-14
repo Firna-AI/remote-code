@@ -1,4 +1,4 @@
-import type { FileResponse } from '../../shared/files'
+import type { FileResponse } from '../../shared/generated/FileResponse'
 import { decodeUtf8 } from '../../shared/utf8'
 
 /** The text of a file, or a mark that the file is not text. */

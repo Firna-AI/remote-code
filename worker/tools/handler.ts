@@ -1,8 +1,5 @@
-import { MACHINE_PATHS } from '../../src/shared/agent-tools'
-import type { AgentCreateWorkspaceRequest } from '../../src/shared/agent-workspaces'
-import { TOOL_TURN_HEADER } from '../../tools/context'
-import { createWorkspaceInput, ToolInputError } from '../../tools/input'
-import { createdWorkspace } from '../../tools/responses'
+import type { AgentCreateWorkspaceRequest } from '../../src/shared/generated/AgentCreateWorkspaceRequest'
+import { MACHINE_PATHS, TOOL_TURN_HEADER } from '../../src/shared/agent-tools'
 import { errorResponse, HttpError, privateResponse } from '../http'
 import { readJsonObject } from '../http/json-body'
 import {
@@ -17,6 +14,8 @@ import {
   writePreviewFromTool,
 } from './preview-routes'
 import { createFromTool } from './create'
+import { createWorkspaceInput, ToolInputError } from './input'
+import { createdWorkspace } from './workspace-replies'
 import { isAgentToolPath, listFromTool } from './lists'
 import type { AgentToolServices } from './services'
 import { callingWorkspace } from './store'

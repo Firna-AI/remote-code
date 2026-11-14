@@ -1,5 +1,4 @@
-import type { MessageSender } from '../shared/messages'
-
+import type { MessageSender } from '../shared/generated/MessageSender'
 type Person = Pick<MessageSender, 'displayName' | 'githubLogin'>
 
 function words(name: string): string[] {

@@ -1,30 +1,33 @@
 # Image software downloads have no retries
 
-- **Severity:** Low. **Likelihood:** Rare. **Effort:** Small. **Confidence:** Medium. **Harder later:** No.
+- **Severity:** Low. **Likelihood:** Rare. **Effort:** Medium. **Confidence:** High. **Harder later:** No.
 - **Kind:** Outside the scope.
 - **Added:** 2026-11-10, from branch `calummoore/global-snapshot-simplification`, a new problem of the options check of the plan for the software image of first builds. Branch `calummoore/build-image-install-order` holds an earlier copy of this item from 2026-11-09.
-- **Location:** `image/install.sh:11`, `image/install.sh:21`, `image/install-runtime.sh:18`, and `worker/terminal/service.ts:22`.
-- **Reason:** the problem is outside the software image change, and one fix in a separate branch reaches every build.
+- **Location:** `terminalPackagesCommand` in `worker/terminal/service.ts`, `installImageSoftware` in `worker/lifecycle/image-software.ts`, `bootstrapDownload` in `worker/lifecycle/software-bootstrap.ts`, `Engine::download` in `crates/cnd-cli/src/update/download.rs`, `crates/cnd-cli/src/update/http.rs`, and `crates/cnd-cli/src/update_command.rs`.
+- **Reason:** Download retry policy remains separate from the Rust software port. No retry implementation belongs in this documentation fix.
 
 - **Terms:**
-  - **Software step:** the step that installs the app's own software in a cloud computer image: the private Node, the runner archive, the GitHub CLI, and the terminal packages.
-  - **Software image:** one saved image for each version of the app's own software. It holds the provider's base image and the software step. The deploy workflow asks the Worker to build it, and the first build of an org starts from it.
+  - **Software step:** Installs Conductive's program, release parts, GitHub CLI, and terminal packages in an image.
+  - **Release parts:** The private Node, SDK helper, and system files that the Rust update engine downloads separately.
+  - **Bootstrap:** Downloads a verified program before that program can download and install its release parts.
 - **Background:**
-  - The software step downloads the private Node from `nodejs.org` with `curl` in `image/install-runtime.sh`.
-  - It downloads the runner archive, about 320 MiB, from `https://runner.conductive.build/` with `curl` in `image/install.sh`.
-  - It installs the GitHub CLI with `apt-get update` and `apt-get install -y gh` in `image/install.sh`, when `/usr/bin/gh` is missing.
-  - It installs the terminal packages with `apt-get update` and `apt-get install -y ttyd tmux` in `terminalInstallCommand` of `worker/terminal/service.ts`.
-  - Each command runs once, under `set -eu`, and none of them asks for a retry.
-  - The provider retry policy of builds covers errors of the provider's API. It does not cover a failed command inside the sandbox.
-  - An org image build without a software image, each later build, and each software image build run the software step.
-- **Problem:** One short network fault in any of these downloads fails the whole build.
-- **Impact if no action:** A short network fault fails an org image build, and an admin must start the build again. It also fails a software image build, so first builds do the full install until the next deploy run builds the image.
+  - `terminalPackagesCommand` runs `apt-get update` and `apt-get install -y ttyd tmux`.
+  - `installImageSoftware` installs `gh` with apt and runs the software bootstrap.
+  - `bootstrapDownload` uses `curl --fail --silent --show-error --location` for the program archive. It checks its SHA-256 before extracting it.
+  - `Engine::download` uses `cli_updater::HttpReleaseClient` for the release archive and changed `node`, `sdk-helper`, and `system` parts. The engine checks each digest before staging a complete release.
+  - Neither the curl command nor the HTTP release client retries a failed download. Apt commands set no `Acquire::Retries` option.
+  - The image's `update check --bootstrap` waits for the installation lock. Lock serialization does not retry a network request.
+  - Org image builds without a reusable software image, later builds, refreshes, and software image builds run the software step in the current code.
+  - The provider retry policy covers provider API failures. It does not retry failed commands inside the sandbox.
+  - Existing workspaces also use the update engine for background downloads. A failure keeps the current release until a later scheduled check.
+- **Problem:** One short network fault can fail an image's software step. It can also delay an existing workspace's next update.
+- **Impact if no action:** An admin must retry a failed org image build. A failed software image build delays the prepared image for first builds.
 - **Root question:** How does a build survive a short network fault in its downloads?
 - **Options:**
-  - **A.** Retry inside each download command: `curl --retry 3 --retry-all-errors` for both archives, and `apt-get -o Acquire::Retries=3` for the packages. The digest checks stay as they are. Effort: Small.
-  - **B.** Retry the whole software step once in the Worker after a failed command. A real failure then runs the step twice. Effort: Medium.
-- **Left out:** Change nothing, because each short fault keeps failing a build. Only two places can handle the fault, the command and the step around it, so there is no third approach.
-- **Wider fix:** None. Four commands download, and they are not a class.
-- **Previous examples:** None found.
-- **Recommendation:** A. It retries only the part that failed, and a real failure still fails at once after the retries.
-- **Action:** fix after merge, apply A, because the problem is outside the software image change.
+  - **A.** Add bounded transient retries around the metadata, program, and part requests in `Engine::download`. Use bounded curl retries for bootstrap and apt acquisition retries for packages. Keep digest, schema, and install failures terminal. Test a transient failure followed by success and an exhausted retry. Each Rust request site must keep the same retry policy. Effort: Medium.
+  - **B.** Put the Rust retry policy in one release-client wrapper used for metadata, program, and part requests. Keep bounded curl retries for bootstrap and apt acquisition retries for packages. Test the wrapper's transient and permanent errors. Preserve the HTTP client's streaming and timeout rules. Effort: Medium.
+- **Left out:** These two approaches differ in who owns the Rust retry policy. Change nothing leaves short faults fatal to builds. Curl flags alone cannot reach the Rust part downloads. Retrying the whole software step repeats successful work and permanent checksum, schema, or install errors.
+- **Wider fix:** B. One release-client boundary applies the same retry policy to metadata, the program, and every release part.
+- **Previous examples:** The provider retry policy handles API errors at a different boundary. It cannot recover a failed download inside a command.
+- **Recommendation:** B. Each owner retries only its transient network work. One Rust wrapper prevents request sites from using different policies.
+- **Action:** fix after merge, apply B. Retry policy can ship independently and costs the same later.

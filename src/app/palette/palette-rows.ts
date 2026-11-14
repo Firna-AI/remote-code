@@ -1,7 +1,8 @@
+import type { Workspace } from '../../shared/generated/Workspace'
 import { workspaceLabel } from '../../../docs/mockups/src/components/workspaces/label'
 import type { OrgSummary } from '../../shared/orgs'
 import type { ShortcutCommandId } from '../../shared/shortcut-commands'
-import type { Workspace } from '../../shared/workspaces'
+
 import { routes, type AccountTab, type SettingsTab } from '../router'
 import {
   accountSettingIds,

@@ -1,4 +1,4 @@
-import type { MessageSender } from '../../src/shared/messages'
+import type { MessageSender } from '../../src/shared/generated/MessageSender'
 import { HttpError } from '../http'
 import { userSuspended } from '../data/user-access'
 import { suspendedOwnerRecipientError } from './errors'

@@ -1,5 +1,6 @@
+import type { Session } from '../../shared/generated/Session'
 import { Store } from '../../app/store'
-import type { Session, SessionsResponse } from '../../shared/sessions'
+import type { SessionsResponse } from '../../shared/sessions'
 
 /** The sessions of a linked workspace, open and closed, as one read gave them. */
 export type LinkedSessions =

@@ -1,4 +1,5 @@
-import type { Session } from '../sessions'
+import type { Session } from '../generated/Session'
+
 import type { ChatEnvelope } from './session-events'
 import { emptyTranscript, foldEvent, type Transcript } from './transcript'
 import { foldRecord } from './turn-records'

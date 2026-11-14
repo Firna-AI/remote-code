@@ -59,5 +59,5 @@ says.
   snake case", then loses its underscores. A rule that an agent names a
   workspace only when a member names it was rejected, because agents then
   name fewer workspaces.
-- Risk: an agent that ignores the text still adds underscores. A cloud
-  computer gets the new text only from a full build of its org image.
+- Risk: an agent that ignores the text still adds underscores. The text
+  follows the [sandbox software update rules](sandbox-software.md#updates).

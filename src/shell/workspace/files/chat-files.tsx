@@ -4,6 +4,7 @@ import {
   useSyncExternalStore,
   type ReactNode,
 } from 'react'
+import type { FileEntry } from '../../../shared/generated/FileEntry'
 import { useNavigation } from '../../../app/navigation'
 import { routes } from '../../../app/router'
 import type { RenderTab, TabDraw } from '../../../chat/components/tab-row'
@@ -17,7 +18,6 @@ import type {
   FilesTab,
   FilesTarget,
 } from '../../../files/navigation'
-import type { FileEntry } from '../../../shared/files'
 import { PanelContext } from '../../layout/panels'
 import {
   FileTabItem,

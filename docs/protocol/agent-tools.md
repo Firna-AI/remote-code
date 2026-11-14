@@ -64,11 +64,11 @@ decision number names a dated record, as
 - The CLI takes the text of a message from a file, or from stdin with `-`,
   for each call that takes a message. Reason: Conductor's CLI takes a
   message file. The MCP server takes the text only.
-- A cloud computer has the workspace tools of the org image that it starts
-  from. A full build of the org image installs the current tools. A
-  refresh and a resume keep the tools of the cloud computer.
-- Tools from an older org image keep working with the Worker. They offer
-  only their own calls.
+- The workspace tools are a part of the sandbox software. A build of the
+  org image installs the newest tools. A cloud computer gets newer tools
+  with each update, as [Updates](sandbox-software.md#updates) says.
+- Older tools keep working with the Worker until their update applies.
+  They offer only their own calls.
 - The app sets no limit of its own on the workspaces that agents create
   (decision 8). The plan limits of the app's Boat account apply, as
   [The provider](workspaces-and-sandboxes.md#the-provider) says.

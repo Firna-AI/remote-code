@@ -1,3 +1,4 @@
+import type { Attachment } from '../../shared/generated/Attachment'
 import {
   filesWait,
   isMissingFile,
@@ -12,7 +13,7 @@ import {
   reconcileFiles,
 } from '../../app/draft-file-state'
 import { withoutMarks } from '../../app/draft-marks'
-import type { Attachment, SendMessageRequest } from '../../shared/messages'
+import type { SendMessageRequest } from '../../shared/messages'
 import { sendBlock } from './blockers'
 import { sessionState, withSession, type SessionState } from './chat-snapshot'
 import { showNotice, type ChatContext } from './context'

@@ -1,7 +1,8 @@
+import type { Session } from '../../src/shared/generated/Session'
+import type { AgentChatEvent } from '../../src/shared/generated/AgentChatEvent'
 import type { TurnStopRequester } from '../../src/shared/session-stop'
 import { recordStopRequest } from './stop-request'
-import type { AgentChatEvent } from '../../src/shared/chat-events'
-import type { Session } from '../../src/shared/sessions'
+
 import { HttpError } from '../http'
 import { TurnCompletion, type TurnEnd } from './turn-completion'
 import type { ChatTransaction } from './store'

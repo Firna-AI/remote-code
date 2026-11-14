@@ -1,6 +1,5 @@
+import type { CommitAuthor } from './generated/CommitAuthor'
 import type { User } from './api'
-
-export type CommitAuthor = { name: string; email: string }
 
 export function commitAuthor(
   user: Pick<User, 'githubId' | 'githubLogin' | 'displayName'>,

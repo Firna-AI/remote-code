@@ -1,10 +1,11 @@
-import type { AgentCreateWorkspaceRequest } from '../../src/shared/agent-workspaces'
+import type { AgentCreateWorkspaceRequest } from '../../src/shared/generated/AgentCreateWorkspaceRequest'
+
 import { sessionTitleFrom } from '../../src/shared/session-title'
-import { choice } from '../../tools/input'
 import { hash } from '../security/crypto'
 import { HttpError } from '../http'
 import { sessionLink } from '../../src/shared/session-link'
 import { requireCallingToolTurn } from './calling-turn'
+import { choice } from './input'
 import { agentToolMessage } from './message-text'
 import type { AgentToolServices } from './services'
 import {

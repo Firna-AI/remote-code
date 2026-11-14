@@ -1,6 +1,6 @@
-import type { AgentChoice } from '../../src/shared/agents'
+import type { AgentChoice } from '../../src/shared/generated/AgentChoice'
+import type { RunnerProtocolVersion } from '../../src/shared/generated/RunnerProtocolVersion'
 import { MACHINE_PATHS } from '../../src/shared/agent-tools'
-import type { RunnerProtocolVersion } from '../../src/shared/runner'
 import {
   CLAUDE,
   MACHINE_ORIGIN,

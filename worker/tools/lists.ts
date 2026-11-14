@@ -1,16 +1,15 @@
-import {
-  MACHINE_PATHS,
-  type AgentListModelsResponse,
-  type AgentListRepositoriesResponse,
-  type AgentListSectionsResponse,
-} from '../../src/shared/agent-tools'
-import type { AgentListWorkspacesResponse } from '../../src/shared/agent-workspaces'
+import type { AgentListModelsResponse } from '../../src/shared/generated/AgentListModelsResponse'
+import type { AgentListRepositoriesResponse } from '../../src/shared/generated/AgentListRepositoriesResponse'
+import type { AgentListSectionsResponse } from '../../src/shared/generated/AgentListSectionsResponse'
+import type { AgentListWorkspacesResponse } from '../../src/shared/generated/AgentListWorkspacesResponse'
+import type { AgentChoice } from '../../src/shared/generated/AgentChoice'
+import { MACHINE_PATHS } from '../../src/shared/agent-tools'
+
 import { sectionToolMethods } from './section-routes'
 import { previewToolMethods } from './preview-routes'
 import { listToolWorkspaces } from './workspace-data'
 import { workspaceToolMethods } from './workspace-routes'
 import { workspaceListInput } from './workspace-input'
-import type { AgentChoice } from '../../src/shared/agents'
 import { HttpError } from '../http'
 import { readImageRepositories } from '../lifecycle/published-image-data'
 import type { AgentToolServices } from './services'

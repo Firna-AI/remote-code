@@ -2,6 +2,7 @@ import { generateKeyPairSync } from 'node:crypto'
 
 import type { AppEnv, HttpFetch } from '../env'
 import { isRecord } from '../http'
+import { withSoftwareRelease } from './software-release-test-support'
 import {
   handleImageSourceCredential,
   IMAGE_SOURCE_CREDENTIAL_PATH,
@@ -21,7 +22,7 @@ export function backendImageFetch(
   github: HttpFetch,
 ): HttpFetch {
   let sequence = 0
-  return async (request) => {
+  return withSoftwareRelease(async (request) => {
     const url = new URL(request.url)
     if (url.hostname === 'api.github.com') {
       if (
@@ -55,5 +56,5 @@ export function backendImageFetch(
       }
     }
     return provider(request)
-  }
+  })
 }

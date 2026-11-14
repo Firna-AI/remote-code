@@ -1,0 +1,13 @@
+---
+source: crates/cnd-runner-interface/tests/fast_wire.rs
+expression: model
+---
+{
+  "agent": "claude",
+  "model": "test-model",
+  "label": "Test",
+  "efforts": [
+    "high"
+  ],
+  "fast": true
+}

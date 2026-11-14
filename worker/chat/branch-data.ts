@@ -1,5 +1,4 @@
-import type { RunnerBranches } from '../../src/shared/runner'
-
+import type { RunnerBranches } from '../../src/shared/generated/RunnerBranches'
 export function readRunnerBranches(
   db: D1Database,
   workspaceId: string,

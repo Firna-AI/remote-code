@@ -3,7 +3,7 @@
 - **Severity:** Low. **Likelihood:** Common. **Effort:** Small. **Confidence:** Medium. **Harder later:** No.
 - **Kind:** Outside the scope.
 - **Added:** 2026-11-09, from the options check of the plan for agent instructions on the branch `conductor/conductor-prompts`.
-- **Location:** `runner/src/providers/claude.ts:59`.
+- **Location:** `runner/sdk-helper/src/providers/claude.ts:59`.
 - **Reason:** The change that found it adds the agent instructions, and the attribution of commits and pull requests is a separate setting with its own naming choice.
 
 - **Terms:**

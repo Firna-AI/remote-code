@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest'
-import type { FileEntry } from '../../shared/files'
+import type { FileEntry } from '../../shared/generated/FileEntry'
 import { folderLabel, mentionRows } from './mention-rows'
 
 function entry(path: string, kind: FileEntry['kind'] = 'file'): FileEntry {

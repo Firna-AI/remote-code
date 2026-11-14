@@ -1,0 +1,10 @@
+[Unit]
+Description=Check Conductive software hourly
+
+[Timer]
+OnBootSec=30s
+OnUnitActiveSec=1h
+Unit=conductive-update-check.service
+
+[Install]
+WantedBy=timers.target

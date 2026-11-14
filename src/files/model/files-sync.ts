@@ -1,9 +1,7 @@
-import type {
-  ChangesResponse,
-  FileEvent,
-  FileTreeDelta,
-  FileTreeResponse,
-} from '../../shared/files'
+import type { ChangesResponse } from '../../shared/generated/ChangesResponse'
+import type { FileTreeDelta } from '../../shared/generated/FileTreeDelta'
+import type { FileTreeResponse } from '../../shared/generated/FileTreeResponse'
+import type { FileEvent } from '../../shared/files'
 import { applyTreeDelta, treeFromSnapshot, type FileTree } from './tree-model'
 
 /**

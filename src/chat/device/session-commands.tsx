@@ -1,6 +1,7 @@
+import type { DeviceCommandRecord } from '../../shared/generated/DeviceCommandRecord'
 import type { ReactNode } from 'react'
 import { CircleAlert } from 'lucide-react'
-import type { DeviceCommandRecord } from '../../shared/device'
+
 import { Notice } from '../../../docs/mockups/src/components/common/Notice'
 import type { TranscriptInsert } from '../../shared/transcript/transcript-entries'
 import type { ChatSnapshot, SessionState } from '../state/chat-snapshot'

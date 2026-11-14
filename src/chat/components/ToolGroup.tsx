@@ -12,7 +12,7 @@ import {
   SquareTerminal,
   Wrench,
 } from 'lucide-react'
-import type { ToolCall } from '../../shared/chat-events'
+import type { ToolCall } from '../../shared/generated/ToolCall'
 import {
   foldLabel,
   toolEnding,

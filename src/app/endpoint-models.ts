@@ -1,5 +1,7 @@
+import type { AgentModel } from '../shared/generated/AgentModel'
+import type { Agent } from '../shared/generated/Agent'
+import type { AgentChoice } from '../shared/generated/AgentChoice'
 import type { EndpointModelList } from '../shared/account'
-import type { Agent, AgentChoice, AgentModel } from '../shared/agents'
 
 /**
  * An agent login of the signed-in person, with the last model list of an

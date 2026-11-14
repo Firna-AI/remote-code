@@ -1,5 +1,5 @@
+import type { RunnerReportKind } from '../../../shared/generated/RunnerReportKind'
 import type { WorkspaceEvent } from '../../../shared/events'
-import type { RunnerReportKind } from '../../../shared/runner'
 import type { FakeApiServer } from '../../../test-support/fake-api'
 import {
   firstLoss,

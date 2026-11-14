@@ -1,10 +1,5 @@
-import {
-  orgPath,
-  type Org,
-  type OrgRole,
-  type Timestamp,
-  type User,
-} from './api'
+import type { Timestamp } from './generated/Timestamp'
+import { orgPath, type Org, type OrgRole, type User } from './api'
 import { workspacePath } from './workspaces'
 
 export function membersPath(orgId: string): string {

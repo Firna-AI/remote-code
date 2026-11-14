@@ -1,6 +1,9 @@
-import type { AgentChoice } from './agents'
-import { orgPath, type Timestamp } from './api'
-import type { Session } from './sessions'
+import type { Session } from './generated/Session'
+import type { AgentChoice } from './generated/AgentChoice'
+import type { UserMessage } from './generated/UserMessage'
+import type { Attachment } from './generated/Attachment'
+import { orgPath } from './api'
+
 import { filePaths } from './files'
 
 export const ATTACHMENT_MAX_BYTES = 100_000_000
@@ -32,22 +35,6 @@ export function attachmentUploadUrl(
   return `${attachmentUploadPath(orgId, target)}?${query}`
 }
 
-export interface MessageSender {
-  id: string
-  githubLogin: string
-  displayName: string | null
-  avatarUrl: string | null
-}
-
-export interface Attachment {
-  id: string
-  name: string
-  path: string | null
-  kind: 'image' | 'file'
-  mediaType: string
-  sizeBytes: number
-}
-
 export interface MessageDraft {
   text: string
   attachmentIds: readonly string[]
@@ -57,17 +44,6 @@ export interface SendMessageRequest extends MessageDraft {
   /** A stable client ID lets a retry refer to the same message. */
   id: string
   choice: AgentChoice
-}
-
-export interface UserMessage {
-  id: string
-  sessionId: string
-  sender: MessageSender
-  text: string
-  attachments: readonly Attachment[]
-  choice: AgentChoice
-  createdAt: Timestamp
-  state: 'queued' | 'sent'
 }
 
 export interface SendMessageResponse {

@@ -1,8 +1,6 @@
-import type {
-  DeviceApprovalAction,
-  DeviceCommandRecord,
-  DevicePairing,
-} from '../../shared/device'
+import type { DeviceCommandRecord } from '../../shared/generated/DeviceCommandRecord'
+import type { DevicePairing } from '../../shared/generated/DevicePairing'
+import type { DeviceApprovalAction } from '../../shared/device'
 
 /** The Mac commands of one workspace, as this window knows them. */
 export interface DeviceSnapshot {

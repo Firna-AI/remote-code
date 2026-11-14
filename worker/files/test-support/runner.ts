@@ -1,8 +1,8 @@
+import type { RunnerFileCommand } from '../../../src/shared/generated/RunnerFileCommand'
 import { MACHINE_PATHS } from '../../../src/shared/agent-tools'
 import { FakeRunner } from '../../test-support/fake-runner'
 import { FakeRunnerConnection } from '../../test-support/runner-connection'
 import { RunnerFiles } from '../runner'
-import type { RunnerFileCommand } from '../../../src/shared/runner-files'
 import type { WorkspaceFiles } from '../workspace'
 
 export async function connectFilesRunner(workspaceId = 'workspace-1') {

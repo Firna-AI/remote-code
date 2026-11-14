@@ -32,10 +32,6 @@ it('keeps the accepted first message and failed start readable to every member a
     }
     const org = await findMembership(fixture.env.DB, 'runtime-org', user.id)
     if (!org) throw new Error('Missing runtime org')
-    const software = {
-      url: 'https://software.conductive.test/runner.tar.gz',
-      sha256: 'a'.repeat(64),
-    }
     const dependencies = {
       fetch: fixture.boat.fetch,
       now: Date.now,
@@ -86,7 +82,6 @@ it('keeps the accepted first message and failed start readable to every member a
         },
       },
       {
-        software,
         waitUntil: (work) => {
           void work.catch(() => {})
         },

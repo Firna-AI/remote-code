@@ -1,4 +1,5 @@
-import type { BranchChangedFile, ChangesResponse } from '../../shared/files'
+import type { BranchChangedFile } from '../../shared/generated/BranchChangedFile'
+import type { ChangesResponse } from '../../shared/generated/ChangesResponse'
 import { pathLabel } from '../model/file-labels'
 import { splitPath, type DiffTab, type FilesNavigation } from '../navigation'
 import { ChangeIcon, changeLabels } from '../ui/ChangeIcon'

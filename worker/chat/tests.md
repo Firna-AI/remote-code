@@ -20,8 +20,9 @@ The held owner writes to neither computer, the new computer gets its own copy, a
 After a restart on the old computer, which has no proof, the files copy there.
 `attachment-proof-recovery.test.ts` fails or interrupts the save of the shared proof after a continuation.
 It checks that the connection closes, and that the redelivery after a restart copies again only when no proof committed.
-`attachment-cancellation.test.ts` connects the real runner `AgentEngine` through `attachment-engine.test-support.ts`.
-It checks that a failed copy stops the running agent, and that Try again starts after the old agent process exits, with no Worker wait.
+`attachment-cancellation.test.ts` checks the Worker command order after a copy failure.
+It checks that cancellation precedes Try again without waiting for the old turn end.
+Rust engine tests check helper close order and the next turn inputs.
 It also checks that a restart sends the stored interrupts again, and that each late end removes only the interrupt of its turn.
 `integration/attachment-raw.test.ts` checks native fixed-length R2 writes, raw metadata and ownership, interrupted transfers, and desktop admission.
 `integration/attachment-cleanup.test.ts` runs the production scheduled handler through `/__test/scheduled`, with the native workspace object, D1, and R2.

@@ -1,5 +1,5 @@
 import { CircleSlash, FileText } from 'lucide-react'
-import type { TurnEndReason } from '../../../../../src/shared/chat-events'
+import type { TurnEndReason } from '../../../../../src/shared/generated/TurnEndReason'
 import { splitPath, type ChangedFile } from '../../fixtures/files'
 import { ScreenLink } from '../common/ScreenLink'
 import { DiffStat } from '../files/DiffStat'

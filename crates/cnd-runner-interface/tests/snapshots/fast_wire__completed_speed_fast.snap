@@ -1,0 +1,17 @@
+---
+source: crates/cnd-runner-interface/tests/fast_wire.rs
+expression: completed
+---
+{
+  "type": "turn.completed",
+  "sessionId": "session",
+  "turnId": "turn",
+  "state": "finished",
+  "durationMs": 1000,
+  "speed": {
+    "state": "fast"
+  },
+  "files": [],
+  "omittedFileCount": 0,
+  "userMessageIds": []
+}

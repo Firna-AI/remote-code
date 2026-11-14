@@ -1,13 +1,13 @@
-import {
-  effortLabels,
-  modelLabel,
-  type AgentChoice,
-  type AgentModel,
-} from '../agents'
-import type { DeviceCommandRecord } from '../device'
+import type { AgentModel } from '../generated/AgentModel'
+import type { DeviceCommandRecord } from '../generated/DeviceCommandRecord'
+import type { Session } from '../generated/Session'
+import type { TranscriptDetail } from '../generated/TranscriptDetail'
+import type { Workspace } from '../generated/Workspace'
+import type { AgentChoice } from '../generated/AgentChoice'
+import { effortLabels, modelLabel } from '../agents'
+
 import { nameLabel } from '../name-label'
-import type { Session, TranscriptDetail } from '../sessions'
-import type { Workspace } from '../workspaces'
+
 import { placeCommands } from './command-placement'
 import { turnOf } from './known-turns'
 import {

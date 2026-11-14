@@ -1,5 +1,6 @@
+import type { Preview } from '../shared/generated/Preview'
 import { ExternalLink } from 'lucide-react'
-import type { Preview } from '../shared/previews'
+
 import styles from './PreviewFrame.module.css'
 
 /**

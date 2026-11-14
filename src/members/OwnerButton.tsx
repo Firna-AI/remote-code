@@ -1,6 +1,7 @@
+import type { Workspace } from '../shared/generated/Workspace'
 import { ChevronDown } from 'lucide-react'
 import { Button } from '@firna/ui/button'
-import type { Workspace } from '../shared/workspaces'
+
 import { personName } from './people'
 import type { MenuTriggerProps } from './ui/ChoiceMenu'
 import { useControlSizes } from './ui/controls'

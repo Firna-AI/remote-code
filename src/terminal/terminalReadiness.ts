@@ -1,6 +1,7 @@
+import type { WorkspaceState } from '../shared/generated/WorkspaceState'
 import type { WorkspaceEvent } from '../shared/events'
 import type { TerminalResponse } from '../shared/terminal'
-import type { WorkspaceState } from '../shared/workspaces'
+
 import type { ReadyTerminal } from './terminalApi'
 import type { ToolError, ToolResult } from './tool-parts/request'
 

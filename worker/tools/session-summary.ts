@@ -1,6 +1,8 @@
-import type { AgentSessionSummary } from '../../src/shared/agent-sessions'
+import type { AgentSessionSummary } from '../../src/shared/generated/AgentSessionSummary'
+import type { Session } from '../../src/shared/generated/Session'
+
 import { sessionLink } from '../../src/shared/session-link'
-import type { Session } from '../../src/shared/sessions'
+
 import type { ChatTransaction } from '../chat/store'
 
 export async function toolSessionSummary(

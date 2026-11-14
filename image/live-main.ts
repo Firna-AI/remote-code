@@ -15,13 +15,13 @@ async function main() {
     return
   }
   await Promise.all(
-    ['runner', 'measure', 'compare'].map((name) =>
-      access(join(root, 'dist/runner', `${name}.mjs`)),
+    ['sdk-helper', 'measure', 'compare'].map((name) =>
+      access(join(root, 'dist/sdk-helper', `${name}.mjs`)),
     ),
   )
   if (process.argv.includes('--prepare')) {
     process.stdout.write(
-      `Preparation passed. Runner bundles and script dependencies are available.\nReal checks need: ${requiredInputs.join(', ')}.\nNo real sandbox or agent was used.\n`,
+      `Preparation passed. SDK helper bundles and script dependencies are available.\nReal checks need: ${requiredInputs.join(', ')}.\nNo real sandbox or agent was used.\n`,
     )
     return
   }

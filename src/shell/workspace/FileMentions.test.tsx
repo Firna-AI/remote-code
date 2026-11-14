@@ -1,8 +1,8 @@
 // @vitest-environment happy-dom
 
 import { describe, expect, test, vi } from 'vitest'
+import type { UserMessage } from '../../shared/generated/UserMessage'
 import { memoryNavigation, NavigationContext } from '../../app/navigation'
-import type { UserMessage } from '../../shared/messages'
 import {
   accessibleName,
   byRole,

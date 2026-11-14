@@ -1,3 +1,4 @@
+import type { Workspace } from '../../shared/generated/Workspace'
 // @vitest-environment happy-dom
 
 import { act } from 'react'
@@ -6,7 +7,7 @@ import { routes } from '../../app/router'
 import { selectText } from '../../chat/components/chip-field/attached-field-events'
 import type { OrgRole } from '../../shared/api'
 import { orgSettingsPaths } from '../../shared/org-settings'
-import { workspacesPath, type Workspace } from '../../shared/workspaces'
+import { workspacesPath } from '../../shared/workspaces'
 import {
   accessibleName,
   byLabel,

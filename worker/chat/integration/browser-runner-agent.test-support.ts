@@ -1,10 +1,7 @@
-import type { AgentChoice } from '../../../src/shared/agents'
-import type {
-  RunnerCommand,
-  RunnerEvent,
-  RunnerToWorkspace,
-} from '../../../src/shared/runner'
-
+import type { AgentChoice } from '../../../src/shared/generated/AgentChoice'
+import type { RunnerCommand } from '../../../src/shared/generated/RunnerCommand'
+import type { RunnerEvent } from '../../../src/shared/generated/RunnerEvent'
+import type { RunnerToWorkspace } from '../../../src/shared/generated/RunnerToWorkspace'
 interface Turn {
   sessionId: string
   turnId: string

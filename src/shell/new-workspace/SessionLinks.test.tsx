@@ -1,3 +1,4 @@
+import type { Workspace } from '../../shared/generated/Workspace'
 // @vitest-environment happy-dom
 
 import { describe, expect, test, vi } from 'vitest'
@@ -5,7 +6,7 @@ import { routes } from '../../app/router'
 import { requestLines } from '../../app/test-kit'
 import { sessionLink } from '../../shared/session-link'
 import { sessionsPath } from '../../shared/sessions'
-import type { Workspace } from '../../shared/workspaces'
+
 import { accessibleName } from '../../test-support/dom-queries'
 import { FAKE_ORIGIN } from '../../test-support/fixtures/core'
 import { workspaceFixtures } from '../../test-support/fixtures/workspaces'

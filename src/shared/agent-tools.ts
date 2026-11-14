@@ -1,5 +1,12 @@
-import type { AgentChoice, AgentModel } from './agents'
-import type { Workspace, WorkspaceState } from './workspaces'
+/** The runner supplies these values at runtime, separately for each turn. */
+export const TOOL_ENV = {
+  machineOrigin: 'CONDUCTIVE_MACHINE_ORIGIN',
+  workspaceToken: 'CONDUCTIVE_WORKSPACE_TOKEN',
+  turnId: 'CONDUCTIVE_TURN_ID',
+} as const
+
+/** Context is a turn identifier, not a credential or a sender identity. */
+export const TOOL_TURN_HEADER = 'X-Conductive-Turn-Id'
 
 /** Machine routes use workspace or turn tokens, or a GitHub webhook signature. */
 export const MACHINE_PATHS = {
@@ -14,32 +21,8 @@ export const MACHINE_PATHS = {
   models: '/v1/tools/models',
 } as const
 
-/** Register this local server. Runtime environment supplies its turn and token. */
+/** @public The SDK helper registers this server with runtime turn and token context. */
 export const WORKSPACE_TOOLS_MCP = {
   command: '/usr/local/bin/conductive',
   args: ['mcp'],
 } as const
-
-export interface AgentWorkspaceSummary {
-  id: string
-  number: number
-  link: string
-  name: Workspace['name']
-  branch: string
-  state: WorkspaceState
-}
-export interface AgentListRepositoriesResponse {
-  repositories: readonly {
-    id: string
-    fullName: string
-    defaultBranch: string
-    current: boolean
-  }[]
-}
-export interface AgentListSectionsResponse {
-  sections: readonly { id: string; name: string; default: boolean }[]
-}
-export interface AgentListModelsResponse {
-  models: readonly AgentModel[]
-  defaultChoice: AgentChoice | null
-}

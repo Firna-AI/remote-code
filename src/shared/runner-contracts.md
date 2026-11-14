@@ -2,8 +2,15 @@
 
 This page belongs to the [shared contracts](README.md).
 
-`runner.ts` defines the versioned handshake, commands, numbered events,
-confirmations, and resend rules. Its comments state the delivery contract.
+The [runner interface crate](../../crates/cnd-runner-interface/README.md)
+defines the versioned handshake, commands, numbered events, confirmations,
+and resend rules. Its Rust comments state the delivery contract.
+`ts-rs` generates their TypeScript into `generated/`.
+Every importer uses the generated types directly.
+`runner.ts` keeps runtime constants and login capability helpers.
+Run `cargo run -p cnd-runner-interface --example export_bindings` from the
+repository root to regenerate and format every type.
+[Repository rules](../../AGENTS.md#repository-rules) state the number and date wire forms.
 `RUNNER_PROTOCOL_VERSION` is 2, and `RunnerProtocolVersion` is that one
 version. The packaged runner sends it, and each full image build records it.
 The Worker accepts only that version. It closes a runner of any other
@@ -41,7 +48,8 @@ Storage and network failures remain unconfirmed.
 After a refused file tree, changes list, start steps, workspace name, or port list,
 `RunnerReportRefresh` asks for one fresh full report of that `RunnerReportKind`.
 It carries no login and no turn token. A redelivery keeps its command ID.
-`ports.ts` defines the common listening-port fields and both report phases.
+`generated/` contains `ListeningPort` and `RunnerPortsUpdated`.
+`ports.ts` keeps the browser report phase and runtime limits.
 `RunnerPortsUpdated` carries complete selected private labels.
 `PortsUpdated` carries final filtered display labels, with a null list when
 there is no current report. The display limits apply only after the workspace
@@ -50,7 +58,7 @@ filter. The module owns those limits and the shared count limit.
 and the terminal backend.
 [Listening ports](../../docs/protocol/agent-runner.md#listening-ports) states
 that report, its limits, and its refresh kind.
-`runner-transport.ts` defines the injectable socket boundary.
+`runner-transport.ts` defines the Worker's in-memory runner test socket boundary.
 `RunnerConnection` and `RunnerConnector` take the type of the Worker's
 messages.
 Browser response types carry no login and no turn token.

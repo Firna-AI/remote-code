@@ -1,8 +1,6 @@
-import type {
-  FileEntry,
-  FileTreeDelta,
-  FileTreeResponse,
-} from '../../shared/files'
+import type { FileEntry } from '../../shared/generated/FileEntry'
+import type { FileTreeDelta } from '../../shared/generated/FileTreeDelta'
+import type { FileTreeResponse } from '../../shared/generated/FileTreeResponse'
 import { pathLabel } from './file-labels'
 
 /** The files of the branch at one revision, by repository path. */

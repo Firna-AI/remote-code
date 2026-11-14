@@ -1,8 +1,6 @@
-import {
-  AGENT_TRANSCRIPT_MAX_BYTES,
-  type AgentReadSessionRequest,
-  type AgentListSessionsRequest,
-} from '../../src/shared/agent-sessions'
+import type { AgentReadSessionRequest } from '../../src/shared/generated/AgentReadSessionRequest'
+import type { AgentListSessionsRequest } from '../../src/shared/generated/AgentListSessionsRequest'
+import { AGENT_TRANSCRIPT_MAX_BYTES } from '../../src/shared/agent-sessions'
 import { sessionLink } from '../../src/shared/session-link'
 import { jsonBytes } from '../../src/shared/event-limits'
 import { AttachmentWorkspace } from '../chat/attachment-workspace'

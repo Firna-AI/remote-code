@@ -1,4 +1,4 @@
-import type { Attachment } from '../../src/shared/messages'
+import type { Attachment } from '../../src/shared/generated/Attachment'
 import { attachmentPath } from '../../src/shared/attachment-paths'
 import type { AppEnv } from '../env'
 import { HttpError } from '../http'

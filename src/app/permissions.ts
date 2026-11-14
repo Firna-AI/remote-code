@@ -1,6 +1,7 @@
+import type { Workspace } from '../shared/generated/Workspace'
 import type { OrgRole, User } from '../shared/api'
 import type { OrgSummary } from '../shared/orgs'
-import type { Workspace } from '../shared/workspaces'
+
 import type { Readable } from './store'
 
 /**

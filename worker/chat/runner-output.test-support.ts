@@ -1,4 +1,4 @@
-import type { RunnerEvent } from '../../src/shared/runner'
+import type { RunnerEvent } from '../../src/shared/generated/RunnerEvent'
 import { orgEnvironmentContext } from '../lifecycle/settings-data'
 import { encrypt } from '../security/crypto'
 import type { TestHarness } from '../test-support/harness'

@@ -1,14 +1,11 @@
-import type {
-  ChangedFile,
-  ChangesResponse,
-  DiffResponse,
-  FileEntry,
-  FileResponse,
-  FileTreeResponse,
-  RunnerFileEvent,
-} from './files'
-import type { RunnerEvent } from './runner'
-
+import type { ChangedFile } from './generated/ChangedFile'
+import type { ChangesResponse } from './generated/ChangesResponse'
+import type { DiffResponse } from './generated/DiffResponse'
+import type { FileEntry } from './generated/FileEntry'
+import type { FileResponse } from './generated/FileResponse'
+import type { FileTreeResponse } from './generated/FileTreeResponse'
+import type { RunnerFileEvent } from './generated/RunnerFileEvent'
+import type { RunnerEvent } from './generated/RunnerEvent'
 type FilterText = (value: string) => string
 
 function pathLabel<T extends { path: string; displayPath?: string }>(

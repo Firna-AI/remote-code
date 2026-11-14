@@ -1,7 +1,8 @@
+import type { AgentModel } from '../../shared/generated/AgentModel'
 // @vitest-environment happy-dom
 import { useState } from 'react'
 import { describe, expect, it } from 'vitest'
-import type { AgentChoice, AgentModel } from '../../shared/agents'
+import type { AgentChoice } from '../../shared/generated/AgentChoice'
 import {
   accessibleName,
   byRole,

@@ -9,6 +9,7 @@ import {
 } from '../data/user-access'
 import { orgProviderForAccount, providerForAccount } from '../sandbox/client'
 import { DEFAULT_PROVIDER_ACCOUNT } from '../sandbox/account-identity'
+import { latestSoftwareRelease } from './software-release'
 import { softwareVersion } from '../software-image/version'
 import type { SandboxProvider } from '../sandbox/provider'
 import { IMAGE_BUILD_TIME_LIMIT_MS, JobTimeLimit } from './job-time-limit'
@@ -154,10 +155,11 @@ export async function startImageBuild(
       software,
       softwareVersion:
         input.kind === 'build' && !image?.imageName
-          ? await softwareVersion(software)
+          ? await softwareVersion(
+              await latestSoftwareRelease(env, dependencies.fetch),
+            )
           : undefined,
       previousImageName: image?.imageName ?? null,
-      previousRunnerProtocolVersion: previous?.runnerProtocolVersion ?? null,
       now,
       nextImageRefreshAt:
         input.kind === 'refresh' && input.dailyRefresh

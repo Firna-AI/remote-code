@@ -1,3 +1,4 @@
+import type { DevicePairing } from '../../src/shared/generated/DevicePairing.js'
 import { once } from 'node:events'
 import { createServer } from 'node:http'
 import { WebSocketServer } from 'ws'
@@ -10,7 +11,6 @@ import {
 } from '../../src/shared/device.ts'
 import type {
   DeviceCommandRef,
-  DevicePairing,
   DeviceToWorker,
   WorkerToDevice,
 } from '../../src/shared/device.ts'

@@ -2,6 +2,7 @@
 
 import { act } from 'react'
 import { describe, expect, test, vi } from 'vitest'
+import type { WorkspaceStart } from '../../shared/generated/WorkspaceStart'
 import { routes } from '../../app/router'
 import { requestLines } from '../../app/test-kit'
 import type { WorkspaceEvent } from '../../shared/events'
@@ -10,7 +11,6 @@ import {
   workspacePath,
   workspacePaths,
   workspacesPath,
-  type WorkspaceStart,
 } from '../../shared/workspaces'
 import {
   byLabel,

@@ -1,9 +1,10 @@
+import type { AgentModel } from '../../shared/generated/AgentModel'
+import type { Session } from '../../shared/generated/Session'
+import type { AgentChoice } from '../../shared/generated/AgentChoice'
+import type { MessageSender } from '../../shared/generated/MessageSender'
 import type { LinkedReason } from '../../../docs/mockups/src/components/chat/linkedCopy'
 import type { SessionLogin } from '../../../docs/mockups/src/components/chat/SessionLogin'
 import { offeredModels, type LoginModels } from '../../app/endpoint-models'
-import type { AgentChoice, AgentModel } from '../../shared/agents'
-import type { MessageSender } from '../../shared/messages'
-import type { Session } from '../../shared/sessions'
 
 /**
  * Whose agent login a message of the reader uses in a session. A session runs

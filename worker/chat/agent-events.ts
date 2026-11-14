@@ -1,9 +1,8 @@
-import {
-  readTurnSpeed,
-  type AgentChatEvent,
-  type ToolCall,
-} from '../../src/shared/chat-events'
-import type { ChangedFile, ChangeKind } from '../../src/shared/files'
+import type { AgentChatEvent } from '../../src/shared/generated/AgentChatEvent'
+import type { ToolCall } from '../../src/shared/generated/ToolCall'
+import type { ChangedFile } from '../../src/shared/generated/ChangedFile'
+import type { ChangeKind } from '../../src/shared/generated/ChangeKind'
+import { readTurnSpeed } from '../../src/shared/chat-events'
 import { warnWorker } from '../warnings'
 import {
   choice,

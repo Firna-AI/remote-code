@@ -1,3 +1,5 @@
+import type { Agent } from '../shared/generated/Agent'
+import type { AgentChoice } from '../shared/generated/AgentChoice'
 import {
   ACCOUNT_PATHS,
   agentLoginPath,
@@ -14,7 +16,6 @@ import {
   type UpdateAgentLoginRequest,
   type UpdateAgentLoginResponse,
 } from '../shared/account'
-import type { Agent, AgentChoice } from '../shared/agents'
 import { API_PATHS } from '../shared/api'
 import type { SaveShortcutsRequest } from '../shared/shortcuts'
 import { WAITLIST_PATHS, type WaitlistStateResponse } from '../shared/waitlist'

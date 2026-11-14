@@ -3,7 +3,7 @@
 - **Severity:** Low. **Effort:** Medium. **Confidence:** High. **Harder later:** No.
 - **Kind:** Fix after merge.
 - **Added:** 2026-11-11, from decision 12 of the own endpoint plan on branch `calummoore/cli-proxy-setup`. Cal chose B now and C later: "B - C later (can we add as advanced menu)".
-- **Location:** the own endpoint fields of `AgentConnectForm` in `src/shell/account/`, the `agent_logins` table, the turn credential in `src/shared/runner.ts`, `runner/src/providers/claude.ts`, and "How the agents reach the gateway" in `docs/protocol/model-gateway.md`.
+- **Location:** the own endpoint fields of `AgentConnectForm` in `src/shell/account/`, the `agent_logins` table, the turn credential in `src/shared/runner.ts`, `runner/sdk-helper/src/providers/claude.ts`, and "How the agents reach the gateway" in `docs/protocol/model-gateway.md`.
 - **Reason:** Cal chose to ship the 1-hour cache for every Claude own endpoint first, and to add the choice later.
 
 - **Terms:**

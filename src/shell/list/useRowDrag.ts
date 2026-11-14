@@ -1,6 +1,7 @@
+import type { Workspace } from '../../shared/generated/Workspace'
 import { useState } from 'react'
 import { usePointerDrag, type PointerDrag } from '../../app/pointer-drag'
-import type { Workspace } from '../../shared/workspaces'
+
 import { DropLayout, type DropTarget } from './drop-target'
 
 /**

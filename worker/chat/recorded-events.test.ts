@@ -1,5 +1,6 @@
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest'
-import type { AgentChatEvent, ChatEvent } from '../../src/shared/chat-events'
+import type { AgentChatEvent } from '../../src/shared/generated/AgentChatEvent'
+import type { ChatEvent } from '../../src/shared/chat-events'
 import { sessionPaths } from '../../src/shared/sessions'
 import { recordedChatEvents } from '../../src/test-support/recorded-chat'
 import { createHarness, type TestHarness } from '../test-support/harness'

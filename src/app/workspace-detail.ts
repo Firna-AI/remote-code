@@ -1,4 +1,5 @@
-import type { Workspace, WorkspaceResponse } from '../shared/workspaces'
+import type { Workspace } from '../shared/generated/Workspace'
+import type { WorkspaceResponse } from '../shared/workspaces'
 import type { ShellEvent } from './api/read-events'
 import type { Change } from './resource'
 

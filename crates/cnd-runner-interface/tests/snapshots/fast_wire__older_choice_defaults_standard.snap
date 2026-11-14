@@ -1,0 +1,10 @@
+---
+source: crates/cnd-runner-interface/tests/fast_wire.rs
+expression: older
+---
+{
+  "agent": "claude",
+  "model": "test-model",
+  "effort": "high",
+  "fast": false
+}

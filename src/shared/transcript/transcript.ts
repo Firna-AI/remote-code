@@ -1,13 +1,11 @@
+import type { AgentChoice } from '../generated/AgentChoice'
+import type { AgentChatEvent } from '../generated/AgentChatEvent'
+import type { ToolCall } from '../generated/ToolCall'
+import type { ChangedFile } from '../generated/ChangedFile'
+import type { MessageSender } from '../generated/MessageSender'
+import type { UserMessage } from '../generated/UserMessage'
 import type { StopSessionReference } from '../session-stop'
-import type { AgentChoice } from '../agents'
-import type {
-  AgentChatEvent,
-  ChatEvent,
-  RunnerEventRefused,
-  ToolCall,
-} from '../chat-events'
-import type { ChangedFile } from '../files'
-import type { MessageSender, UserMessage } from '../messages'
+import type { ChatEvent, RunnerEventRefused } from '../chat-events'
 import { continuedKey, userKey } from './item-keys'
 import { hasEnded, noteTurn, takeMessage, type KnownTurn } from './known-turns'
 import { foldLate } from './late-events'

@@ -7,7 +7,8 @@ pages that it links state the requirements.
 
 ## The calls
 
-Both tools give each call. Each CLI command starts with `conductive`.
+The Rust CLI and stdio MCP server give each call. Each CLI command starts
+with `conductive`.
 `conductive --help` gives the same commands and options.
 
 | MCP tool | CLI command and options | Kind |

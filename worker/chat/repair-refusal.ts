@@ -1,5 +1,5 @@
-import type { RunnerReportKind } from '../../src/shared/runner'
-import type { RunnerFileEvent } from '../../src/shared/files'
+import type { RunnerReportKind } from '../../src/shared/generated/RunnerReportKind'
+import type { RunnerFileEvent } from '../../src/shared/generated/RunnerFileEvent'
 import { storedReportGenerations } from '../files/report-generation'
 import type { RunnerEventIdentity } from './runner-event-identity'
 import type { IncomingRunnerEnvelope } from './runner-input'

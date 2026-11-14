@@ -1,4 +1,4 @@
-import type { TurnSpeed } from '../../shared/chat-events'
+import type { TurnSpeed } from '../../shared/generated/TurnSpeed'
 import type { WorkspaceEventEnvelope } from '../../shared/events'
 import { withUnreadFiles } from './dev-loss'
 import type { DevOptions } from './dev-options'

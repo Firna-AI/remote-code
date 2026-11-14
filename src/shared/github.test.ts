@@ -1,3 +1,4 @@
+import type { GitHubSummary } from './generated/GitHubSummary'
 import { expect, it } from 'vitest'
 
 import {
@@ -7,7 +8,6 @@ import {
   type BannerState,
   type GitHubBanner,
   type GitHubCheck,
-  type GitHubSummary,
 } from './github'
 
 function banner(state: BannerState): GitHubBanner {

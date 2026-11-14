@@ -1,6 +1,6 @@
 import { renderToStaticMarkup } from 'react-dom/server'
 import { describe, expect, it } from 'vitest'
-import type { Attachment } from '../../shared/messages'
+import type { Attachment } from '../../shared/generated/Attachment'
 import { OversizeNotice, SentFiles } from './AttachmentChips'
 import { textOf } from './render-kit'
 

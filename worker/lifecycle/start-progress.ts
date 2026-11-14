@@ -9,7 +9,7 @@ import { stepLabel } from './start-step-label'
 import { creationFetchLabel } from './creation-fetch-label'
 import type { StartJobStorage, WorkspaceStartJob } from './start-types'
 import { WorkspaceStartError } from './workspace-start'
-import type { WorkspaceRow } from './workspace-data'
+import type { WorkspaceRow } from './workspace-row'
 import type { WorkspaceLifecycleEndpoint } from './workspace-runtime'
 import { JobTimeLimit } from './job-time-limit'
 import { startTimeLimitReached } from './start-provider-retry'
@@ -48,6 +48,7 @@ export async function advanceStartSteps(
       job,
       label,
       call,
+      dependencies.fetch,
     ))
   )
     return false

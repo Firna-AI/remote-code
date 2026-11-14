@@ -1,7 +1,8 @@
+import type { Workspace } from '../../shared/generated/Workspace'
 import { act } from 'react'
 import { routes } from '../../app/router'
 import { requestLines } from '../../app/test-kit'
-import { workspacePath, type Workspace } from '../../shared/workspaces'
+import { workspacePath } from '../../shared/workspaces'
 import {
   accessibleName,
   byRole,

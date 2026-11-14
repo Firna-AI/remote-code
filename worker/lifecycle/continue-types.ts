@@ -1,9 +1,9 @@
+import type { Workspace } from '../../src/shared/generated/Workspace'
+import type { MessageSender } from '../../src/shared/generated/MessageSender'
 import type {
   ContinueWorkspaceRequest,
   ContinueWorkspaceResponse,
-  Workspace,
 } from '../../src/shared/workspaces'
-import type { MessageSender } from '../../src/shared/messages'
 import type { WorkspaceChat } from '../chat/backend'
 import type { ChatData } from '../chat/types'
 import type { AppDependencies, AppEnv } from '../env'

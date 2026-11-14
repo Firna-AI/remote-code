@@ -52,7 +52,8 @@ import { routePreview, routeWorkspaceFeatures } from './features/router'
 import { productionAgentTools } from './tools/composition'
 import { isAgentToolPath } from './tools/lists'
 import { productionGitHubWebhook } from './github/composition'
-import { appFrameSources, runnerSoftware } from './configuration'
+import { appFrameSources } from './configuration'
+import { latestSoftwareRelease } from './lifecycle/software-release'
 import { appSiteResponse } from './marketing/assets'
 import { retryApprovalEmails } from './operator/approval-email'
 import { freshCodexLogin } from './codex-auth/renew'
@@ -276,7 +277,7 @@ export function createApp(overrides: Partial<AppDependencies> = {}) {
       await repairLifecycleAlarms(
         workspaceRuntime(env, dependencies),
         imageRuntime(env, dependencies),
-        () => runnerSoftware(env),
+        () => latestSoftwareRelease(env, dependencies.fetch),
       )
       try {
         await repairSoftwareImages({ env, dependencies })
@@ -294,7 +295,6 @@ export function createApp(overrides: Partial<AppDependencies> = {}) {
 }
 
 function healthResponse(): Response {
-  return privateResponse(
-    Response.json({ status: 'ok' } satisfies HealthResponse),
-  )
+  const body: HealthResponse = { status: 'ok' }
+  return privateResponse(Response.json(body))
 }

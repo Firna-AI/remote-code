@@ -1,4 +1,4 @@
-import type { AgentChoice } from '../../src/shared/agents'
+import type { AgentChoice } from '../../src/shared/generated/AgentChoice'
 import type { Routine } from '../../src/shared/routines'
 import { routineNotFound } from './errors'
 import { readRoutineTriggers } from './stored-triggers'

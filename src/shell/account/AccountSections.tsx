@@ -1,7 +1,7 @@
 import { LogOut } from 'lucide-react'
+import type { Agent } from '../../shared/generated/Agent'
 import styles from '../../../docs/mockups/src/components/settings/AccountSections.module.css'
 import { Section } from '../../../docs/mockups/src/components/settings/Section'
-import type { Agent } from '../../shared/agents'
 import type { User } from '../../shared/api'
 import { useApp } from '../context'
 import { ActionButton } from '../ui/actions'

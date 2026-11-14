@@ -1,8 +1,8 @@
+import type { UserMessage } from '../../src/shared/generated/UserMessage'
 import type { User } from '../../src/shared/api'
 import type {
   SendMessageRequest,
   SendMessageResponse,
-  UserMessage,
 } from '../../src/shared/messages'
 import { applyMessageSessionTitle } from './session-titles'
 import { HttpError } from '../http'

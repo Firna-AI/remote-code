@@ -1,6 +1,6 @@
 import type { GitHubRepository } from '../../src/shared/account'
 import type { Repository } from '../../src/shared/org-settings'
-import { runnerSoftware } from '../configuration'
+import { latestSoftwareRelease } from '../lifecycle/software-release'
 import type { AppDependencies, AppEnv } from '../env'
 import { HttpError } from '../http'
 import { startImageBuild } from '../lifecycle/image-builds'
@@ -98,7 +98,12 @@ export async function changeShellRepository(
           { ...env, WORKSPACES: workspaceBinding(env) },
           dependencies,
         ),
-        { orgId, userId, kind: 'build', software: runnerSoftware(env) },
+        {
+          orgId,
+          userId,
+          kind: 'build',
+          software: await latestSoftwareRelease(env, dependencies.fetch),
+        },
       )
     } catch {
       warnWorker({ kind: 'repository_image_build_start_failed' })

@@ -1,4 +1,5 @@
-import { workspacePaths, type WorkspaceState } from '../shared/workspaces'
+import type { WorkspaceState } from '../shared/generated/WorkspaceState'
+import { workspacePaths } from '../shared/workspaces'
 import { ignore } from './api/parse'
 import type { OrgModel } from './org-model'
 

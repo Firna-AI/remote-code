@@ -1,4 +1,4 @@
-import type { Agent } from '../../src/shared/agents'
+import type { Agent } from '../../src/shared/generated/Agent'
 import { agentLoginKind } from '../chat/login-kind'
 import { decryptAgentLogin, senderLoginAccess } from '../chat/queries'
 import type { AppEnv } from '../env'

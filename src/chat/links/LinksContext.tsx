@@ -1,8 +1,9 @@
+import type { Workspace } from '../../shared/generated/Workspace'
 import { createContext, useContext, type ReactNode } from 'react'
 import type { ChipWorkspace } from '../../../docs/mockups/src/components/chat/WorkspaceChip'
 import { workspaceLabel } from '../../../docs/mockups/src/components/workspaces/label'
 import { nameLabel } from '../../shared/name-label'
-import type { Workspace } from '../../shared/workspaces'
+
 import type { SessionLinks } from './session-links'
 import type { WorkspaceLinks } from './workspace-links'
 

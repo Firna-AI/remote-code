@@ -1,5 +1,6 @@
+import type { Workspace } from '../shared/generated/Workspace'
 import type { Section } from '../shared/sections'
-import type { Workspace } from '../shared/workspaces'
+
 import type { Change } from './resource'
 import { moveWorkspace, reorderSections, withoutSection } from './sections'
 

@@ -1,6 +1,7 @@
-import type { AgentListWorkspacesRequest } from '../../src/shared/agent-workspaces'
-import { workspaceState } from '../../tools/responses'
+import type { AgentListWorkspacesRequest } from '../../src/shared/generated/AgentListWorkspacesRequest'
+
 import { HttpError } from '../http'
+import { workspaceState } from './workspace-replies'
 
 function invalid(): never {
   throw new HttpError(

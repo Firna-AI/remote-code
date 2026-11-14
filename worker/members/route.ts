@@ -1,3 +1,4 @@
+import type { Workspace } from '../../src/shared/generated/Workspace'
 import { API_PATHS, orgPath } from '../../src/shared/api'
 import {
   invitePath,
@@ -12,7 +13,7 @@ import {
   readMoveOrgRequest,
   restoreOrgPath,
 } from '../../src/shared/orgs'
-import type { Workspace } from '../../src/shared/workspaces'
+
 import type { AppDependencies, AppEnv } from '../env'
 import { HttpError, requiredString } from '../http'
 import { createInvitationMailer, invitationLink } from '../invitation-mailer'

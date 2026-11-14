@@ -3,7 +3,7 @@
 - **Severity:** Medium. **Likelihood:** Rare. **Effort:** Medium. **Confidence:** Medium. **Harder later:** No.
 - **Kind:** Fix after merge.
 - **Added:** 2026-11-11, the wider fix of finding 15 of review round 1 on branch `calummoore/cli-proxy-setup`, which fixed the reported case.
-- **Location:** `worker/chat/turn-events.ts` (the text of an own endpoint model failure), `worker/chat/delivery-state.ts` (`turn.endpointModel`), `runner/src/providers/failure.ts` (`failureCause`), the failure event in `src/shared/runner.ts`, and `docs/protocol/own-endpoint-logins.md`.
+- **Location:** `worker/chat/turn-events.ts` (the text of an own endpoint model failure), `worker/chat/delivery-state.ts` (`turn.endpointModel`), `runner/sdk-helper/src/providers/failure.ts` (`failureCause`), the failure event in `src/shared/runner.ts`, and `docs/protocol/own-endpoint-logins.md`.
 - **Reason:** The direct fix reads the model of the failed message. A runner that reports the model of the refused request needs a change of the runner event contract, and each runner on an older image must keep working.
 
 - **Terms:**

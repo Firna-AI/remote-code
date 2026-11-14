@@ -1,4 +1,4 @@
-import type { RunnerEventEnvelope } from '../../src/shared/runner'
+import type { RunnerEventEnvelope } from '../../src/shared/generated/RunnerEventEnvelope'
 import type { WorkspaceEventEnvelope } from './workspace-events'
 import { HttpError } from '../http'
 import { InvalidRunnerReport, RunnerFileReports } from '../files/runner-reports'
@@ -12,7 +12,6 @@ import type { ChatTransaction } from './store'
 import { prepareAgentEvent } from './turn-events'
 import { observeRepairPart } from './repair-refusal'
 import { storeWorkspaceTitle } from './workspace-title'
-
 import type { ChatDependencies, RunnerWorkspaceRecord } from './types'
 /** Only validation errors become permanent refusals. Storage and sends must retry. */
 export async function storeRunnerReceipt(

@@ -1,3 +1,4 @@
+import type { Workspace } from '../../shared/generated/Workspace'
 import { Fragment, useState, type KeyboardEvent } from 'react'
 import { createPortal } from 'react-dom'
 import { classes } from '../../../docs/mockups/src/components/common/classes'
@@ -5,7 +6,7 @@ import styles from '../../../docs/mockups/src/components/workspaces/SectionList.
 import type { ArchiveAction } from '../../app/archive-model'
 import { stepTarget, type SectionGroup } from '../../app/sections'
 import { workspaceRowMove } from '../../app/shortcuts/navigation'
-import type { Workspace } from '../../shared/workspaces'
+
 import { nameLabel } from '../../shared/name-label'
 import ui from '../ui/ui.module.css'
 import { ArchivedGroup, useArchivedOpen } from './ArchivedGroup'

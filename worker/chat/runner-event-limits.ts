@@ -1,3 +1,4 @@
+import type { RunnerEvent } from '../../src/shared/generated/RunnerEvent'
 import {
   TOOL_DETAIL_MAX_BYTES,
   TURN_COMPLETED_FILES_MAX_BYTES,
@@ -7,10 +8,7 @@ import {
   FILE_EVENT_MAX_BYTES,
   FILE_TREE_DELTA_MAX_CHANGES,
 } from '../../src/shared/files'
-import {
-  RUNNER_EVENT_MAX_BYTES,
-  type RunnerEvent,
-} from '../../src/shared/runner'
+import { RUNNER_EVENT_MAX_BYTES } from '../../src/shared/runner'
 import { jsonBytes } from '../../src/shared/event-limits'
 import { HttpError, isRecord } from '../http'
 import { invalidInput } from './inputs'

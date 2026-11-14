@@ -1,9 +1,7 @@
+import type { StartStep } from '../../shared/generated/StartStep'
+import type { WorkspaceStart } from '../../shared/generated/WorkspaceStart'
 import type { Repository } from '../../shared/org-settings'
-import type {
-  StartStep,
-  WorkspaceResponse,
-  WorkspaceStart,
-} from '../../shared/workspaces'
+import type { WorkspaceResponse } from '../../shared/workspaces'
 import { changeWorkspace, requireWorkspace, type DevBackend } from './backend'
 import type { OrgState } from './state'
 

@@ -1,7 +1,7 @@
+import type { Attachment } from '../../shared/generated/Attachment'
 import {
   ATTACHMENT_MAX_BYTES,
   attachmentUploadPath,
-  type Attachment,
   type UploadAttachmentResponse,
 } from '../../shared/messages'
 import { attachmentPath } from '../../shared/attachment-paths'

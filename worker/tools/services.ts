@@ -1,37 +1,30 @@
-import type { AgentWorkspaceSummary } from '../../src/shared/agent-tools'
-import type {
-  AgentListSessionsResponse,
-  AgentReadSessionRequest,
-  AgentReadSessionResponse,
-  AgentCreateSessionRequest,
-  AgentSendMessageRequest,
-  AgentSessionWriteResponse,
-  AgentSessionResponse,
-  AgentStopSessionResponse,
-  AgentGetMessageResponse,
-  AgentListSessionsRequest,
-  AgentRenameSessionRequest,
-  AgentCloseSessionRequest,
-} from '../../src/shared/agent-sessions'
-import type {
-  AgentCreateWorkspaceResponse,
-  AgentRenameWorkspaceRequest,
-  AgentMoveWorkspaceRequest,
-} from '../../src/shared/agent-workspaces'
-import type { AgentChoice, AgentModel } from '../../src/shared/agents'
-import type { MessageSender } from '../../src/shared/messages'
-import type { User } from '../../src/shared/api'
+import type { AgentWorkspaceSummary } from '../../src/shared/generated/AgentWorkspaceSummary'
+import type { AgentListSessionsResponse } from '../../src/shared/generated/AgentListSessionsResponse'
+import type { AgentReadSessionRequest } from '../../src/shared/generated/AgentReadSessionRequest'
+import type { AgentReadSessionResponse } from '../../src/shared/generated/AgentReadSessionResponse'
+import type { AgentCreateSessionRequest } from '../../src/shared/generated/AgentCreateSessionRequest'
+import type { AgentSendMessageRequest } from '../../src/shared/generated/AgentSendMessageRequest'
+import type { AgentSessionWriteResponse } from '../../src/shared/generated/AgentSessionWriteResponse'
+import type { AgentSessionResponse } from '../../src/shared/generated/AgentSessionResponse'
+import type { AgentStopSessionResponse } from '../../src/shared/generated/AgentStopSessionResponse'
+import type { AgentGetMessageResponse } from '../../src/shared/generated/AgentGetMessageResponse'
+import type { AgentListSessionsRequest } from '../../src/shared/generated/AgentListSessionsRequest'
+import type { AgentRenameSessionRequest } from '../../src/shared/generated/AgentRenameSessionRequest'
+import type { AgentCloseSessionRequest } from '../../src/shared/generated/AgentCloseSessionRequest'
+import type { AgentCreateWorkspaceResponse } from '../../src/shared/generated/AgentCreateWorkspaceResponse'
+import type { AgentRenameWorkspaceRequest } from '../../src/shared/generated/AgentRenameWorkspaceRequest'
+import type { AgentMoveWorkspaceRequest } from '../../src/shared/generated/AgentMoveWorkspaceRequest'
+import type { AgentModel } from '../../src/shared/generated/AgentModel'
+import type { AgentCreateSectionRequest } from '../../src/shared/generated/AgentCreateSectionRequest'
+import type { AgentCreateSectionResponse } from '../../src/shared/generated/AgentCreateSectionResponse'
+import type { AgentDeleteSectionResponse } from '../../src/shared/generated/AgentDeleteSectionResponse'
+import type { AgentListPreviewsResponse } from '../../src/shared/generated/AgentListPreviewsResponse'
+import type { AgentOpenPreviewResponse } from '../../src/shared/generated/AgentOpenPreviewResponse'
+import type { AgentClosePreviewResponse } from '../../src/shared/generated/AgentClosePreviewResponse'
+import type { AgentChoice } from '../../src/shared/generated/AgentChoice'
+import type { MessageSender } from '../../src/shared/generated/MessageSender'
 
-import type {
-  AgentCreateSectionRequest,
-  AgentCreateSectionResponse,
-  AgentDeleteSectionResponse,
-} from '../../src/shared/agent-sections'
-import type {
-  AgentListPreviewsResponse,
-  AgentOpenPreviewResponse,
-  AgentClosePreviewResponse,
-} from '../../src/shared/agent-previews'
+import type { User } from '../../src/shared/api'
 
 export type ToolSectionWrite = { orgId: string; senderUserId: string } & (
   | ({ kind: 'create' } & AgentCreateSectionRequest)

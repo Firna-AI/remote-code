@@ -1,3 +1,4 @@
+import type { Workspace } from '../../shared/generated/Workspace'
 import { useEffect } from 'react'
 import { inFirstRun } from '../../app/get-started'
 import type { ListData } from '../../app/list-changes'
@@ -18,7 +19,7 @@ import {
   type Readable,
 } from '../../app/store'
 import type { Section } from '../../shared/sections'
-import type { Workspace } from '../../shared/workspaces'
+
 import { useApp } from '../context'
 import { useMacApp } from '../mac/mac-app'
 import { useOrgEntry } from '../orgs/useOrgEntry'

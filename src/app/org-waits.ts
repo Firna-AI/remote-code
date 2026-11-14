@@ -1,6 +1,8 @@
+import type { Workspace } from '../shared/generated/Workspace'
+import type { WorkspaceState } from '../shared/generated/WorkspaceState'
 import type { BuildsResponse } from '../shared/org-settings'
 import type { RoutineRun } from '../shared/routines'
-import type { Workspace, WorkspaceState } from '../shared/workspaces'
+
 import type { ListedRoutine } from './api/read-routines'
 import type { ListData } from './list-changes'
 import type { RefreshWait } from './refresh'

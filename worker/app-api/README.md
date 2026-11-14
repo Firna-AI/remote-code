@@ -167,8 +167,8 @@ View writes cannot change this branch.
 - A workspace path decodes its workspace ID once.
 - An archived workspace keeps its view readable. A view write, a read mark,
   and a lifecycle action other than Restore get `409 workspace_archived`.
-- `chatLifecycleRoute` gives the lifecycle handler the runner archive as a
-  getter, so only a build or a refresh reads it. It gives the first message
+- The lifecycle handler reads validated release metadata only for a build or
+  refresh. `chatLifecycleRoute` gives the first message
   of a create to `acceptLifecycleFirstMessage` of the workspace object.
 
 Org suspension keeps shell reads available.

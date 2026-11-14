@@ -1,3 +1,4 @@
+import type { MessageSender } from '../../shared/generated/MessageSender'
 import { routineRows } from '../../../docs/mockups/src/fixtures/routineRows'
 import type { RunState } from '../../../docs/mockups/src/fixtures/routineRuns'
 import {
@@ -5,7 +6,6 @@ import {
   routines as mockupRoutines,
   type Routine as MockupRoutine,
 } from '../../../docs/mockups/src/fixtures/routines'
-import type { MessageSender } from '../../shared/messages'
 import type {
   Routine,
   RoutineInactiveReason,

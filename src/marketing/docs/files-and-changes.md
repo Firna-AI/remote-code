@@ -15,9 +15,11 @@ Opening a file or a change starts the computer again.
 On a computer, the file lists sit beside the chat.
 On a phone, open the workspace's **Files** view.
 
-- **All files** shows the repository as a tree. After a new computer build, it also lists the files in `.context/`.
+- **All files** shows the repository as a tree. With current cloud computer software, it also lists the files in `.context/`.
 - **Changes** lists changes against the workspace's base branch.
 - **Checks** shows the pull request's GitHub checks.
+
+An automatic software update brings `.context/` support to an older workspace at a later start.
 
 An archived workspace keeps read-only chat, with no file lists or tools.
 Its computer and files can stay available for Restore for 14 days after Archive.

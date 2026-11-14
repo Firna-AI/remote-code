@@ -15,4 +15,4 @@ export CONDUCTIVE_WORKSPACE_TOKEN="$WORKSPACE_TOKEN"
 export CONDUCTIVE_REPOSITORY="$CONDUCTIVE_REPOSITORY_DIR"
 export CONDUCTIVE_RUNNER_URL="${CONDUCTIVE_MACHINE_ORIGIN%/}@RUNNER_PATH@"
 cd "$CONDUCTIVE_REPOSITORY"
-exec @CONDUCTIVE_NODE@ /opt/conductive/software/runner/main.mjs
+exec /opt/conductive/current/conductive runner

@@ -1,5 +1,5 @@
+import type { WorkspaceToRunner } from '../../src/shared/generated/WorkspaceToRunner'
 import type { WorkspaceSocketMessage } from '../../src/shared/events'
-import type { WorkspaceToRunner } from '../../src/shared/runner'
 import { HttpError } from '../http'
 import type { WorkspaceChat } from './backend'
 import type { BrowserAccess } from './browser-authorization'

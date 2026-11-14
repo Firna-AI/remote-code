@@ -35,6 +35,7 @@ it.each([
         name: savedImageName(buildId),
       })
       let intentAtSave: string | null = null
+      const fetch = images.dependencies.fetch
       images.dependencies = {
         ...images.dependencies,
         fetch: async (request) => {
@@ -56,7 +57,7 @@ it.each([
             await boat.fetch(request)
             throw new Error('Lost successful snapshot reply')
           }
-          return boat.fetch(request)
+          return fetch(request)
         },
       }
 
@@ -133,6 +134,7 @@ it('replays an undispatched snapshot intent and waits for a racing save before p
     const replayedBodies: unknown[] = []
     const recordedNames: (string | null)[] = []
     let lookups = 0
+    const fetch = images.dependencies.fetch
     images.dependencies = {
       ...images.dependencies,
       fetch: async (request) => {
@@ -162,7 +164,7 @@ it('replays an undispatched snapshot intent and waits for a racing save before p
             { status: 409 },
           )
         }
-        return boat.fetch(request)
+        return fetch(request)
       },
     }
 

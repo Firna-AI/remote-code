@@ -87,11 +87,11 @@ number names a dated record, as
   the folder with its notes and attached files. Reason: Conductor has the
   same limit, and the app still stores each attached file outside the
   cloud computer.
-- Each build of the org image installs the newest runner, as
-  [The agent runner](agent-runner.md#the-agent-runner) says. A cloud
-  computer with an older runner gets no rule and no folder at its start.
-  Its agents are not told about the folder. Its All files lists no file
-  of the folder that Git ignores.
+- A cloud computer with an older runner gets no rule and no folder at its
+  start. Its agents are not told about the folder. Its All files lists no
+  file of the folder that Git ignores. An update gives it a newer runner at
+  a later start, as [The agent runner](agent-runner.md#the-agent-runner)
+  says.
 - These ways were rejected:
   - A `.context/` line in the `.gitignore` of each repository. It adds a
     tracked change on every branch.

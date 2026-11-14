@@ -1,6 +1,5 @@
 import { afterAll, beforeAll, expect, it } from 'vitest'
-
-import type { FileEntry } from '../../src/shared/files'
+import type { FileEntry } from '../../src/shared/generated/FileEntry'
 import { FilesState } from './state'
 import {
   createFilesStorage,

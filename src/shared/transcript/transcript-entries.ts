@@ -1,4 +1,4 @@
-import type { ToolCall } from '../chat-events'
+import type { ToolCall } from '../generated/ToolCall'
 import { toolRunOpen } from './tool-words'
 import type { Transcript, TranscriptItem } from './transcript'
 import { foldedWork, type WorkItem } from './turn-work'

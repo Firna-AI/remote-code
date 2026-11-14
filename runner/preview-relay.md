@@ -14,21 +14,24 @@ The Worker removes the mark before it sends the answer to the browser.
 The [preview requirements](../docs/protocol/terminal-previews-and-desktop.md#port-previews)
 state its access rules.
 
-[`src/relay/main.ts`](src/relay/main.ts) starts the relay.
-With one systemd descriptor for its own process ID, the relay listens on descriptor 3.
+`conductive relay` starts the Rust relay from
+[cnd-relay](../crates/cnd-relay/README.md).
+With one systemd descriptor for its own process ID, it listens on descriptor 3.
 Without those activation variables, it listens on `127.0.0.1:7682`.
-[`startPreviewRelay`](src/relay/server.ts) takes a listen port and target
-addresses for tests.
-The build writes its bundle to `dist/runner/relay.mjs`.
-The archive stores that bundle as `runner/relay.mjs`.
-It uses only built-in Node modules.
+The relay uses Hyper and Tokio and ships inside the static `conductive` program.
+It tries IPv4 loopback, IPv6 loopback, then the sandbox's other local addresses.
+It connects before it reads the upload body, so a refused address loses no body.
+
+Run `cargo test -p cnd-relay` for the real local HTTP and WebSocket tests.
+Run `cargo test -p cnd-cli --test relay_activation_tests` for the shipped
+command with `systemd-socket-activate`. That test needs no running systemd manager.
 
 The [image installer](../image/install.md) installs a separate relay service.
 It also installs and enables `conductive-preview-relay.socket`.
 The socket holds port 7682 while the relay service restarts.
 Both units stay enabled, so the service starts without waiting for a preview request.
 A runner restart does not restart the relay.
-A workspace gets the relay only from a new image build.
-A refresh installs no software.
-An existing workspace keeps the software of its image, also after a resume.
-Start a new workspace from the new image to get the relay.
+The release system part installs its start script and units.
+The script executes `/opt/conductive/current/conductive relay`.
+A workspace downloads newer software in the background and applies it at a
+later start, as [Release updates](../image/README.md#release-updates) describes.

@@ -1,9 +1,9 @@
+import type { Workspace } from '../shared/generated/Workspace'
 import type { WorkspaceEvent } from '../shared/events'
 import {
   WORKSPACE_RESTORE_MS,
   workspacePath,
   workspacePaths,
-  type Workspace,
 } from '../shared/workspaces'
 import { FakeApiServer } from '../test-support/fake-api'
 import { FAKE_IDS, FAKE_TIME } from '../test-support/fixtures/core'

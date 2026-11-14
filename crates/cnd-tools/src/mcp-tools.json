@@ -1,0 +1,726 @@
+[
+  {
+    "name": "run_mac_command",
+    "description": "Ask to run a command on the active turn sender's connected Mac. Approval stays on that Mac.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "command": {
+          "type": "string",
+          "minLength": 1
+        },
+        "folder": {
+          "type": "string",
+          "minLength": 1
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1
+        },
+        "timeoutSeconds": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1800,
+          "default": 60
+        },
+        "longerTimeoutReason": {
+          "type": "string"
+        },
+        "requestId": {
+          "type": "string"
+        }
+      },
+      "required": ["command", "folder", "reason"]
+    },
+    "annotations": {
+      "readOnlyHint": false,
+      "destructiveHint": true,
+      "idempotentHint": false
+    }
+  },
+  {
+    "name": "create_workspace",
+    "description": "Create a workspace with this workspace's owner and start its first message. Needs an active calling turn. Acts for the member whose message started that turn. Omitted model and effort use the owner's defaults. Fast mode requires explicit fast: true for a marked model. The reply gives the workspace number and link, and the first session link. These calls reach workspaces in this org. An omitted workspaceId names the calling workspace. Use names and returned links in normal answers. Workspace and session links show as chips. A session link holds both IDs. A Sent by: line names the sending session. Do not reply only to confirm it.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "repositoryId": {
+          "type": "string",
+          "minLength": 1,
+          "description": "A repository ID from list_repositories."
+        },
+        "firstMessage": {
+          "type": "string",
+          "minLength": 1
+        },
+        "name": {
+          "type": "string",
+          "description": "Optional workspace name. Use plain words separated by spaces. Avoid underscores unless the user tells you to add them. The app keeps the first line, without a final full stop, cut to 60 characters at a word."
+        },
+        "firstSessionTitle": {
+          "type": "string",
+          "description": "Optional first session title. Use plain words separated by spaces. Avoid underscores unless the user tells you to add them."
+        },
+        "model": {
+          "type": "object",
+          "properties": {
+            "agent": {
+              "type": "string",
+              "enum": ["claude", "codex"],
+              "description": "An agent from list_models."
+            },
+            "model": {
+              "type": "string",
+              "minLength": 1,
+              "description": "A model from list_models."
+            }
+          },
+          "required": ["agent", "model"]
+        },
+        "effort": {
+          "type": "string",
+          "enum": ["none", "low", "medium", "high", "xhigh", "max", "ultra"],
+          "description": "An effort from list_models."
+        },
+        "sectionId": {
+          "type": "string",
+          "minLength": 1,
+          "description": "A section ID from list_sections. Omission uses the default section."
+        },
+        "requestId": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Keep this ID to retry without another workspace, session, or message. Omission generates an ID."
+        },
+        "fast": {
+          "type": "boolean",
+          "description": "Use fast mode for a marked model. Creates default to false. Omission on send keeps the session speed."
+        }
+      },
+      "required": ["repositoryId", "firstMessage"]
+    },
+    "annotations": {
+      "readOnlyHint": false,
+      "destructiveHint": false,
+      "idempotentHint": false
+    }
+  },
+  {
+    "name": "list_workspaces",
+    "description": "List workspaces with their number, link, name, branch, state, and owner ID, login, and display name. Needs only the workspace token. Without filters or paging, returns every workspace, including archives. Use the actual message sender's member ID for their workspaces. Find another owner's ID in returned owner fields. Do not infer the owner from the token or active turn. These calls reach workspaces in this org. An omitted workspaceId names the calling workspace. Use names and returned links in normal answers. Workspace and session links show as chips. A session link holds both IDs. A Sent by: line names the sending session. Do not reply only to confirm it.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "ownerId": {
+          "type": "string",
+          "minLength": 1,
+          "description": "A stable member ID from the actual message Sender line or workspace owner fields. A login is not an ID."
+        },
+        "state": {
+          "type": "string",
+          "enum": [
+            "working",
+            "input",
+            "unread",
+            "ready",
+            "starting",
+            "stopped",
+            "error",
+            "archived"
+          ]
+        },
+        "repositoryId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "query": {
+          "type": "string",
+          "description": "Part of the workspace name."
+        },
+        "updatedSince": {
+          "type": "integer",
+          "description": "Signed safe-integer epoch timestamp in milliseconds. Select newer activity."
+        },
+        "archived": {
+          "type": "boolean",
+          "description": "Select archived workspaces with true, or other workspaces with false."
+        },
+        "limit": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100,
+          "description": "Maximum entries. A limited reply gives hasMore. Omission returns every entry."
+        },
+        "offset": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Entries to skip before the next page."
+        }
+      }
+    },
+    "annotations": {
+      "readOnlyHint": true,
+      "destructiveHint": false,
+      "idempotentHint": true
+    }
+  },
+  {
+    "name": "get_workspace",
+    "description": "Get workspace details, including owner, repository, base branch, section, activity, and restore times. Needs only the workspace token. These calls reach workspaces in this org. An omitted workspaceId names the calling workspace. Use names and returned links in normal answers. Workspace and session links show as chips. A session link holds both IDs. A Sent by: line names the sending session. Do not reply only to confirm it.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "workspaceId": {
+          "type": "string",
+          "minLength": 1,
+          "description": "A workspace ID from list_workspaces or a returned link. Defaults to the calling workspace."
+        }
+      }
+    },
+    "annotations": {
+      "readOnlyHint": true,
+      "destructiveHint": false,
+      "idempotentHint": true
+    }
+  },
+  {
+    "name": "rename_workspace",
+    "description": "Rename a workspace. Needs an active calling turn. Acts for the member whose message started that turn. These calls reach workspaces in this org. An omitted workspaceId names the calling workspace. Use names and returned links in normal answers. Workspace and session links show as chips. A session link holds both IDs. A Sent by: line names the sending session. Do not reply only to confirm it.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "workspaceId": {
+          "type": "string",
+          "minLength": 1,
+          "description": "A workspace ID from list_workspaces or a returned link. Defaults to the calling workspace."
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Use plain words separated by spaces. Avoid underscores unless the user tells you to add them."
+        }
+      },
+      "required": ["name"]
+    },
+    "annotations": {
+      "readOnlyHint": false,
+      "destructiveHint": false,
+      "idempotentHint": false
+    }
+  },
+  {
+    "name": "move_workspace",
+    "description": "Move a workspace to the top of an org section. Needs an active calling turn. Acts for the member whose message started that turn. These calls reach workspaces in this org. An omitted workspaceId names the calling workspace. Use names and returned links in normal answers. Workspace and session links show as chips. A session link holds both IDs. A Sent by: line names the sending session. Do not reply only to confirm it.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "workspaceId": {
+          "type": "string",
+          "minLength": 1,
+          "description": "A workspace ID from list_workspaces or a returned link. Defaults to the calling workspace."
+        },
+        "sectionId": {
+          "type": "string",
+          "minLength": 1,
+          "description": "A section ID from list_sections."
+        }
+      },
+      "required": ["sectionId"]
+    },
+    "annotations": {
+      "readOnlyHint": false,
+      "destructiveHint": false,
+      "idempotentHint": false
+    }
+  },
+  {
+    "name": "archive_workspace",
+    "description": "Archive a workspace. Only its owner or an org admin can archive it. Archiving the calling workspace ends this turn. A member can restore it for 14 days. Needs an active calling turn. Acts for the member whose message started that turn. These calls reach workspaces in this org. An omitted workspaceId names the calling workspace. Use names and returned links in normal answers. Workspace and session links show as chips. A session link holds both IDs. A Sent by: line names the sending session. Do not reply only to confirm it.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "workspaceId": {
+          "type": "string",
+          "minLength": 1,
+          "description": "A workspace ID from list_workspaces or a returned link. Defaults to the calling workspace."
+        }
+      }
+    },
+    "annotations": {
+      "readOnlyHint": false,
+      "destructiveHint": true,
+      "idempotentHint": false
+    }
+  },
+  {
+    "name": "list_repositories",
+    "description": "Needs only the workspace token. List the repositories that create_workspace accepts, with their IDs. current marks this workspace's repository.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {}
+    },
+    "annotations": {
+      "readOnlyHint": true,
+      "destructiveHint": false,
+      "idempotentHint": true
+    }
+  },
+  {
+    "name": "list_sections",
+    "description": "Needs only the workspace token. List this org's sections in sidebar order, with their IDs. default marks the section that create_workspace uses when it names none.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {}
+    },
+    "annotations": {
+      "readOnlyHint": true,
+      "destructiveHint": false,
+      "idempotentHint": true
+    }
+  },
+  {
+    "name": "list_models",
+    "description": "Needs only the workspace token. List the models that the app offers, with their agents, efforts, and boolean fast marks, and the standard-speed default choice that create_workspace uses when it names no model.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {}
+    },
+    "annotations": {
+      "readOnlyHint": true,
+      "destructiveHint": false,
+      "idempotentHint": true
+    }
+  },
+  {
+    "name": "list_sessions",
+    "description": "List sessions of a workspace in this org, including closed sessions, their choice, starter, state, and link. Needs only the workspace token. These calls reach workspaces in this org. An omitted workspaceId names the calling workspace. Use names and returned links in normal answers. Workspace and session links show as chips. A session link holds both IDs. A Sent by: line names the sending session. Do not reply only to confirm it.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "workspaceId": {
+          "type": "string",
+          "minLength": 1,
+          "description": "A workspace ID from list_workspaces or a returned link. Defaults to the calling workspace."
+        },
+        "limit": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100,
+          "description": "Maximum entries. A limited reply gives hasMore. Omission returns every entry."
+        },
+        "offset": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Entries to skip before the next page."
+        }
+      }
+    },
+    "annotations": {
+      "readOnlyHint": true,
+      "destructiveHint": false,
+      "idempotentHint": true
+    }
+  },
+  {
+    "name": "read_session",
+    "description": "Read the Markdown transcript of an open or closed session, including an archived workspace. Needs only the workspace token. Defaults to concise and the newest text. For earlier text, set startLine and startOffset. Use next.line and next.offset for the following read. These calls reach workspaces in this org. An omitted workspaceId names the calling workspace. Use names and returned links in normal answers. Workspace and session links show as chips. A session link holds both IDs. A Sent by: line names the sending session. Do not reply only to confirm it.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "workspaceId": {
+          "type": "string",
+          "minLength": 1,
+          "description": "A workspace ID from list_workspaces or a returned link. Defaults to the calling workspace."
+        },
+        "sessionId": {
+          "type": "string",
+          "minLength": 1,
+          "description": "A session ID from list_sessions or a session link."
+        },
+        "detail": {
+          "type": "string",
+          "enum": ["concise", "full"],
+          "default": "concise"
+        },
+        "startLine": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "One-based start line. Zero selects line one."
+        },
+        "startOffset": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "UTF-16 offset within the start line. Defaults to zero when a line is given."
+        }
+      },
+      "required": ["sessionId"]
+    },
+    "annotations": {
+      "readOnlyHint": true,
+      "destructiveHint": false,
+      "idempotentHint": true
+    }
+  },
+  {
+    "name": "create_session",
+    "description": "Create a session in this org for the sender of the active calling turn. Needs an active calling turn. Acts for the member whose message started that turn. Omitted model or effort uses that sender's saved default, then the app default. Fast mode requires explicit fast: true for a marked model. Without firstMessage, creates an empty session. A first message can queue a workspace start. The reply keeps acceptance and reports resume status. These calls reach workspaces in this org. An omitted workspaceId names the calling workspace. Use names and returned links in normal answers. Workspace and session links show as chips. A session link holds both IDs. A Sent by: line names the sending session. Do not reply only to confirm it.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "workspaceId": {
+          "type": "string",
+          "minLength": 1,
+          "description": "A workspace ID from list_workspaces or a returned link. Defaults to the calling workspace."
+        },
+        "model": {
+          "type": "object",
+          "properties": {
+            "agent": {
+              "type": "string",
+              "enum": ["claude", "codex"],
+              "description": "An agent from list_models."
+            },
+            "model": {
+              "type": "string",
+              "minLength": 1,
+              "description": "A model from list_models."
+            }
+          },
+          "required": ["agent", "model"]
+        },
+        "effort": {
+          "type": "string",
+          "enum": ["none", "low", "medium", "high", "xhigh", "max", "ultra"],
+          "description": "An effort from list_models."
+        },
+        "requestId": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Keep this ID to retry without another workspace, session, or message. Omission generates an ID."
+        },
+        "title": {
+          "type": "string",
+          "description": "Optional session title. Use plain words separated by spaces. Avoid underscores unless the user tells you to add them. The app keeps the first line, cut at 60 characters at a word."
+        },
+        "firstMessage": {
+          "type": "string",
+          "minLength": 1
+        },
+        "fast": {
+          "type": "boolean",
+          "description": "Use fast mode for a marked model. Creates default to false. Omission on send keeps the session speed."
+        }
+      }
+    },
+    "annotations": {
+      "readOnlyHint": false,
+      "destructiveHint": false,
+      "idempotentHint": false
+    }
+  },
+  {
+    "name": "send_message",
+    "description": "Send text to a session in this org for the sender of the active calling turn. Needs an active calling turn. Acts for the member whose message started that turn. An omitted choice keeps the session's model, effort, and fast mode. The message joins a running turn, or opens a linked session when the sender cannot use its starter's login. The reply gives the actual receiving session, message, turn, and resume status. These calls reach workspaces in this org. An omitted workspaceId names the calling workspace. Use names and returned links in normal answers. Workspace and session links show as chips. A session link holds both IDs. A Sent by: line names the sending session. Do not reply only to confirm it.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "workspaceId": {
+          "type": "string",
+          "minLength": 1,
+          "description": "A workspace ID from list_workspaces or a returned link. Defaults to the calling workspace."
+        },
+        "sessionId": {
+          "type": "string",
+          "minLength": 1,
+          "description": "A session ID from list_sessions or a session link."
+        },
+        "text": {
+          "type": "string",
+          "minLength": 1
+        },
+        "model": {
+          "type": "object",
+          "properties": {
+            "agent": {
+              "type": "string",
+              "enum": ["claude", "codex"],
+              "description": "An agent from list_models."
+            },
+            "model": {
+              "type": "string",
+              "minLength": 1,
+              "description": "A model from list_models."
+            }
+          },
+          "required": ["agent", "model"]
+        },
+        "effort": {
+          "type": "string",
+          "enum": ["none", "low", "medium", "high", "xhigh", "max", "ultra"],
+          "description": "An effort from list_models."
+        },
+        "requestId": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Keep this ID to retry without another workspace, session, or message. Omission generates an ID."
+        },
+        "fast": {
+          "type": "boolean",
+          "description": "Use fast mode for a marked model. Creates default to false. Omission on send keeps the session speed."
+        }
+      },
+      "required": ["sessionId", "text"]
+    },
+    "annotations": {
+      "readOnlyHint": false,
+      "destructiveHint": false,
+      "idempotentHint": false
+    }
+  },
+  {
+    "name": "get_session",
+    "description": "Get a session's choice, starter, title, closed mark, state, and link. Needs only the workspace token. These calls reach workspaces in this org. An omitted workspaceId names the calling workspace. Use names and returned links in normal answers. Workspace and session links show as chips. A session link holds both IDs. A Sent by: line names the sending session. Do not reply only to confirm it.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "workspaceId": {
+          "type": "string",
+          "minLength": 1,
+          "description": "A workspace ID from list_workspaces or a returned link. Defaults to the calling workspace."
+        },
+        "sessionId": {
+          "type": "string",
+          "minLength": 1,
+          "description": "A session ID from list_sessions or a session link."
+        }
+      },
+      "required": ["sessionId"]
+    },
+    "annotations": {
+      "readOnlyHint": true,
+      "destructiveHint": false,
+      "idempotentHint": true
+    }
+  },
+  {
+    "name": "rename_session",
+    "description": "Rename a session. Needs an active calling turn. Acts for the member whose message started that turn. These calls reach workspaces in this org. An omitted workspaceId names the calling workspace. Use names and returned links in normal answers. Workspace and session links show as chips. A session link holds both IDs. A Sent by: line names the sending session. Do not reply only to confirm it.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "workspaceId": {
+          "type": "string",
+          "minLength": 1,
+          "description": "A workspace ID from list_workspaces or a returned link. Defaults to the calling workspace."
+        },
+        "sessionId": {
+          "type": "string",
+          "minLength": 1,
+          "description": "A session ID from list_sessions or a session link."
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Use plain words separated by spaces. Avoid underscores unless the user tells you to add them."
+        }
+      },
+      "required": ["sessionId", "title"]
+    },
+    "annotations": {
+      "readOnlyHint": false,
+      "destructiveHint": false,
+      "idempotentHint": false
+    }
+  },
+  {
+    "name": "close_session",
+    "description": "Close a session. A running turn refuses the close unless stopRunningTurn is true. Closing the calling session can end this turn. Needs an active calling turn. Acts for the member whose message started that turn. These calls reach workspaces in this org. An omitted workspaceId names the calling workspace. Use names and returned links in normal answers. Workspace and session links show as chips. A session link holds both IDs. A Sent by: line names the sending session. Do not reply only to confirm it.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "workspaceId": {
+          "type": "string",
+          "minLength": 1,
+          "description": "A workspace ID from list_workspaces or a returned link. Defaults to the calling workspace."
+        },
+        "sessionId": {
+          "type": "string",
+          "minLength": 1,
+          "description": "A session ID from list_sessions or a session link."
+        },
+        "stopRunningTurn": {
+          "type": "boolean",
+          "default": false
+        }
+      },
+      "required": ["sessionId"]
+    },
+    "annotations": {
+      "readOnlyHint": false,
+      "destructiveHint": false,
+      "idempotentHint": false
+    }
+  },
+  {
+    "name": "stop_session",
+    "description": "Stop a session's running turn. Without a running turn, succeeds and reports idle. Stopping the calling session can end this turn. Needs an active calling turn. Acts for the member whose message started that turn. These calls reach workspaces in this org. An omitted workspaceId names the calling workspace. Use names and returned links in normal answers. Workspace and session links show as chips. A session link holds both IDs. A Sent by: line names the sending session. Do not reply only to confirm it.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "workspaceId": {
+          "type": "string",
+          "minLength": 1,
+          "description": "A workspace ID from list_workspaces or a returned link. Defaults to the calling workspace."
+        },
+        "sessionId": {
+          "type": "string",
+          "minLength": 1,
+          "description": "A session ID from list_sessions or a session link."
+        }
+      },
+      "required": ["sessionId"]
+    },
+    "annotations": {
+      "readOnlyHint": false,
+      "destructiveHint": false,
+      "idempotentHint": false
+    }
+  },
+  {
+    "name": "get_message",
+    "description": "Get one message's text, sender, state, turn, and time. Needs only the workspace token. These calls reach workspaces in this org. An omitted workspaceId names the calling workspace. Use names and returned links in normal answers. Workspace and session links show as chips. A session link holds both IDs. A Sent by: line names the sending session. Do not reply only to confirm it.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "workspaceId": {
+          "type": "string",
+          "minLength": 1,
+          "description": "A workspace ID from list_workspaces or a returned link. Defaults to the calling workspace."
+        },
+        "sessionId": {
+          "type": "string",
+          "minLength": 1,
+          "description": "A session ID from list_sessions or a session link."
+        },
+        "messageId": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": ["sessionId", "messageId"]
+    },
+    "annotations": {
+      "readOnlyHint": true,
+      "destructiveHint": false,
+      "idempotentHint": true
+    }
+  },
+  {
+    "name": "create_section",
+    "description": "Create a section in this org. Needs an active calling turn. Acts for the member whose message started that turn.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": ["name"]
+    },
+    "annotations": {
+      "readOnlyHint": false,
+      "destructiveHint": false,
+      "idempotentHint": false
+    }
+  },
+  {
+    "name": "delete_section",
+    "description": "Delete an org section and move its workspaces to General. The default section stays and returns deleted: false. Needs an active calling turn. Acts for the member whose message started that turn.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "sectionId": {
+          "type": "string",
+          "minLength": 1,
+          "description": "A section ID from list_sections."
+        }
+      },
+      "required": ["sectionId"]
+    },
+    "annotations": {
+      "readOnlyHint": false,
+      "destructiveHint": true,
+      "idempotentHint": false
+    }
+  },
+  {
+    "name": "list_previews",
+    "description": "List open previews and their links. Needs only the workspace token. Preview links need sign-in. These calls reach workspaces in this org. An omitted workspaceId names the calling workspace. Use names and returned links in normal answers. Workspace and session links show as chips. A session link holds both IDs. A Sent by: line names the sending session. Do not reply only to confirm it.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "workspaceId": {
+          "type": "string",
+          "minLength": 1,
+          "description": "A workspace ID from list_workspaces or a returned link. Defaults to the calling workspace."
+        }
+      }
+    },
+    "annotations": {
+      "readOnlyHint": true,
+      "destructiveHint": false,
+      "idempotentHint": true
+    }
+  },
+  {
+    "name": "open_preview",
+    "description": "Open a private port preview and return its link. The link needs sign-in. Needs an active calling turn. Acts for the member whose message started that turn. These calls reach workspaces in this org. An omitted workspaceId names the calling workspace. Use names and returned links in normal answers. Workspace and session links show as chips. A session link holds both IDs. A Sent by: line names the sending session. Do not reply only to confirm it.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "workspaceId": {
+          "type": "string",
+          "minLength": 1,
+          "description": "A workspace ID from list_workspaces or a returned link. Defaults to the calling workspace."
+        },
+        "port": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 65535
+        }
+      },
+      "required": ["port"]
+    },
+    "annotations": {
+      "readOnlyHint": false,
+      "destructiveHint": false,
+      "idempotentHint": false
+    }
+  },
+  {
+    "name": "close_preview",
+    "description": "Close a preview. An already closed preview succeeds with closed: false. Needs an active calling turn. Acts for the member whose message started that turn. These calls reach workspaces in this org. An omitted workspaceId names the calling workspace. Use names and returned links in normal answers. Workspace and session links show as chips. A session link holds both IDs. A Sent by: line names the sending session. Do not reply only to confirm it.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "workspaceId": {
+          "type": "string",
+          "minLength": 1,
+          "description": "A workspace ID from list_workspaces or a returned link. Defaults to the calling workspace."
+        },
+        "previewId": {
+          "type": "string",
+          "minLength": 1,
+          "description": "A preview ID from list_previews or open_preview."
+        }
+      },
+      "required": ["previewId"]
+    },
+    "annotations": {
+      "readOnlyHint": false,
+      "destructiveHint": false,
+      "idempotentHint": false
+    }
+  }
+]

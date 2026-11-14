@@ -1,6 +1,6 @@
 {
   "$schema": "./node_modules/knip/schema.json",
-  "include": ["exports", "types", "nsExports", "nsTypes"],
+  "include": ["files", "exports", "types", "nsExports", "nsTypes"],
   "workspaces": {
     ".": {
       // Vite, Wrangler, Vitest, and package scripts supply their own entries.
@@ -9,7 +9,6 @@
         "src/**/dev/main.tsx",
         "src/files/markdown/markdown-worker.ts",
         "src/marketing/pages/**/*.astro",
-        "tools/main.ts",
         "tools/chatgpt-egress/proxy.ts",
         "worker/chatgpt-egress/index.ts",
         "image/*.mjs",
@@ -22,7 +21,18 @@
         "worker/features/{entry,activity-entry,checkpoint-entry}.test-support.ts",
         "docs/mockups/src/entries/**/*.tsx",
         "docs/mockups/src/render.tsx",
+        // Tests start these Workers by path.
+        "worker/chat/device-cleanup-worker.test-support.ts",
+        "worker/chat/runner-entry.test-support.ts",
+        "worker/features/continue-entry.test-support.ts",
+        "worker/github/sqlite-worker.test-support.ts",
+        // The deploy bundles this file by path. Astro loads the content config.
+        "worker/lifecycle/image-runtime.ts",
+        "src/marketing/content.config.ts",
       ],
+      // ts-rs writes one file for each Rust type, also for types that no
+      // TypeScript code imports yet.
+      "ignore": ["src/shared/generated/**"],
       "project": [
         "src/**/*.{ts,tsx,astro}",
         "worker/**/*.{ts,mjs}",
@@ -46,12 +56,8 @@
       ],
       "includeEntryExports": true,
     },
-    "runner": {
-      "entry": [
-        "src/{main,measure,compare}.ts",
-        "src/relay/main.ts",
-        "scripts/*.mjs",
-      ],
+    "runner/sdk-helper": {
+      "entry": ["src/{main,measure,compare}.ts", "scripts/*.mjs"],
       "project": [
         "src/**/*.ts",
         "test-support/**/*.ts",

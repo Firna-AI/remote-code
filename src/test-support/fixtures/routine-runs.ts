@@ -1,3 +1,4 @@
+import type { MessageSender } from '../../shared/generated/MessageSender'
 import {
   runsOf,
   type FailedRun,
@@ -10,7 +11,6 @@ import {
   runLists,
   type RunListKey,
 } from '../../../docs/mockups/src/fixtures/runLists'
-import type { MessageSender } from '../../shared/messages'
 import type {
   Routine,
   RoutinePullRequestEvent,

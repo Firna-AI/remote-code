@@ -1,9 +1,7 @@
+import type { DeviceCommandRecord } from '../../src/shared/generated/DeviceCommandRecord.js'
 import { onTestFinished, vi } from 'vitest'
 
-import type {
-  DeviceCommandRecord,
-  DeviceToWorker,
-} from '../../src/shared/device.ts'
+import type { DeviceToWorker } from '../../src/shared/device.ts'
 import { createPermissionStore } from '../src/device/permissions.js'
 import type { CommandOutcome, CommandRun } from '../src/device/runner.js'
 import { createDeviceSession } from '../src/device/session.js'

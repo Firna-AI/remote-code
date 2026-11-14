@@ -226,7 +226,9 @@ The computer starts first if it is stopped.
 The new branch starts from the repository's latest default branch.
 That default branch becomes the workspace's base branch for its new task.
 
-Continue keeps the same cloud computer, files, installed software, running servers, sessions, and workspace name.
+Continue keeps the same cloud computer, files, running servers, sessions, and workspace name.
+It also keeps the software installed by the org's install script.
+Conductive's own software still updates itself.
 Changed files move to the new branch.
 Commits that are not pushed stay on their local branches.
 The question counts those commits across all local branches, including earlier tasks.

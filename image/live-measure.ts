@@ -4,7 +4,6 @@ import { appendFile, writeFile } from 'node:fs/promises'
 import { join } from 'node:path'
 
 import { MACHINE_PATHS } from '../src/shared/agent-tools'
-import { imageNodeExecutable } from '../worker/lifecycle/image-runtime'
 import { LiveBoat } from './live-boat'
 import {
   CheckError,
@@ -50,7 +49,7 @@ export async function measurePlacements(
   root: string,
   cleanup: Set<string>,
 ) {
-  const node = imageNodeExecutable()
+  const node = `${config.software}/node/bin/node`
   const metadata = object(
     JSON.parse(
       await boat.command(
@@ -86,9 +85,9 @@ export async function measurePlacements(
             placement === 'home'
               ? 'measurement_dir="$HOME/.runner-first-start/software"'
               : 'measurement_dir=/opt/runner-first-start/software',
-            'sudo -n install -d -m 755 -o user -g user "$measurement_dir/runner"',
-            `cp -R --preserve=mode,timestamps ${shellQuote(`${config.software}/runner/.`)} "$measurement_dir/runner/"`,
-            'test -f "$measurement_dir/runner/measure.mjs"',
+            'sudo -n install -d -m 755 -o user -g user "$measurement_dir/sdk-helper"',
+            `cp -R --preserve=mode,timestamps ${shellQuote(`${config.software}/sdk-helper/.`)} "$measurement_dir/sdk-helper/"`,
+            'test -f "$measurement_dir/sdk-helper/measure.mjs"',
             `test -x ${shellQuote(node)}`,
             'printf \'%s\\n\' "$measurement_dir"',
           ].join('\n'),
@@ -118,7 +117,7 @@ export async function measurePlacements(
           'set -a',
           '. /run/ascii-secrets/env.sh',
           'set +a',
-          `${shellQuote(node)} ${shellQuote(`${destination}/runner/measure.mjs`)}`,
+          `${shellQuote(node)} ${shellQuote(`${destination}/sdk-helper/measure.mjs`)}`,
         ].join('\n'),
       )
       if (
@@ -143,7 +142,7 @@ export async function measurePlacements(
   }
   const compared = spawnSync(
     process.execPath,
-    [join(root, 'dist/runner/compare.mjs'), ...files],
+    [join(root, 'dist/sdk-helper/compare.mjs'), ...files],
     { encoding: 'utf8' },
   )
   if (compared.status !== 0)

@@ -7,7 +7,7 @@ import { fileURLToPath, pathToFileURL } from 'node:url'
 
 const root = fileURLToPath(new URL('..', import.meta.url))
 const require = createRequire(
-  new URL('../runner/package.json', import.meta.url),
+  new URL('../runner/sdk-helper/package.json', import.meta.url),
 )
 const { build } = require('esbuild')
 const output = join(root, '.context/chat-live-check/cli.mjs')
@@ -23,7 +23,10 @@ try {
     platform: 'node',
     target: 'node24',
     format: 'esm',
-    nodePaths: [join(root, 'runner/node_modules')],
+    nodePaths: [
+      join(root, 'runner/node_modules'),
+      join(root, 'runner/sdk-helper/node_modules'),
+    ],
     banner: {
       js: "import { createRequire } from 'node:module'; const require = createRequire(import.meta.url);",
     },
@@ -32,7 +35,7 @@ try {
   await import(pathToFileURL(output).href)
 } catch {
   process.stderr.write(
-    'The live check could not start. Install the runner packages and check the image scripts.\n',
+    'The live check could not start. Install the SDK helper and live-check packages and check the image scripts.\n',
   )
   process.exitCode = 1
 }

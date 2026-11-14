@@ -16,6 +16,7 @@ import { workerLibraryBundle } from '../test-support/test-bundles'
 import { seedPublishedImage } from './published-image-test-support'
 import { readWorkspaceToken } from './tokens'
 import { MACHINE_PATHS } from '../../src/shared/agent-tools'
+import { withSoftwareRelease } from './software-release-test-support'
 
 export function runtimeBundle(): Promise<string> {
   return workerLibraryBundle(
@@ -97,7 +98,7 @@ export async function realRuntimeFixture(bundle: string) {
                     : await incoming.arrayBuffer(),
                   redirect: 'manual',
                 })
-                const response = await boat.fetch(request)
+                const response = await withSoftwareRelease(boat.fetch)(request)
                 return new RuntimeResponse(await response.arrayBuffer(), {
                   status: response.status,
                   headers: [...response.headers.entries()],

@@ -3,7 +3,7 @@
 - **Severity:** Medium. **Likelihood:** Rare. **Effort:** Medium. **Confidence:** High. **Harder later:** No.
 - **Kind:** Fix after merge.
 - **Added:** 2026-11-10, from PR #154, review finding 3.
-- **Location:** `runner/src/socket-table.ts:31`, `runner/src/proc-ports.ts`, `runner/src/relay/connect.ts:4`, `runner/src/relay/server.ts:16`, and `runner/src/relay/connect.test.ts:30`.
+- **Location:** `crates/cnd-runner/src/ports/sockets.rs`, `crates/cnd-runner/src/ports/proc.rs`, `crates/cnd-relay/src/connect.rs`, and `crates/cnd-relay/tests/relay/http_tests.rs`.
 - **Reason:** This needs an unusual server bind address. The two feature fix rounds are used.
 
 - **Source:** Review. **Category:** Product bug.
@@ -14,10 +14,10 @@
 - **Background:**
   - Conductive lists servers found by the runner. Selecting a row opens the port through the preview relay.
   - The scanner includes same-user wildcard and loopback listeners. It includes all IPv4 `127.0.0.0/8` addresses and their IPv4-mapped forms.
-  - `runner/src/proc-ports.test.ts` supplies `0200007F`, which is `127.0.0.2`. Its expected report keeps that port.
+  - `crates/cnd-runner/src/_tests_/proc_ports_tests.rs` supplies `0200007F`, which is `127.0.0.2`. Its expected report keeps that port.
   - Production relay discovery tries `127.0.0.1`, `::1`, and non-internal interface addresses. It does not discover other loopback listener addresses.
   - The report and the preview request name only the port. A click sends the same request as manual port entry.
-  - The relay's existing connection test reaches `127.0.0.2` only through an injected target list. It does not exercise production discovery.
+  - The relay integration tests use an injected connector for upstream servers. They do not exercise production discovery of a server bound only to `127.0.0.2`.
   - An independent Node 24 probe bound a server only to `127.0.0.2`. Every production target gave `ECONNREFUSED`. A direct connection succeeded.
   - The same relay behavior also affects manual port entry on main. It has the same cause and belongs to this fix.
 - **Problem:** A web server bound only to `127.0.0.2` appears in the list. Its preview returns HTTP 502 with "The server did not answer." The relay cannot connect to its bind address.
@@ -41,7 +41,7 @@
 - **Action:** fix after merge, apply C, because the bind address is unusual and the two feature fix rounds are used.
 
 The relay remains the only preview route. The public report keeps one row for each port, without an address.
-Only a new org image build installs the corrected software. Existing workspaces keep their software after a resume.
+An automatic sandbox software update can deliver the correction to existing workspaces at a later runner start.
 The Worker currently rewrites redirects only for `localhost`, `127.0.0.1`, and `[::1]`.
 A server that writes another bind address into an absolute redirect still sends that address to the browser.
 

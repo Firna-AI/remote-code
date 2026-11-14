@@ -1,4 +1,5 @@
-import type { DeviceCommandRecord } from '../device'
+import type { DeviceCommandRecord } from '../generated/DeviceCommandRecord'
+
 import type { TranscriptItem } from './transcript'
 
 /** A command and the item that it follows, or null when it comes first. */

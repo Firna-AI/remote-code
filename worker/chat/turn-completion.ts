@@ -1,4 +1,5 @@
-import type { Session } from '../../src/shared/sessions'
+import type { Session } from '../../src/shared/generated/Session'
+
 import { continueUnanswered } from './continuation'
 import type { ChatTransaction } from './store'
 import type { StoredTurn } from './types'

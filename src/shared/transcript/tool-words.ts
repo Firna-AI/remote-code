@@ -1,5 +1,4 @@
-import type { ToolCall } from '../chat-events'
-
+import type { ToolCall } from '../generated/ToolCall'
 const verbs: Readonly<
   Record<ToolCall['kind'], { done: string; running: string }>
 > = {

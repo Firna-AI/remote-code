@@ -1,7 +1,8 @@
-import type { AgentWorkspaceResponse } from '../../src/shared/agent-workspaces'
+import type { AgentWorkspaceResponse } from '../../src/shared/generated/AgentWorkspaceResponse'
+
 import { MACHINE_PATHS } from '../../src/shared/agent-tools'
 import { sessionTitleFrom } from '../../src/shared/session-title'
-import { TOOL_TURN_HEADER } from '../../tools/context'
+import { TOOL_TURN_HEADER } from '../../src/shared/agent-tools'
 import { HttpError } from '../http'
 import { identifier, invalidInput } from '../chat/inputs'
 import { readJsonObject } from '../http/json-body'

@@ -1,12 +1,10 @@
 import { expect, it } from 'vitest'
-
-import type { UserMessage } from '../../src/shared/messages'
+import type { UserMessage } from '../../src/shared/generated/UserMessage'
 import {
   workspacesPath,
   type CreateWorkspaceResponse,
 } from '../../src/shared/workspaces'
 import { setupBackendTests } from './backend-test-hooks'
-import { SOFTWARE } from './backend-test-support'
 import { handleLifecycleRequest, type LifecycleBrowserOptions } from './browser'
 import { FIRST_MESSAGE } from './durable-test-support'
 
@@ -21,7 +19,6 @@ it('answers with the stored queued first message before starting a sandbox and p
   }
   const messages = new Map<string, UserMessage>()
   const options: LifecycleBrowserOptions = {
-    software: SOFTWARE,
     waitUntil: (work) => {
       void work.catch(() => {})
     },

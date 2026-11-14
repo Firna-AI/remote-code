@@ -8,7 +8,7 @@ each report, and the [runner README](README.md) gives the rest of the runner.
 
 ## The comparison base
 
-`comparisonBase` gives the base of each comparison: the snapshot of each
+The repository service selects the base of each comparison: the snapshot of each
 scan, the Changes list of each report and of each turn, and each file diff.
 It reads Git references and the local Git settings only. It fetches
 nothing, and it moves, resets, or writes no branch, reference, or setting.
@@ -68,7 +68,7 @@ branch.
   for a new report compares the whole report.
 - Each numbered part of a report repeats both counts, and the saved events
   keep them.
-- Each sandbox keeps the runner of the org image that it starts from. A
+- A sandbox can keep an older runner until its next release update. A
   report from an older runner can lack either count. The Worker and the
   browser keep that absence as unknown, rather than reporting zero.
 
@@ -85,41 +85,22 @@ branch.
 
 ## Tests
 
-- `src/uncommitted-files.test.ts`: a pushed file whose uncommitted edit
-  brings back its base content counts once, with an empty Changes list.
-  After that edit is committed and pushed, a report with only the new count
-  goes out.
-- `src/files.test.ts`: a changed, a renamed, and an untracked path count
-  once each.
-- `src/file-limits.test.ts`: both counts through the output filter, the
-  parts, the saved events, and the parts that the fake endpoint joins.
-- `src/file-content.test.ts`: a remote base branch that moved without a
-  merge sends no report. A merge of that base moves the merge base, and
-  sends a new report, also when the files and the line counts stay the
-  same.
-- `src/merge-base.test.ts`: newer commits of the base branch stay out of
-  Changes, file marks, and diffs. The fetched remote base comes before a
-  local base branch that is behind. The `gh-merge-base` setting comes
-  before the configured name, also while `origin/HEAD` names another
-  branch.
-- The Worker runs one file reporter through Continue and a rename of the
-  default branch, as the [Continue tests](../worker/lifecycle/continue.md#tests)
-  say.
+- [base_tests.rs](../crates/cnd-runner/tests/repository/base_tests.rs) checks merge bases, fetched refs, branch settings, and count-only changes.
+- [checkpoint_tests.rs](../crates/cnd-runner/tests/repository/checkpoint_tests.rs) checks readable content, Git representations, and turn baselines.
+- [content_tests.rs](../crates/cnd-runner/tests/repository/content_tests.rs),
+  [paths_tests.rs](../crates/cnd-runner/tests/repository/paths_tests.rs), and
+  [limits_tests.rs](../crates/cnd-runner/tests/repository/limits_tests.rs) check bytes, namespace safety, limits, and cancellation.
+- [report tests](../crates/cnd-runner/tests/core/reports/) check parts, retained replies, and restart replay.
+- The [Continue tests](../worker/lifecycle/continue.md#tests) execute Worker branch and metadata commands with real Git.
 
 ## Key code
 
-- `src/files.ts`, `src/repository.ts`, and `src/checkpoint.ts`: the scan
-  queue, the file tree, the branch changes, bounded reads, and the files of
-  one turn.
-- `src/comparison-base.ts`: `comparisonBase`, the one base of the scans,
-  the Changes lists, and the diffs. It reads the `gh-merge-base` setting
-  of the current branch before the configured name.
-- `src/repository-changes.ts`: changed files against the base, the raw
-  status count, and current-branch commits that no remote branch holds.
-- `src/file-parts.ts`: full report parts and bounded tree deltas.
-- `src/file-updates.ts`: the full tree or the tree delta of each scan, and
-  the check for a new changes report.
-- `src/git-index.ts`, `src/git-entries.ts`, and `src/git-diff.ts`: temporary
-  indexes and objects for Git comparisons. The real index stays unchanged.
-- `src/git.ts`: Git commands and merge-base selection, which prefers the fetched remote-tracking base over a local branch.
-- `src/git-paths.ts`: shared Git namespace states for paths and parents.
+- [service.rs](../crates/cnd-runner/src/repository/service.rs) selects the comparison base.
+- [snapshot.rs](../crates/cnd-runner/src/repository/snapshot.rs) captures complete scans and content identities.
+- [changes.rs](../crates/cnd-runner/src/repository/changes.rs) computes branch changes and status counts.
+- [checkpoint.rs](../crates/cnd-runner/src/repository/checkpoint.rs) compares turn baselines.
+- [reports](../crates/cnd-runner/src/reports/) serializes scans and writes bounded report parts.
+- [index.rs](../crates/cnd-runner/src/repository/index.rs) and
+  [diff.rs](../crates/cnd-runner/src/repository/diff.rs) use private Git indexes and objects.
+- [access.rs](../crates/cnd-runner/src/repository/access.rs) and
+  [paths.rs](../crates/cnd-runner/src/repository/paths.rs) enforce safe reads and Git namespace rules.

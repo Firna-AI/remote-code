@@ -2,15 +2,13 @@ import { afterEach, beforeAll, expect, it } from 'vitest'
 
 import { readNewestStoredEvents } from '../../src/chat/api/read-workspace'
 import { chatHistoryPath } from '../../src/shared/events'
-import { createWorkspaceToolClient } from '../../tools/client'
-import {
-  outerWorkerBundle,
-  OUTER_MACHINE_ORIGIN,
-} from '../chat/integration/outer-runtime.test-support'
+import { agentSessionTranscriptPath } from '../../src/shared/agent-session-paths'
+import { outerWorkerBundle } from '../chat/integration/outer-runtime.test-support'
+import { record } from '../chat/inputs'
+import { machineRead } from './session-management.test-support'
 import {
   OUTER_ORG,
   OUTER_WORKSPACE,
-  OUTER_TOKEN,
 } from '../chat/integration/outer-seed.test-support'
 import {
   agentWriteFixture,
@@ -62,21 +60,13 @@ it('keeps a turn end reason in stored history and read_session after a restart',
       .envelopes.map((envelope) => envelope.event)
       .filter((item) => item?.type === 'turn.completed'),
   ).toEqual([event])
-  const client = createWorkspaceToolClient(
-    { machineOrigin: OUTER_MACHINE_ORIGIN, workspaceToken: OUTER_TOKEN },
-    async (request) => {
-      const response = await active.runtime.dispatchFetch(request.url, {
-        method: request.method,
-        headers: Object.fromEntries(request.headers),
-      })
-      return new Response(await response.text(), {
-        status: response.status,
-        headers: Object.fromEntries(response.headers),
-      })
-    },
-  )
   for (const detail of ['concise', 'full'] as const) {
-    const read = await client.readSession(active.sourceSessionId, { detail })
+    const response = await machineRead(
+      active,
+      `${agentSessionTranscriptPath(undefined, active.sourceSessionId)}?${new URLSearchParams({ detail })}`,
+    )
+    expect(response.status).toBe(200)
+    const read = record(await response.json())
     expect(read.detail).toBe(detail)
     expect(read.markdown).toContain(
       '_Background work stopped at the time limit_\n\n_Finished in 2m 5s. Changed files: `src/checks.ts`_',

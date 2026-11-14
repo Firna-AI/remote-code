@@ -1,11 +1,13 @@
+import type { AgentModel } from '../shared/generated/AgentModel'
 import { createContext, useContext } from 'react'
+import type { AgentChoice } from '../shared/generated/AgentChoice'
 import type { AppModel } from '../app/app-model'
 import { offeredModels } from '../app/endpoint-models'
 import type { OrgModel } from '../app/org-model'
 import type { AppServices } from '../app/services'
 import { isSuspended, type OrgAccess } from '../app/permissions'
 import { useStore } from '../app/store'
-import type { AgentChoice, AgentModel } from '../shared/agents'
+
 import type { OrgSummary } from '../shared/orgs'
 
 export const AppModelContext = createContext<AppModel | null>(null)

@@ -178,7 +178,6 @@ it('deletes an equal-named previous image through its own account after builder 
     previousRepositoryLocations: [],
     software: SOFTWARE,
     previousImageName: 'shared-image',
-    previousRunnerProtocolVersion: null,
     now: runtime.dependencies.now(),
   })
   await assignBuildSandbox(runtime.env.DB, 'account-build', 'same-id', 'boat')

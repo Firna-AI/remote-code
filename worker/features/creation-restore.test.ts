@@ -35,10 +35,7 @@ afterEach(async () => {
 
 it('continues a sandbox-free admitted create only when opened after Restore, with its pinned image and original sender', async () => {
   const active = (fixture = await featureFixture(bundle, {
-    configuration: {
-      CONDUCTIVE_RUNNER_ARCHIVE_URL: OUTER_SOFTWARE.url,
-      CONDUCTIVE_RUNNER_ARCHIVE_SHA256: OUTER_SOFTWARE.sha256,
-    },
+    configuration: {},
   }))
   const created = await active.request(workspacesPath(OUTER_ORG), {
     method: 'POST',
@@ -181,10 +178,7 @@ it('continues a sandbox-free admitted create only when opened after Restore, wit
 
 it('keeps the workspace and its accepted message when a retained creation loses its image pin', async () => {
   const active = (fixture = await featureFixture(bundle, {
-    configuration: {
-      CONDUCTIVE_RUNNER_ARCHIVE_URL: OUTER_SOFTWARE.url,
-      CONDUCTIVE_RUNNER_ARCHIVE_SHA256: OUTER_SOFTWARE.sha256,
-    },
+    configuration: {},
   }))
   const created = await active.request(workspacesPath(OUTER_ORG), {
     method: 'POST',

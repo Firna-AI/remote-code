@@ -1,4 +1,4 @@
-import type { RunnerAttachment } from '../../src/shared/runner'
+import type { RunnerAttachment } from '../../src/shared/generated/RunnerAttachment'
 import type { AppEnv } from '../env'
 import { workspaceRepositoryLocations } from '../lifecycle/repository-location-data'
 import { repositoryLocation } from '../lifecycle/repository-locations'

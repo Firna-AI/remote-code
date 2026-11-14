@@ -1,9 +1,6 @@
-import type {
-  AgentChatEvent,
-  ChatEvent,
-  RunnerEventRefused,
-  ToolCall,
-} from '../../shared/chat-events'
+import type { AgentChatEvent } from '../../shared/generated/AgentChatEvent'
+import type { ToolCall } from '../../shared/generated/ToolCall'
+import type { ChatEvent, RunnerEventRefused } from '../../shared/chat-events'
 import { FAKE_IDS } from '../../test-support/fixtures/core'
 import type { ChatController } from '../state/controller'
 

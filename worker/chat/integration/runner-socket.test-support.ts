@@ -1,12 +1,9 @@
 import { WebSocket } from 'miniflare'
-
+import type { RunnerEvent } from '../../../src/shared/generated/RunnerEvent'
+import type { RunnerEventEnvelope } from '../../../src/shared/generated/RunnerEventEnvelope'
+import type { RunnerToWorkspace } from '../../../src/shared/generated/RunnerToWorkspace'
+import type { RunnerProtocolVersion } from '../../../src/shared/generated/RunnerProtocolVersion'
 import { MACHINE_PATHS } from '../../../src/shared/agent-tools'
-import type {
-  RunnerEvent,
-  RunnerEventEnvelope,
-  RunnerToWorkspace,
-  RunnerProtocolVersion,
-} from '../../../src/shared/runner'
 import { SocketInbox } from '../adapter-sockets.test-support'
 import {
   OUTER_MACHINE_ORIGIN,

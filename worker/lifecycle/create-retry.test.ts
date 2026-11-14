@@ -1,7 +1,6 @@
 import { expect, it, vi } from 'vitest'
 
 import { setupBackendTests } from './backend-test-hooks'
-import { SOFTWARE } from './backend-test-support'
 import { handleLifecycleRequest, type LifecycleBrowserOptions } from './browser'
 import { workspacesPath } from '../../src/shared/workspaces'
 import { FIRST_MESSAGE } from './durable-test-support'
@@ -80,7 +79,6 @@ it('admits concurrent pending creates once and publishes their later failure wit
     }),
   )
   const options: LifecycleBrowserOptions = {
-    software: SOFTWARE,
     acceptFirstMessage: accept,
     waitUntil: (promise) => {
       void promise.catch(() => {})

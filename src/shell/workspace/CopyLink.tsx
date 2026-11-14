@@ -1,3 +1,4 @@
+import type { Workspace } from '../../shared/generated/Workspace'
 import { useEffect, useRef, useState } from 'react'
 import {
   CopyLinkButton,
@@ -5,7 +6,7 @@ import {
 } from '../../../docs/mockups/src/components/workspace/CopyLinkButton'
 import { workspaceLabel } from '../../../docs/mockups/src/components/workspaces/label'
 import { useServices } from '../../app/services'
-import type { Workspace } from '../../shared/workspaces'
+
 import { useShortcutOffer } from '../shortcuts/shortcut-context'
 import {
   ShortcutTip,

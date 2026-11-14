@@ -2,11 +2,7 @@ import { afterAll, beforeAll, beforeEach, expect, it } from 'vitest'
 
 import { createToolsHarness, type ToolsHarness } from '../previews/test-support'
 import { decrypt } from '../security/crypto'
-import {
-  startWorkspaceTerminal,
-  installTerminalService,
-  terminalStartCommand,
-} from './service'
+import { startWorkspaceTerminal, terminalStartCommand } from './service'
 
 let harness: ToolsHarness
 beforeAll(async () => {
@@ -19,20 +15,8 @@ afterAll(async () => {
   await harness.dispose()
 })
 
-it('keeps the local password through automatic service restarts and caches only the trusted current sandbox response', async () => {
+it('caches only the trusted current sandbox password without exposing it in startup commands', async () => {
   const seed = await harness.seed()
-  let installed = ''
-  await installTerminalService(
-    {
-      runCommand: async (_id, command) => {
-        installed = command
-        return { exitCode: 0, stdout: '', stderr: '', timedOut: false }
-      },
-    },
-    'image',
-  )
-  expect(installed).toContain('RuntimeDirectoryPreserve=yes')
-  expect(installed).toContain('if ! valid_password')
   const password = 'b'.repeat(64)
   const readiness = terminalStartCommand()
   expect(readiness.startsWith("sudo -n -- /bin/sh -c '")).toBe(true)

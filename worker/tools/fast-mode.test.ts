@@ -1,18 +1,9 @@
 import { afterAll, beforeAll, expect, it } from 'vitest'
 
 import { MACHINE_PATHS } from '../../src/shared/agent-tools'
-import { TOOL_ENV } from '../../tools/context'
-import { runToolProcess } from '../../tools/main'
 import { createHarness, type TestHarness } from '../test-support/harness'
 import { publishToolImage } from './list-test-support'
-import {
-  toolFixture,
-  toolOutput,
-  inputLines,
-  TOOL_TEST_ORIGIN,
-  TOOL_TEST_TOKEN,
-  TOOL_TEST_TURN,
-} from './test-support'
+import { TOOL_TEST_ORIGIN, toolFixture } from './test-support'
 
 let harness: TestHarness
 beforeAll(async () => {
@@ -56,28 +47,12 @@ it('requires explicit fast on tool creates and lists each model capability with 
       },
     }),
   )
-  const output = toolOutput()
-  const status = await runToolProcess(
-    [
-      'workspaces',
-      'create',
-      '--repository',
-      'repo-a',
-      '--message',
-      'Fast',
-      '--fast',
-      'true',
-    ],
-    {
-      [TOOL_ENV.machineOrigin]: TOOL_TEST_ORIGIN,
-      [TOOL_ENV.workspaceToken]: TOOL_TEST_TOKEN,
-      [TOOL_ENV.turnId]: TOOL_TEST_TURN,
-    },
-    inputLines([]),
-    output.output,
-    fixture.send,
-  )
-  expect(status, output.stderr.join('')).toBe(0)
+  const fast = await fixture.create({
+    repositoryId: 'repo-a',
+    firstMessage: 'Fast',
+    fast: true,
+  })
+  expect(fast.status).toBe(201)
   expect(fixture.services.createWorkspace).toHaveBeenLastCalledWith(
     expect.objectContaining({
       choice: {
@@ -106,10 +81,9 @@ it('requires explicit fast on tool creates and lists each model capability with 
       },
     }),
   )
-  const response = await fixture.send(
-    new Request(`${TOOL_TEST_ORIGIN}${MACHINE_PATHS.models}`, {
-      headers: { Authorization: `Bearer ${TOOL_TEST_TOKEN}` },
-    }),
+  const response = await fixture.request(
+    {},
+    `${TOOL_TEST_ORIGIN}${MACHINE_PATHS.models}`,
   )
   expect(await response.json()).toMatchObject({
     models: [{ fast: true }, { fast: false }],

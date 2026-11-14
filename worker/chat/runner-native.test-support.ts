@@ -1,8 +1,7 @@
 import type { Miniflare, WebSocket } from 'miniflare'
 import { expect } from 'vitest'
-
+import type { RunnerProtocolVersion } from '../../src/shared/generated/RunnerProtocolVersion'
 import { MACHINE_PATHS } from '../../src/shared/agent-tools'
-import type { RunnerProtocolVersion } from '../../src/shared/runner'
 import { sessionsPath, sessionPaths } from '../../src/shared/sessions'
 import { TEST_ORIGIN } from '../test-support/harness'
 import { closeSockets } from './adapter-sockets.test-support'

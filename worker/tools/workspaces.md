@@ -6,9 +6,9 @@ options of the workspace list, and the replay of a create.
 [Workspace calls](../../docs/protocol/workspace-calls.md) states their
 requirements. [Agent tool access](../../docs/protocol/agent-tool-access.md)
 states the reach, the turn rule, and the rights of the sender.
-[agent-workspaces.ts](../../src/shared/agent-workspaces.ts) holds the
-request and reply types and the path builders `agentWorkspacePath` and
-`agentWorkspacePaths`.
+[Rust tool contracts](../../crates/cnd-runner-interface/src/tools/mod.rs) own the request and reply types.
+[agent-workspaces.ts](../../src/shared/agent-workspaces.ts) holds the path builders
+`agentWorkspacePath` and `agentWorkspacePaths`.
 
 The CLI and the MCP server offer each of these routes, the list options,
 the first session title, and the create request ID, as
@@ -134,6 +134,9 @@ the first session title, and the create request ID, as
   calling workspace as the parent, and waits for the creation.
 
 ## Tests
+
+[handler.management.test.ts](handler.management.test.ts) checks the management route inputs and replies.
+The [Rust tools crate](../../crates/cnd-tools/README.md) tests CLI and MCP request construction.
 
 - `workspace-reads.test.ts`: token-only reads of archived workspace facts,
   and the refusal of another org.

@@ -1,4 +1,4 @@
-import type { Agent } from '../../src/shared/agents'
+import type { Agent } from '../../src/shared/generated/Agent'
 import type { AppEnv } from '../env'
 import { CODEX_RECONNECT_CAUSE, parseCodexTokens } from '../codex-auth/tokens'
 import { failCodexRefresh } from '../codex-auth/token-store'

@@ -1,11 +1,12 @@
+import type { Session } from '../../shared/generated/Session'
+import type { AgentChoice } from '../../shared/generated/AgentChoice'
 import {
   createApiClient,
   type FetchLike,
   type FileTransport,
 } from '../../app/api/client'
-import type { AgentChoice } from '../../shared/agents'
 import { chatHistoryPath, type WorkspaceEvent } from '../../shared/events'
-import type { ChangeModelResponse, Session } from '../../shared/sessions'
+import type { ChangeModelResponse } from '../../shared/sessions'
 import { FakeApiServer, type FakeApiOptions } from '../../test-support/fake-api'
 import type { FakeWorkspaceEvents } from '../../test-support/fake-events'
 import { fetchFiles } from '../../test-support/fake-files'

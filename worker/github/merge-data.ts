@@ -1,5 +1,5 @@
+import type { WorkspaceState } from '../../src/shared/generated/WorkspaceState'
 import type { GitHubWorkspace } from './contracts'
-import type { WorkspaceState } from '../../src/shared/workspaces'
 
 interface MergeWorkspace extends GitHubWorkspace {
   archivedAt: number | null

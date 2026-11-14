@@ -157,53 +157,9 @@ The [marketing site page](marketing-site.md) gives the responsibilities and boun
 
 ## Sandbox software
 
-Every org image holds the app's own sandbox software:
-
-- the agent runner, a Node program that runs as an always-on service
-- the terminal service, on a private port
-- the preview relay, on a private port
-- the agent tools: an MCP server and a CLI that create, list, and change
-  the workspaces of the org, start, read, message, close, and stop its
-  sessions, change its sections, open port previews, and ask for Mac
-  commands
-- a git credential helper that gets a fresh GitHub token for each git
-  operation
-- a udev rule that stops disk flushes at each boot, as
-  [Disk flushes](../protocol/workspaces-and-sandboxes.md#disk-flushes) says
-
-The Worker builds one software image for each version of this software,
-when the deploy run asks. The software image holds the base image and this
-software, and no org data. A build of an org without an org image starts
-from it, so that build installs none of this software.
-
-The agent runner runs Claude through the Claude Agent SDK, with the agent
-program that the SDK bundles at its own version. A pinned version guards
-against a change in how the agent program reads its credential and its
-model address. The runner runs Codex through the Codex SDK or the Codex
-App Server (decision 36).
-
-The runner finds the listening ports in the sandbox itself, with no Boat
-call (decision 220).
-
-The runner makes both agent programs send their model requests to the
-[model gateway](../protocol/model-gateway.md). It gives each agent program
-the turn token of its turn, and no agent login. A settings file in the
-repository can send the requests of Claude to another address, as
-[How the agents reach the gateway](../protocol/model-gateway.md#how-the-agents-reach-the-gateway)
-says. Each sandbox keeps the runner of the org image that it starts from.
-The workspace refuses a runner of an unsupported protocol version, as
-[Runner versions](../protocol/version-pins.md#runner-versions) says.
-
-The preview relay forwards each preview request to a local port of the
-sandbox. The previewed server then gets its local address as `Host`
-(decision 218).
-[Terminal, previews, and desktop](../protocol/terminal-previews-and-desktop.md#port-previews)
-states the rules of the relay.
-
-The Worker gives each sandbox the commit author of its workspace owner.
-The agent runner gives each agent the commit author of the sender of its
-turn. [Commit author](../protocol/github-tokens.md#commit-author) states
-the rules.
+The [sandbox software page](sandbox-software.md) describes the app's own
+software in each sandbox: its two programs, its releases and updates, and
+the software image.
 
 ## External services
 

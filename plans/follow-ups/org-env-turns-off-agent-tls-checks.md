@@ -3,7 +3,7 @@
 - **Severity:** Medium. **Effort:** Small. **Confidence:** Medium. **Harder later:** No.
 - **Kind:** Outside the scope.
 - **Added:** 2026-11-08, from the options check of the own endpoint plan on branch `calummoore/cli-proxy-setup`.
-- **Location:** `providerEnvironment` in `runner/src/providers/environment.ts:20`, and `image/runner-start.sh:3`.
+- **Location:** `providerEnvironment` in `runner/sdk-helper/src/providers/environment.ts:20`, and `image/runner-start.sh:3`.
 - **Reason:** the own endpoint change does not touch the org env vars, and the fix changes what an org's setup can do, so the user decides it.
 
 - **Terms:**
@@ -29,6 +29,6 @@
   - **E.** Keep the behaviour, and state the risk in the access protocol. Effort: Small.
 - **Left out:** Removing every org env var from the agent environment. It fails the goal of the org env vars, because the agents' tools need them.
 - **Wider fix:** C. A fixed rule for the agent environment covers each new variable of this kind.
-- **Previous examples:** the launcher of the workspace tools in `worker/tools/image.ts` loads the org env vars and then unsets `NODE_OPTIONS`, so that an org setting cannot load code into the tools.
+- **Previous examples:** the replaced Node tools launcher removed `NODE_OPTIONS` before starting its private Node. The current Rust tools use no Node runtime. `plans/follow-ups/org-node-options-reach-sandbox-software.md` records the remaining SDK-helper boundary.
 - **Recommendation:** A. It removes the one variable that turns off the checks, and it keeps each way to add a certificate.
 - **Action:** ask the user, because removing a variable that an admin sets changes what an org's setup can do, and no requirement covers it.

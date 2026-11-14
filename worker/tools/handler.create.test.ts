@@ -1,6 +1,6 @@
 import { afterAll, beforeAll, beforeEach, expect, it } from 'vitest'
 
-import { TOOL_TURN_HEADER } from '../../tools/context'
+import { TOOL_TURN_HEADER } from '../../src/shared/agent-tools'
 import { sessionLink } from '../../src/shared/session-link'
 import { configuredDefaultChoice } from '../app-api/models'
 import { HttpError } from '../http'

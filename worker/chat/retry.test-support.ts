@@ -1,8 +1,8 @@
+import type { Session } from '../../src/shared/generated/Session'
 import type { WorkspaceSocketMessage } from '../../src/shared/events'
 import {
   retryMessagePath,
   sessionsPath,
-  type Session,
   type SessionsResponse,
 } from '../../src/shared/sessions'
 import { WORKSPACE_ID, type ChatFixture } from './harness.test-support'

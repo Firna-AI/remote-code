@@ -1,0 +1,18 @@
+---
+source: crates/cnd-runner-interface/tests/helper_wire.rs
+expression: output
+---
+{
+  "type": "event",
+  "event": {
+    "type": "tool",
+    "tool": {
+      "id": "tool-1",
+      "kind": "run",
+      "target": "checks",
+      "detail": null,
+      "omittedDetailBytes": 0,
+      "state": "done"
+    }
+  }
+}

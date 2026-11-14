@@ -1,0 +1,14 @@
+---
+source: crates/cnd-runner-interface/tests/helper_wire.rs
+expression: output
+---
+{
+  "type": "event",
+  "event": {
+    "type": "result",
+    "state": "finished",
+    "userMessageIds": [
+      "message-2"
+    ]
+  }
+}

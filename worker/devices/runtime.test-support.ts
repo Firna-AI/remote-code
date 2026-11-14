@@ -1,6 +1,6 @@
 import { Miniflare, type WebSocket } from 'miniflare'
 
-import { MACHINE_PATHS } from '../../src/shared/agent-tools'
+import { MACHINE_PATHS, TOOL_TURN_HEADER } from '../../src/shared/agent-tools'
 import {
   deviceConnectionPath,
   DEVICE_COMMAND_PATH,
@@ -20,12 +20,11 @@ import { encrypt, hash, sign } from '../security/crypto'
 import { migratedStorage, TEST_D1_ID } from '../test-support/migrated-storage'
 import { workerLibraryBundle } from '../test-support/test-bundles'
 import { seedAppAccess } from '../test-support/app-access'
-import { TOOL_TURN_HEADER } from '../../tools/context'
 
 export const APP = 'https://app.conductive.test'
-export const MACHINE = 'https://machine.conductive.test'
+const MACHINE = 'https://machine.conductive.test'
 export const WID = 'device-workspace'
-export const TOKEN = 'device-workspace-token'
+const TOKEN = 'device-workspace-token'
 const KEY = btoa('s'.repeat(32))
 export async function deviceFixture(options: { entry?: string } = {}) {
   const storage = await migratedStorage()

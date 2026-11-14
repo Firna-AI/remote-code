@@ -1,4 +1,5 @@
-import type { Timestamp } from './api'
+import type { Preview } from './generated/Preview'
+import type { Timestamp } from './generated/Timestamp'
 import { workspacePath } from './workspaces'
 
 export const PREVIEW_RELAY_PORT = 7682
@@ -14,17 +15,6 @@ export function previewPath(
   previewId: string,
 ): string {
   return `${previewsPath(orgId, workspaceId)}/${encodeURIComponent(previewId)}`
-}
-export interface OpenPreviewRequest {
-  port: number
-}
-export interface Preview {
-  /** New for each open. The API never gives out a revoked ID again. */
-  id: string
-  port: number
-  /** Authenticated app launch URL. Each navigation grants its browser partition access. */
-  url: string
-  expiresAt: Timestamp
 }
 export interface PreviewResponse {
   preview: Preview

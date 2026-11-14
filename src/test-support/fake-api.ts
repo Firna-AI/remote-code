@@ -1,13 +1,11 @@
+import type { GitHubSummary } from '../shared/generated/GitHubSummary'
+import type { WorkspaceState } from '../shared/generated/WorkspaceState'
 import type { PathState } from '../../docs/mockups/src/fixtures/maskedFiles'
 import type { SessionResponse } from '../shared/account'
 import { API_PATHS, type OrgRole, type User } from '../shared/api'
 import { chatHistoryPath } from '../shared/events'
-import {
-  githubSummary,
-  type BannerState,
-  type GitHubSummary,
-} from '../shared/github'
-import type { WorkspaceState } from '../shared/workspaces'
+import { githubSummary, type BannerState } from '../shared/github'
+
 import { chatEventsOf } from '../shared/transcript/session-events'
 import type { FakeMethod, FakeRouteWriter } from './fake-api-routes'
 import { fakeCoreRoutes } from './fake-core-routes'

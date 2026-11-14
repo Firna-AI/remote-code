@@ -120,7 +120,7 @@ export const workspacesAndBranchesFeatures: readonly ParityFeature[] = [
     area: 'workspaces-and-branches',
     name: '.context folder',
     status: 'available',
-    note: 'Git ignores attachments and, after a new computer build, .context agent notes. All files lists them after rebuilding, with older workspace updates in progress.',
+    note: 'Git ignores attachments and .context agent notes. All files lists them. Older workspaces gain this support when an automatic software update applies at a later start.',
   },
   {
     id: 'monorepo-working-directories',

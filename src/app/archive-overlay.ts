@@ -1,6 +1,6 @@
+import type { Workspace } from '../shared/generated/Workspace'
 import {
   WORKSPACE_RESTORE_MS,
-  type Workspace,
   type WorkspaceResponse,
 } from '../shared/workspaces'
 import type { ArchiveAction } from './archive-model'

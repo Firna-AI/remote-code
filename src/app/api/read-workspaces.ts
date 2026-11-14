@@ -1,13 +1,14 @@
-import type { Attachment, UserMessage } from '../../shared/messages'
+import type { Workspace } from '../../shared/generated/Workspace'
+import type { WorkspaceState } from '../../shared/generated/WorkspaceState'
+import type { Attachment } from '../../shared/generated/Attachment'
+import type { UserMessage } from '../../shared/generated/UserMessage'
+import type { StartStep } from '../../shared/generated/StartStep'
+import type { WorkspaceStart } from '../../shared/generated/WorkspaceStart'
 import { readGitHubSummary } from '../../shared/github-read'
 import type {
   CreateWorkspaceResponse,
   OrderedWorkspaceResponse,
-  StartStep,
-  Workspace,
   WorkspaceResponse,
-  WorkspaceStart,
-  WorkspaceState,
 } from '../../shared/workspaces'
 import {
   choice,

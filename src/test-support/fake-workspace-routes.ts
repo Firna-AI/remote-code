@@ -1,6 +1,8 @@
+import type { GitHubSummary } from '../shared/generated/GitHubSummary'
+import type { WorkspaceState } from '../shared/generated/WorkspaceState'
 import type { PathState } from '../../docs/mockups/src/fixtures/maskedFiles'
 import { chatHistoryPath } from '../shared/events'
-import type { GitHubSummary } from '../shared/github'
+
 import { workspaceOwnerPath } from '../shared/members'
 import {
   retryMessagePath,
@@ -14,7 +16,6 @@ import {
   workspacePath,
   workspacePaths,
   workspacesPath,
-  type WorkspaceState,
 } from '../shared/workspaces'
 import type { FakeRouteWriter } from './fake-api-routes'
 import { FAKE_IDS, FAKE_TIME } from './fixtures/core'

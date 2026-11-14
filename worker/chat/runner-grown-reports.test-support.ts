@@ -1,8 +1,6 @@
-import type {
-  FileEntry,
-  FileEvent,
-  RunnerFileEvent,
-} from '../../src/shared/files'
+import type { FileEntry } from '../../src/shared/generated/FileEntry'
+import type { RunnerFileEvent } from '../../src/shared/generated/RunnerFileEvent'
+import type { FileEvent } from '../../src/shared/files'
 import { encrypt } from '../security/crypto'
 import { orgEnvironmentContext } from '../lifecycle/settings-data'
 import { createRunnerLimitsFixture } from './runner-limits.test-support'

@@ -1,7 +1,8 @@
+import type { WorkspaceState } from '../shared/generated/WorkspaceState'
 import { describe, expect, it } from 'vitest'
 import type { WorkspaceEvent } from '../shared/events'
 import { terminalPaths, type TerminalResponse } from '../shared/terminal'
-import type { WorkspaceState } from '../shared/workspaces'
+
 import { workspaceFixtures } from '../test-support/fixtures/workspaces'
 import type { ToolResult } from './tool-parts/request'
 import {

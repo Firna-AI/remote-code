@@ -1,6 +1,7 @@
 import { act } from 'react'
 import { vi } from 'vitest'
-import { filePaths, type FileResponse } from '../../shared/files'
+import type { FileResponse } from '../../shared/generated/FileResponse'
+import { filePaths } from '../../shared/files'
 import { FakeApiServer } from '../../test-support/fake-api'
 import { accessibleName } from '../../test-support/dom-queries'
 import { FAKE_IDS } from '../../test-support/fixtures/core'

@@ -1,7 +1,7 @@
+import type { DeviceCommandRecord } from '../../../src/shared/generated/DeviceCommandRecord.js'
+import type { DevicePairing } from '../../../src/shared/generated/DevicePairing.js'
 import type {
-  DeviceCommandRecord,
   DeviceCommandRef,
-  DevicePairing,
   DeviceToWorker,
   WorkerToDevice,
 } from '../../../src/shared/device.ts'

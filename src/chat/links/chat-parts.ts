@@ -1,6 +1,6 @@
+import type { FileEntry } from '../../shared/generated/FileEntry'
+import type { Attachment } from '../../shared/generated/Attachment'
 import { attachmentForMention } from '../../shared/attachment-mentions'
-import type { FileEntry } from '../../shared/files'
-import type { Attachment } from '../../shared/messages'
 import { mentionAt, type Mention } from '../../shared/mention-text'
 import {
   bareLinkAt,

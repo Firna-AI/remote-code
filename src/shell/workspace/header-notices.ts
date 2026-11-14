@@ -1,7 +1,7 @@
+import type { RunnerReportKind } from '../../shared/generated/RunnerReportKind'
 import type { StreamEnvelope } from '../../app/api/read-events'
 import type { WorkspaceStream } from '../../app/events'
 import { Store } from '../../app/store'
-import type { RunnerReportKind } from '../../shared/runner'
 
 /** Workspace data under the header that a later full report replaces. */
 export type HeaderReportKind = Extract<

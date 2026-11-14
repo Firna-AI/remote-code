@@ -1,9 +1,10 @@
+import type { Session } from '../../shared/generated/Session'
+import type { Workspace } from '../../shared/generated/Workspace'
 import { useEffect } from 'react'
 import type { ChipSession } from '../../../docs/mockups/src/components/chat/SessionChip'
 import { workspaceLabel } from '../../../docs/mockups/src/components/workspaces/label'
 import { nameLabel } from '../../shared/name-label'
-import type { Session } from '../../shared/sessions'
-import type { Workspace } from '../../shared/workspaces'
+
 import { useChatLinks } from './LinksContext'
 import type { LinkedSessions, SessionReads } from './session-reads'
 import type { LinkTarget } from './workspace-links'

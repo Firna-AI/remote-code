@@ -1,11 +1,7 @@
-import { SOFTWARE } from '../lifecycle/backend-test-support'
+import { SOFTWARE_RELEASE as SOFTWARE } from '../lifecycle/software-release-test-support'
 import { softwareImageName } from '../lifecycle/image-names'
 import { TEST_TIME } from '../test-support/harness'
-import { TOOLS_COMMAND_COUNT } from '../tools/image-commands.test-support'
 import { softwareVersion } from './version'
-
-/** The fake sandbox prints one line for each workspace tools command. */
-export const TOOLS_OUTPUT = 'done\n'.repeat(TOOLS_COMMAND_COUNT)
 
 export async function seedReadySoftwareImage(
   db: D1Database,

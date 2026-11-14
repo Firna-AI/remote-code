@@ -1,8 +1,8 @@
+import type { UserMessage } from '../../shared/generated/UserMessage'
 import { readSendResponse } from '../../chat/api/read-responses'
 import type {
   SendMessageRequest,
   SendMessageResponse,
-  UserMessage,
 } from '../../shared/messages'
 import { sessionPaths } from '../../shared/sessions'
 import { FAKE_ORIGIN } from '../../test-support/fixtures/core'

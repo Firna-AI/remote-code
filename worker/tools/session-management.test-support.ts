@@ -1,4 +1,4 @@
-import type { Session } from '../../src/shared/sessions'
+import type { Session } from '../../src/shared/generated/Session'
 import { CLAUDE } from '../chat/harness.test-support'
 import { OUTER_MACHINE_ORIGIN } from '../chat/integration/outer-runtime.test-support'
 import {

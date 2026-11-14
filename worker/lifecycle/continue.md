@@ -272,13 +272,11 @@ results.
   with the new base, and the count of every local branch.
   [`continue-native.test-support.ts`](continue-native.test-support.ts)
   builds its real Git repositories.
-- [`continue-comparisons.test.ts`](continue-comparisons.test.ts) keeps one
-  runner file reporter across a fetch without a merge, Continue, and a
-  default branch that only the remote has after a rename. The fetch without
-  a merge sends no report. After Continue, Changes and diffs use the new
-  base, the local default branch keeps its commit, and the new branch has
-  only its `gh-merge-base` setting. Locks on `origin/HEAD` and on the Git
-  config after the checkout fail the read until both locks go. The next
-  read repairs both without another checkout.
+- [`continue-comparisons.test.ts`](continue-comparisons.test.ts) checks the real Git
+  refs, content, and status across fetch, Continue, and a remote default rename.
+  The local default keeps its commit. The new branch has only its `gh-merge-base`
+  setting. Locks on `origin/HEAD` and Git config fail the metadata read until
+  both locks go. The next read repairs both without another checkout.
+  Rust repository and report tests check the runner's comparison output.
 - [`branch-context.test.ts`](../chat/branch-context.test.ts): the current
   branches of each runner command.

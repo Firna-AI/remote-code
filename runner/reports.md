@@ -45,7 +45,7 @@ states the requirements.
 - `PortReporter` keeps two successful scans for each addition or removal.
   A failed table read keeps the last list and writes a local warning.
 - Production `main.ts` supplies a scan every 2 seconds. Its timer stops at
-  shutdown. The optional `RunnerOptions.ports` boundary lets tests inject
+  shutdown. The `PortReports` boundary lets tests inject
   scans and scheduling without reading the host socket tables.
 - The port scan queue is separate from the repository scan queue. Agent
   commands do not wait for either queue.

@@ -1,4 +1,5 @@
-import type { Session } from '../../shared/sessions'
+import type { Session } from '../../shared/generated/Session'
+
 import type { WorkspaceTab, WorkspaceView } from '../../shared/workspace-view'
 import type { ChatSnapshot } from './chat-snapshot'
 import { withSessionPlace } from './tab-order'

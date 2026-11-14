@@ -1,4 +1,4 @@
-import type { GitHubSummary } from '../../fixtures/pullRequests'
+import type { GitHubSummary } from '../../../../../src/shared/generated/GitHubSummary'
 import type { ActivityStatus } from '../../fixtures/workspaces'
 import { classes } from '../common/classes'
 import { MarkGrid, ring, ringDelay, type MarkCell } from './MarkGrid'

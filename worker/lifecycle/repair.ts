@@ -16,7 +16,7 @@ import type { WorkspaceRuntime } from './workspace-runtime'
 export async function repairLifecycleAlarms(
   runtime: WorkspaceRuntime,
   images: ImageRuntime,
-  software: () => ImageSoftwareArtifact,
+  software: () => ImageSoftwareArtifact | Promise<ImageSoftwareArtifact>,
 ) {
   const { env, dependencies } = runtime
   const cutoff = dependencies.now() - REPAIR_GRACE_MS
@@ -38,7 +38,7 @@ export async function repairLifecycleAlarms(
     else result.orgs++
     try {
       if (kind === 'workspace') await check(id)
-      else await scheduleIdleImage(images, id, software())
+      else await scheduleIdleImage(images, id, await software())
     } catch {
       if (kind === 'workspace') result.pendingWorkspaces++
       else result.pendingOrgs++

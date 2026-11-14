@@ -1,4 +1,5 @@
-import type { GitHubSummary } from '../../src/shared/github'
+import type { GitHubSummary } from '../../src/shared/generated/GitHubSummary'
+
 import type { GitHubWorkspace } from './contracts'
 
 export async function saveWorkspaceGitHubSummary(

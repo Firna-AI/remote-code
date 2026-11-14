@@ -1,0 +1,12 @@
+---
+source: crates/cnd-runner-interface/tests/wire_1.rs
+assertion_line: 83
+description: Current protocol JSON. Optional fields stay absent; nullable fields stay null.
+expression: message
+---
+{
+  "type": "interrupt",
+  "commandId": "command-3",
+  "sessionId": "session-1",
+  "turnId": "turn-1"
+}

@@ -1,3 +1,4 @@
+import type { Workspace } from '../shared/generated/Workspace'
 import type { GitHubCapabilities } from '../shared/github'
 import { membersPath, type MembersResponse } from '../shared/members'
 import {
@@ -9,7 +10,7 @@ import {
 } from '../shared/org-settings'
 import { routinesPath } from '../shared/routines'
 import { sectionsPath, type Section } from '../shared/sections'
-import { workspacesPath, type Workspace } from '../shared/workspaces'
+import { workspacesPath } from '../shared/workspaces'
 import { items, record } from './api/parse'
 import { readSection } from './api/read-core'
 import { readRoutines, type ListedRoutine } from './api/read-routines'

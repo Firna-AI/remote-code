@@ -1,7 +1,8 @@
+import type { TranscriptDetail } from '../shared/generated/TranscriptDetail'
 import { copyText } from '../app/clipboard'
 import { browserDelay } from '../app/events'
 import type { AppServices } from '../app/services'
-import type { TranscriptDetail } from '../shared/sessions'
+
 import type { ChatApi, WorkspaceTarget } from './api/client'
 
 /**

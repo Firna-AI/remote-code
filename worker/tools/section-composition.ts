@@ -1,7 +1,7 @@
 import type { AppDependencies, AppEnv } from '../env'
 import { featureSectionWrite } from '../app-api/feature-sections'
 import { requireShellWriter } from '../app-api/feature-shell-access'
-import { record, text } from '../../tools/input'
+import { record, text } from './input'
 import { toolUser } from './composition-data'
 import { orgSections } from './store'
 import type { ToolSectionWrite } from './services'

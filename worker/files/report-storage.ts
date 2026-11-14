@@ -1,4 +1,4 @@
-import type { RunnerFileEvent } from '../../src/shared/files'
+import type { RunnerFileEvent } from '../../src/shared/generated/RunnerFileEvent'
 import { isRecord } from '../http'
 import { natural } from './parsers'
 import { parseRunnerFileEvent } from './runner-input'

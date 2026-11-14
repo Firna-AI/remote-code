@@ -20,9 +20,11 @@
   request was rejected, because no update arrives between two requests.
 - Both a check and a report were rejected, because two paths must stay in
   step. An install of the newest runner at each start was rejected,
-  because a start then takes longer and can fail in a new way. It also
-  breaks the rule that only a build installs the software of a sandbox,
-  which decision 148 kept for the terminal programs.
+  because a start then takes longer and can fail in a new way.
+- An older sandbox gets a runner that reports ports with an update of its
+  software, as [Updates](sandbox-software.md#updates) says (sandbox
+  software decision 1). Sandbox software decisions are the decisions of
+  the change that makes the sandbox software update itself.
 - Each server is a button with its port, its program name, and its folder,
   when the report gives them (decision 221). A folder that does not fit
   keeps its end, after "…".
@@ -42,8 +44,8 @@
 - When the runner reports no server, the form asks the user to start one
   in the terminal, or to ask the agent. The field stays.
 - When the app has no report, the form shows only the field. This holds
-  for a sandbox whose runner does not report ports, such as one from an
-  older org image, because only a build installs a new runner.
+  for a sandbox whose runner does not report ports, until an update gives
+  it a newer runner.
 - When the sandbox stops, the workspace sends `ports.updated` with
   `ports: null` to the open tabs. A null list means that the app has no
   report. Reason: an old list would offer servers that the stop ended.

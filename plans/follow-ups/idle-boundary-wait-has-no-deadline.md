@@ -3,7 +3,7 @@
 - **Severity:** Medium. **Likelihood:** Rare. **Effort:** Small. **Confidence:** Medium. **Harder later:** No.
 - **Kind:** Fix after merge.
 - **Added:** 2026-11-11, from peer review of PR #245, finding 1.
-- **Location:** `runner/src/engine-background.ts:62`, with `runner/src/engine-input.ts:118` and `runner/src/engine-events.ts:34`.
+- **Location:** `crates/cnd-runner/src/engine/background.rs`, `crates/cnd-runner/src/engine/input.rs`, `crates/cnd-runner/src/engine/results.rs`, and `crates/cnd-runner/src/engine/actor.rs`.
 - **Reason:** The failure is Rare and Medium, and the fix has no migration or other cost that grows after merge.
 
 - **Terms:**
@@ -39,13 +39,13 @@
 
 ## Related cases to verify during future work
 
-- Location: `runner/src/providers/claude-background.ts:22`, `runner/src/providers/claude-events.ts:41`, and `runner/src/engine-background.ts:34`.
+- Location: `runner/sdk-helper/src/providers/claude-background.ts:22`, `runner/sdk-helper/src/providers/claude-events.ts:41`, and `crates/cnd-runner/src/engine/background.rs` and `crates/cnd-runner/src/engine/results.rs`.
   A static reading suggests a queued notification reply can follow the result after a task ended inside that first reply.
   If so, `waited` is false, its result is ignored, its Stop hook clears `replied`, and final idle cannot end the hold.
   No real run reproduced this order. Do not treat it as a confirmed defect without that evidence.
-- Location: `runner/src/engine-background.ts:56`.
+- Location: `crates/cnd-runner/src/engine/background.rs` and `crates/cnd-runner/src/engine/actor.rs`.
   The same static reading suggests a reply can send no new running frame.
   Then `waiting` might stay true and allow the deadline to cut that reply.
   No real run reproduced that order. It remains unconfirmed.
 
-The current PR made no runner change or extra investigation for this peer finding. Future work must keep the approved same-turn notification and no-cut rules.
+The Rust port keeps this wait path. `Background::reply` returns `Wait` when work was observed and idle is false, without setting `waiting` or a deadline. The actor arms the background timer only when `waiting` is true. The two related cases above still need a real-program reproduction. Future work must keep the approved same-turn notification and no-cut rules.

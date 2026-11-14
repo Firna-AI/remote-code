@@ -1,3 +1,4 @@
+import type { Workspace } from '../../shared/generated/Workspace'
 // @vitest-environment happy-dom
 
 import { act } from 'react'
@@ -5,7 +6,7 @@ import { describe, expect, test, vi } from 'vitest'
 import { routes } from '../../app/router'
 import { rightClick } from '../../chat/components/tab-row-test-kit'
 import { sectionsPath } from '../../shared/sections'
-import { workspacesPath, type Workspace } from '../../shared/workspaces'
+import { workspacesPath } from '../../shared/workspaces'
 import { byRole } from '../../test-support/dom-queries'
 import { FakeApiServer } from '../../test-support/fake-api'
 import {

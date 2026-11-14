@@ -1,8 +1,8 @@
+import type { RunnerProtocolVersion } from '../../src/shared/generated/RunnerProtocolVersion'
 import type { WorkspaceEventEnvelope } from './workspace-events'
 import {
   isSupportedRunnerVersion,
   RUNNER_PROTOCOL_VERSION,
-  type RunnerProtocolVersion,
 } from '../../src/shared/runner'
 import type {
   WorkspaceSockets,

@@ -1,0 +1,10 @@
+---
+source: crates/cnd-runner-interface/tests/fast_wire.rs
+expression: choice
+---
+{
+  "agent": "codex",
+  "model": "test-model",
+  "effort": "high",
+  "fast": true
+}

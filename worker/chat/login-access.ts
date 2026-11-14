@@ -1,4 +1,4 @@
-import type { Agent } from '../../src/shared/agents'
+import type { Agent } from '../../src/shared/generated/Agent'
 import type { AppEnv } from '../env'
 import { HttpError } from '../http'
 import { readAgentLogin, senderLoginAccess } from './queries'

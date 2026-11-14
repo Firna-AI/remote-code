@@ -1,5 +1,6 @@
+import type { WorkspaceState } from '../../shared/generated/WorkspaceState'
 import type { OrgRole } from '../../shared/api'
-import type { WorkspaceState } from '../../shared/workspaces'
+
 import type { FakeMacScenario } from '../../test-support/fixtures/devices'
 import type { RecordedChatScenario } from '../../test-support/recorded-chat'
 

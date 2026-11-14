@@ -3,7 +3,7 @@
 - **Severity:** High. **Effort:** Medium. **Confidence:** High. **Harder later:** Yes.
 - **Kind:** Needs decision.
 - **Added:** 2026-11-07, from the options check of [the agent-login follow-up item](https://github.com/Firna-AI/remote-code/blob/60b5b8d7fe1fa394687bdc125636c4eabd155c57/plans/follow-ups/agent-logins-readable-in-sandbox.md), which the model gateway change fixed and deleted on 10 November 2026, on branch `calummoore/conductor-alternative-architecture`, a problem outside its scope. The user sees it as item 121.
-- **Location:** `handleGitCredential` in `worker/lifecycle/machine.ts:10`, the stored token read in `worker/security/github-tokens.ts:104`, `image/git-credential-helper.sh`, the section "Start in a workspace" of `image/README.md`, and the section "GitHub tokens" of `docs/protocol/tokens-and-secrets.md`.
+- **Location:** `handleGitCredential` in `worker/lifecycle/machine.ts:10`, the stored token read in `worker/security/github-tokens.ts:104`, `crates/cnd-cli/src/environment.rs` and `crates/cnd-credential/src/service.rs`, the section "Start in a workspace" of `image/start.md`, and the section "GitHub tokens" of `docs/protocol/tokens-and-secrets.md`.
 - **Reason:** each option states or changes a security rule of the access protocol, and the user decides those rules.
 
 - **Terms:**
@@ -17,8 +17,8 @@
   - GitHub user tokens expire after 8 hours when the app has expiry on. The code also accepts tokens with no expiry, in `worker/security/github-token-data.ts`.
   - The access doc says that a limit to the org's repositories "was rejected for now, because GitHub cannot set it on a user token". GitHub's scoped-token call contradicts that reason. Nobody has checked it with the real app.
   - The runner and the terminal run as the system user `user`, and Boat gives `user` passwordless sudo (`image/README.md`). The terminal loads `/run/ascii-secrets/env.sh` into each shell (`worker/terminal/scripts.ts`).
-  - The runner redacts only the workspace token and the agent logins from tool output (`runner/src/runner.ts`). A GitHub token that a tool prints goes into the chat history that every member sees.
-  - The route is not wired yet. The machine hostname serves a stub (`worker/application.ts`), and the runner does not set `CONDUCTIVE_TURN_ID`. So the risk comes from the design, and it starts when the wiring lands.
+  - The runner filters known workspace and turn tokens from tool output in `crates/cnd-runner/src/filter/`. A GitHub token that a tool prints goes into the chat history that every member sees.
+  - The machine route is live in `worker/lifecycle/machine.ts`. The runner sets `CONDUCTIVE_TURN_ID` for each agent process in `crates/cnd-runner/src/engine/provider.rs`. The helper sends that ID with its credential request.
   - For agent logins, decision 49 D of 6 November 2026 accepted that processes can read the login during a turn. Decision 114 of 7 November 2026 states the risk for tool processes after the turn now, and fixes it later.
 - **Problem:** While a turn runs, each process in the sandbox, and each member with a terminal there, can get the sender's GitHub user token, for example with `git credential fill`. The token works after the turn, and on the person's repositories outside the org. The access doc does not state this risk.
 - **Impact if no action:** Sandbox code or another member can take a member's GitHub token and use it outside the product, also after the turn. With the Workflows permission, a taken token can push a workflow that reads the Actions secrets of each repository that it reaches.
@@ -31,7 +31,7 @@
     - The scoped token reaches only the workspace's repositories, with the permissions for contents, workflows, and pull requests.
     - The Worker keeps the scoped token encrypted with the turn record, and gives it for each helper call of that turn. The stored token never enters the sandbox.
     - Pushes still show as the person (decision 50). No Git data passes through the Worker.
-    - GitHub limits a scoped token to the repositories of one owner. So repositories of two owners need two tokens. The helper can send the repository path, because `image/install.sh` already sets `credential.useHttpPath`.
+    - GitHub limits a scoped token to the repositories of one owner. So repositories of two owners need two tokens. The helper can send the repository path, because `image/install-system.sh` already sets `credential.useHttpPath`.
     - The access doc must drop "GitHub cannot set it on a user token", and state the risk that remains: during a turn, sandbox code can use the token on the workspace's repositories.
     - Unchecked: how long a scoped token lives, whether a renewal of the stored token ends it, whether git over HTTPS accepts it, and whether GitHub caps the live tokens of one person. The check needs the app's client secret and a real user, so the user must take part.
   - **C.** A Git proxy in the Worker. Effort: Large.

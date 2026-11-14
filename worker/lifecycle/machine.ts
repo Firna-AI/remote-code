@@ -1,5 +1,5 @@
-import { MACHINE_PATHS } from '../../src/shared/agent-tools'
-import { TOOL_TURN_HEADER } from '../../tools/context'
+import { MACHINE_PATHS, TOOL_TURN_HEADER } from '../../src/shared/agent-tools'
+
 import { suspendedUserError } from '../data/user-access'
 import { HttpError, privateResponse } from '../http'
 import { hash } from '../security/crypto'

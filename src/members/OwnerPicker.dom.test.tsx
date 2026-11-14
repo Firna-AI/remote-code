@@ -1,3 +1,4 @@
+import type { Workspace } from '../shared/generated/Workspace'
 // @vitest-environment happy-dom
 import { act } from 'react'
 import { describe, expect, it, vi } from 'vitest'
@@ -8,7 +9,7 @@ import {
   workspaceOwnerPath,
   type OrgMember,
 } from '../shared/members'
-import type { Workspace } from '../shared/workspaces'
+
 import {
   accessibleName,
   byDialog,

@@ -71,7 +71,7 @@ account-owned token both work.
 | --- | --- | --- | --- |
 | Workers Scripts Edit | Account | The account of the Worker | `wrangler deploy`: the Worker, its assets, its cron trigger, its URL settings, and its custom domains |
 | D1 Edit | Account | The account of the Worker | The D1 migrations |
-| Workers R2 Storage Edit | Account | The account of the Worker | The upload of the runner archive |
+| Workers R2 Storage Edit | Account | The account of the Worker | The upload of Conductive release files |
 | Workers Routes Edit | Zone | `conductive.page` | The route `*.conductive.page/*` |
 | Zone Read | Zone | `conductive.page` | Wrangler finds the zone of that route by its name |
 | Containers Edit | Account | The account of the Worker | The image and the instances of the [ChatGPT egress Worker](../worker/chatgpt-egress/README.md) |
@@ -97,7 +97,7 @@ through the API. Give it the same permissions, with two changes:
   `conductive-runner`.
 
 The S3 key pair of the upload then reaches only that bucket.
-[The archive in each deploy](deployment/runner-archive.md#the-archive-in-each-deploy)
+[The release in each deploy](deployment/runner-archive.md#the-release-in-each-deploy)
 describes that upload. The API names each Edit permission with Write, as
 in `D1 Write`.
 
@@ -107,9 +107,10 @@ Each run takes these steps, in this order:
 
 1. It installs the packages with `npm ci` and `npm ci --prefix runner`.
 2. It builds the app with `npm run build`, which also runs the typecheck.
-3. It packages the runner archive.
-4. It publishes the archive when the archive is new, as
-   [The archive in each deploy](deployment/runner-archive.md#the-archive-in-each-deploy)
+3. It packages the system and SDK helper parts, and builds the musl program
+   with its version and three-part list embedded.
+4. It uploads each missing immutable release file and checks its public size, as
+   [The release in each deploy](deployment/runner-archive.md#the-release-in-each-deploy)
    says.
 5. It applies the D1 migrations with
    `npx wrangler d1 migrations apply DB --remote --config wrangler.jsonc`.
@@ -128,13 +129,14 @@ Each run takes these steps, in this order:
    - A failure of this deploy gives a warning and does not stop the run.
      The next run deploys the egress Worker again.
 7. It makes a new random deploy token, and deploys the Worker with
-   `npx wrangler deploy`. Two `--var` options set the runner variables to
-   the archive. A third sets the SHA-256 digest of the token. The deploy
+   `npx wrangler deploy`. A `--var` option sets the SHA-256 digest of the token. The deploy
    also publishes the model list and app default from `wrangler.jsonc`.
 8. It checks that `https://app.conductive.build/api/health` answers
    `{"status":"ok"}`. When that answer does not come within about a
    minute, the run fails.
-9. It asks the Worker for the
+9. It publishes the newest-version JSON only for a higher version. It reads
+   the current JSON directly from R2 and checks the public size after upload.
+10. It asks the Worker for the
    [software image](protocol/org-image.md#the-software-image) of the new
    version, with the deploy token, and waits for it for up to 15 minutes.
    The log of the run shows the output of the build. When the image of
@@ -145,8 +147,7 @@ Each run takes these steps, in this order:
 A failed step stops the run, except a failed deploy of the egress Worker.
 An app build error stops the run before it changes anything live.
 
-- The `--var` options set only `CONDUCTIVE_RUNNER_ARCHIVE_URL`,
-  `CONDUCTIVE_RUNNER_ARCHIVE_SHA256`, and `CONDUCTIVE_DEPLOY_TOKEN_SHA256`.
+- The `--var` option sets only `CONDUCTIVE_DEPLOY_TOKEN_SHA256`.
   The token itself stays in the deploy job. The values in `wrangler.jsonc`
   replace the corresponding Worker variables. This includes
   `CONDUCTIVE_MODELS` and `CONDUCTIVE_DEFAULT_CHOICE`, as
@@ -155,8 +156,7 @@ An app build error stops the run before it changes anything live.
   no secret.
 - The deploy tags the new Worker version with the short commit hash. So
   the Cloudflare dashboard shows which commit is live.
-- The summary of each run names the commit, the archive URL, whether the
-  run uploaded the archive, the result of the egress deploy, and the result
+- The summary of each run names the commit, the release version and publication result, the result of the egress deploy, and the result
   of the software image.
 - The health route reads no D1 data and gives no version. So the check
   proves only that the Worker answers. Wrangler names the deployed version

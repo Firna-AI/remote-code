@@ -1,6 +1,6 @@
 import type { AppDependencies, AppEnv } from '../env'
 import { workspaceBinding } from '../app-api/workspace-state'
-import { runnerSoftware } from '../configuration'
+import { latestSoftwareRelease } from '../lifecycle/software-release'
 import { imageRuntime } from '../lifecycle/runtime'
 import { refreshImagesForPush } from '../lifecycle/image-timers'
 import { handleGitHubWebhook } from './webhook'
@@ -46,7 +46,7 @@ export async function productionGitHubWebhook(
           githubRepositoryId: repositoryId,
           installationId,
           ref: `refs/heads/${branch}`,
-          software: runnerSoftware(env),
+          software: await latestSoftwareRelease(env, dependencies.fetch),
         })
       },
     },

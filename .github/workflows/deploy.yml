@@ -110,6 +110,7 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v7
         with:
+          fetch-depth: 0
           persist-credentials: false
 
       # The deploy job skips the npm cache.
@@ -125,43 +126,65 @@ jobs:
           npm ci
           npm ci --prefix runner
 
+      - name: Set up Rust
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: x86_64-unknown-linux-musl
+
+      - name: Install musl tools
+        run: sudo apt-get update && sudo apt-get install -y musl-tools
+
+      - name: Cache Cargo dependencies
+        uses: Swatinem/rust-cache@v2
+
       # Build before any change to the live deployment.
       - name: Build app
         run: |
           set -euo pipefail
           npm run build
 
-      # Name the archive by the digest of its contents.
-      - name: Package runner
-        id: runner
+      - name: Package Conductive release
+        id: release
         run: |
           set -euo pipefail
-          node image/package-runner.mjs --base-url "$RUNNER_BASE_URL"
-          metadata=.context/runner-artifact/runner.tar.gz.json
-          url=$(jq -r '.url' "$metadata")
-          sha256=$(jq -r '.sha256' "$metadata")
-          if [[ ! "$sha256" =~ ^[[:xdigit:]]{64}$ ||
-            "$url" != "${RUNNER_BASE_URL}runner-${sha256}.tar.gz" ]]; then
-            echo '::error::Runner archive metadata has an invalid digest or URL.'
-            exit 1
-          fi
-          {
-            echo "url=$url"
-            echo "sha256=$sha256"
-            echo "key=runner-${sha256}.tar.gz"
-          } >> "$GITHUB_OUTPUT"
+          version="0.0.$(git rev-list --count HEAD)"
+          input="$PWD/.context/release-input"
+          mkdir -p "$input"
+          npx --no-install esbuild worker/lifecycle/image-runtime.ts --bundle \
+            --platform=node --format=esm --outfile="$input/runtime.mjs"
+          node --input-type=module -e '
+            import { IMAGE_NODE_RUNTIME } from "./.context/release-input/runtime.mjs";
+            process.stdout.write(JSON.stringify(IMAGE_NODE_RUNTIME));
+          ' > "$input/node.json"
+          node_url=$(jq -er '.url' "$input/node.json")
+          node_sha256=$(jq -er '.sha256' "$input/node.json")
+          sdk_helper_sha256=$(node runner/sdk-helper/scripts/package.mjs "$input")
+          sdk_helper_key="releases/download/sdk-helper/sdk-helper-$sdk_helper_sha256.tar.gz"
+          mkdir -p ".context/release-artifact/$(dirname "$sdk_helper_key")"
+          cp "$input/sdk-helper-$sdk_helper_sha256.tar.gz" ".context/release-artifact/$sdk_helper_key"
+          system_sha256=$(bash image/package-system.sh "$input")
+          system_key="releases/download/system/system-$system_sha256.tar.gz"
+          mkdir -p ".context/release-artifact/$(dirname "$system_key")"
+          cp "$input/system-$system_sha256.tar.gz" ".context/release-artifact/$system_key"
+          cargo run --locked -p cnd-release -- parts \
+            --part node "$node_url" "$node_sha256" \
+            --part sdk-helper "${RUNNER_BASE_URL}${sdk_helper_key}" "$sdk_helper_sha256" \
+            --part system "${RUNNER_BASE_URL}${system_key}" "$system_sha256" \
+            --output "$input/parts.json"
+          CONDUCTIVE_RELEASE_VERSION="$version" CONDUCTIVE_PARTS_FILE="$input/parts.json" \
+            cargo build --locked --release --target x86_64-unknown-linux-musl -p cnd-cli
+          cargo run --locked -p cnd-release -- package --version "$version" \
+            --program target/x86_64-unknown-linux-musl/release/conductive \
+            --parts "$input/parts.json" --output .context/release-artifact
+          echo "version=$version" >> "$GITHUB_OUTPUT"
 
-      # Keep the derived S3 credentials in this step only.
-      - name: Publish runner
-        id: publish
+      - name: Upload Conductive release files
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
           AWS_DEFAULT_REGION: auto
           AWS_REQUEST_CHECKSUM_CALCULATION: when_required
           AWS_RESPONSE_CHECKSUM_VALIDATION: when_required
-          ARCHIVE_URL: ${{ steps.runner.outputs.url }}
-          ARCHIVE_KEY: ${{ steps.runner.outputs.key }}
         run: |
           set -euo pipefail
           token_id=$(curl -fsS \
@@ -175,7 +198,7 @@ jobs:
               jq -r '.result.id // empty') || token_id=''
           fi
           if [[ -z "$token_id" ]]; then
-            echo '::error::Could not read the Cloudflare token ID for the runner upload.'
+            echo '::error::Could not read the Cloudflare token ID for the release upload.'
             exit 1
           fi
           echo "::add-mask::$token_id"
@@ -184,28 +207,30 @@ jobs:
           echo "::add-mask::$secret_key"
           export AWS_ACCESS_KEY_ID="$token_id" AWS_SECRET_ACCESS_KEY="$secret_key"
           endpoint="https://$CLOUDFLARE_ACCOUNT_ID.r2.cloudflarestorage.com"
-          archive=.context/runner-artifact/runner.tar.gz
-          if aws s3api head-object --bucket "$RUNNER_BUCKET" --key "$ARCHIVE_KEY" \
-            --endpoint-url "$endpoint" > /dev/null 2>&1; then
-            echo 'Runner archive already exists.'
-            result=reused
-          else
-            aws s3 cp "$archive" "s3://$RUNNER_BUCKET/$ARCHIVE_KEY" \
-              --endpoint-url "$endpoint" --content-type application/gzip --only-show-errors
-            result=uploaded
-          fi
-          if ! headers=$(curl -fsSI --retry 3 "$ARCHIVE_URL"); then
-            echo "::error::Could not read the public runner archive at $ARCHIVE_URL."
-            exit 1
-          fi
-          remote_size=$(printf '%s\n' "$headers" |
-            awk 'tolower($1) == "content-length:" {gsub("\r", "", $2); size=$2} END {print size}')
-          local_size=$(stat -c %s "$archive")
-          if [[ "$remote_size" != "$local_size" ]]; then
-            echo "::error::Public runner archive size does not match the local archive at $ARCHIVE_URL."
-            exit 1
-          fi
-          echo "result=$result" >> "$GITHUB_OUTPUT"
+          output=.context/release-artifact
+          check_size() {
+            local file="$1" url="$2" headers remote_size local_size
+            headers=$(curl -fsSI --retry 3 "$url")
+            remote_size=$(printf '%s\n' "$headers" |
+              awk 'tolower($1) == "content-length:" {gsub("\r", "", $2); size=$2} END {print size}')
+            local_size=$(stat -c %s "$file")
+            if [[ "$remote_size" != "$local_size" ]]; then
+              echo "::error::Public release file size does not match the local file at $url."
+              return 1
+            fi
+          }
+          while IFS= read -r -d '' file; do
+            key=${file#"$output/"}
+            content_type=application/gzip
+            if [[ "$file" == *.json ]]; then content_type=application/json; fi
+            if ! aws s3api head-object --bucket "$RUNNER_BUCKET" --key "$key" \
+              --endpoint-url "$endpoint" > /dev/null 2>&1; then
+              aws s3 cp "$file" "s3://$RUNNER_BUCKET/$key" --endpoint-url "$endpoint" \
+                --content-type "$content_type" --cache-control 'public, max-age=31536000, immutable' \
+                --only-show-errors
+            fi
+            check_size "$file" "${RUNNER_BASE_URL}${key}"
+          done < <(find "$output/releases/download" -type f -print0)
 
       # Use the source config so migrations do not follow the build redirect.
       - name: Apply migrations
@@ -274,8 +299,6 @@ jobs:
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
-          ARCHIVE_URL: ${{ steps.runner.outputs.url }}
-          ARCHIVE_SHA256: ${{ steps.runner.outputs.sha256 }}
         run: |
           set -euo pipefail
           umask 077
@@ -286,8 +309,6 @@ jobs:
           deploy_digest=${deploy_digest%% *}
           npx wrangler deploy \
             --var "CONDUCTIVE_DEPLOY_TOKEN_SHA256:$deploy_digest" \
-            --var "CONDUCTIVE_RUNNER_ARCHIVE_URL:$ARCHIVE_URL" \
-            --var "CONDUCTIVE_RUNNER_ARCHIVE_SHA256:$ARCHIVE_SHA256" \
             --tag "${GITHUB_SHA:0:7}" --message "main at $GITHUB_SHA"
 
       - name: Check health
@@ -304,6 +325,71 @@ jobs:
           done
           echo "::error::Health check failed for $HEALTH_URL."
           exit 1
+
+      - name: Publish Conductive release
+        id: publish_release
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
+          AWS_DEFAULT_REGION: auto
+          AWS_REQUEST_CHECKSUM_CALCULATION: when_required
+          AWS_RESPONSE_CHECKSUM_VALIDATION: when_required
+          RELEASE_VERSION: ${{ steps.release.outputs.version }}
+        run: |
+          set -euo pipefail
+          token_id=$(curl -fsS \
+            -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+            "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/tokens/verify" |
+            jq -r '.result.id // empty') || token_id=''
+          if [[ -z "$token_id" ]]; then
+            token_id=$(curl -fsS \
+              -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+              'https://api.cloudflare.com/client/v4/user/tokens/verify' |
+              jq -r '.result.id // empty') || token_id=''
+          fi
+          if [[ -z "$token_id" ]]; then
+            echo '::error::Could not read the Cloudflare token ID for the release upload.'
+            exit 1
+          fi
+          echo "::add-mask::$token_id"
+          secret_key=$(printf '%s' "$CLOUDFLARE_API_TOKEN" | sha256sum)
+          secret_key=${secret_key%% *}
+          echo "::add-mask::$secret_key"
+          export AWS_ACCESS_KEY_ID="$token_id" AWS_SECRET_ACCESS_KEY="$secret_key"
+          endpoint="https://$CLOUDFLARE_ACCOUNT_ID.r2.cloudflarestorage.com"
+          output=.context/release-artifact
+          latest_key=releases/latest/conductive/x86_64-unknown-linux-musl
+          check_size() {
+            local file="$1" url="$2" headers remote_size local_size
+            headers=$(curl -fsSI --retry 3 "$url")
+            remote_size=$(printf '%s\n' "$headers" |
+              awk 'tolower($1) == "content-length:" {gsub("\r", "", $2); size=$2} END {print size}')
+            local_size=$(stat -c %s "$file")
+            if [[ "$remote_size" != "$local_size" ]]; then
+              echo "::error::Public release file size does not match the local file at $url."
+              return 1
+            fi
+          }
+          # Read R2 directly. A cached public JSON must never decide version ordering.
+          aws s3api list-objects-v2 --bucket "$RUNNER_BUCKET" --prefix "$latest_key" \
+            --endpoint-url "$endpoint" > .context/release-input/objects.json
+          if jq -e --arg key "$latest_key" 'any(.Contents[]?; .Key == $key)' \
+            .context/release-input/objects.json > /dev/null; then
+            aws s3api get-object --bucket "$RUNNER_BUCKET" --key "$latest_key" \
+              --endpoint-url "$endpoint" .context/release-input/current.json > /dev/null
+            newer=$(cargo run --locked -p cnd-release -- newer \
+              --candidate "$output/$latest_key" --current .context/release-input/current.json)
+            if [[ "$newer" != true ]]; then
+              echo 'The public release is already at this version or a higher version.'
+              echo 'result=kept' >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
+          fi
+          aws s3 cp "$output/$latest_key" "s3://$RUNNER_BUCKET/$latest_key" \
+            --endpoint-url "$endpoint" --content-type application/json \
+            --cache-control 'max-age=60' --only-show-errors
+          check_size "$output/$latest_key" "${RUNNER_BASE_URL}${latest_key}?version=$RELEASE_VERSION"
+          echo 'result=published' >> "$GITHUB_OUTPUT"
 
       - name: Build software image
         id: software_image
@@ -386,15 +472,14 @@ jobs:
 
       - name: Write deploy summary
         env:
-          ARCHIVE_URL: ${{ steps.runner.outputs.url }}
-          PUBLISH_RESULT: ${{ steps.publish.outputs.result }}
+          RELEASE_VERSION: ${{ steps.release.outputs.version }}
+          RELEASE_RESULT: ${{ steps.publish_release.outputs.result }}
           EGRESS_RESULT: ${{ steps.egress.outputs.result }}
         run: |
           set -euo pipefail
           {
             printf 'Commit: %s\n\n' "$GITHUB_SHA"
-            printf 'Runner archive: %s\n\n' "$ARCHIVE_URL"
-            printf 'Archive publish result: %s\n\n' "$PUBLISH_RESULT"
+            printf 'Conductive release: %s, %s\n\n' "$RELEASE_VERSION" "$RELEASE_RESULT"
             printf 'ChatGPT egress Worker: %s\n' "$EGRESS_RESULT"
           } >> "$GITHUB_STEP_SUMMARY"
 

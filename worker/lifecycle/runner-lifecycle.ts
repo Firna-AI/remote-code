@@ -1,4 +1,4 @@
-import type { RunnerEvent } from '../../src/shared/runner'
+import type { RunnerEvent } from '../../src/shared/generated/RunnerEvent'
 import type { DurableLifecycle } from './durable'
 import type { TurnScopes } from './turns'
 import type { AppEnv } from '../env'

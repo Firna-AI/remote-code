@@ -1,5 +1,6 @@
-import type { AgentChoice } from '../../shared/agents'
-import type { ChangeModelRequest, Session } from '../../shared/sessions'
+import type { Session } from '../../shared/generated/Session'
+import type { AgentChoice } from '../../shared/generated/AgentChoice'
+import type { ChangeModelRequest } from '../../shared/sessions'
 import { sessionState, type ChatSnapshot } from './chat-snapshot'
 import type { ChatContext } from './context'
 import { moveDraft } from './drafts'

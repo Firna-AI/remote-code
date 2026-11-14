@@ -1,29 +1,30 @@
-# Org NODE_OPTIONS reach the runner and helper
+# Org NODE_OPTIONS reach the SDK helper
 
-- **Severity:** Medium. **Likelihood:** Rare. **Effort:** Small. **Confidence:** Medium. **Harder later:** No.
+- **Severity:** Medium. **Likelihood:** Rare. **Effort:** Small. **Confidence:** High. **Harder later:** No.
 - **Kind:** Outside the scope.
 - **Added:** 2026-11-11, from the check of finding 5 in review round 1 of the branch `calummoore/github-push-failure`.
-- **Location:** `image/runner-start.sh:3` to `:7`, `image/git-credential-helper.sh:4` to `:8`, and for comparison `worker/tools/image.ts:45` and `worker/tools/image.test.ts:74`.
-- **Reason:** the review found it in code that the branch did not change.
+- **Location:** `image/runner-start.sh`, `crates/cnd-runner/src/helper/process.rs`, and `runner/sdk-helper/src/providers/environment.ts`.
+- **Reason:** This environment policy remains outside the Rust software port's behavior changes.
 
 - **Terms:**
-  - **Sandbox variables:** the env values that the Worker gives a cloud computer at each start, with the org's env vars. The sandbox provider writes them to `/run/ascii-secrets/env.sh`.
-  - **Private Node:** the Node runtime that the org image installs for Conductive's own programs, apart from the Node of the org's project.
+  - **Saved settings:** The org and workspace variables in `/run/ascii-secrets/env.sh`.
+  - **Private Node:** The release's Node runtime, which runs only the SDK helper.
 - **Background:**
-  - `runner-start.sh` loads every sandbox variable with automatic export, and then starts the agent runner with the private Node.
-  - `git-credential-helper.sh` does the same before it starts the credential helper.
-  - An org can set `NODE_OPTIONS` as an env var for its own app, for example to preload a module with `--require` or `--import`.
-  - The tools launcher in `worker/tools/image.ts` removes `NODE_OPTIONS` before it starts the private Node. `worker/tools/image.test.ts` checks this.
-- **Problem:** The runner and the credential helper get the org's `NODE_OPTIONS`. A preload that names a file of the org's project, or an option that the private Node does not accept, can stop them.
-- **Impact if no action:** In such an org, the agents do not start, or Git gets no GitHub access. The org sees no reason.
-- **Root question:** Which env values may reach the private Node of Conductive's own programs?
+  - `runner-start.sh` exports saved settings before it starts the Rust runner.
+  - `NodeHelpers::port` starts the private Node with the runner's inherited environment. It does not remove `NODE_OPTIONS`.
+  - An org can set `NODE_OPTIONS` for its project, for example to preload a module with `--require` or `--import`.
+  - The runner, workspace tools, and Git credential command are Rust programs. Node options no longer change those commands directly.
+  - The SDK helper still loads under Node before its provider environment filter can run.
+- **Problem:** The SDK helper inherits the org's `NODE_OPTIONS`. A project preload or an unsupported Node option can stop it before an agent starts.
+- **Impact if no action:** Agent turns can fail during helper startup. The project setting gives no clear explanation in the app.
+- **Root question:** Which org variables may change the private Node that runs Conductive's SDK helper?
 - **Options:**
-  - **A.** Remove `NODE_OPTIONS` in `runner-start.sh` and `git-credential-helper.sh` before they start the private Node, as the tools launcher does. Add the case to the launcher tests. Effort: Small.
-  - **B.** Start each program of the private Node with a fixed list of env values from the file, as `env -i` with the names that it reads. This also stops other Node variables, such as `NODE_PATH`. The runner reads many values, so its list is long. Effort: Medium.
-  - **C.** Refuse an org env var named `NODE_OPTIONS` in the settings. This adds a new rejection, and an org then cannot set it for its own app. Effort: Small.
-- **Left out:** Change nothing, because an org cannot see why its agents fail.
-- **Wider fix:** B, because it also covers other variables that change Node.
-- **Previous examples:** The tools launcher removes `NODE_OPTIONS` for the same reason.
-- **Related:** `plans/follow-ups/launcher-turn-id-restore.md` changes the same credential launcher.
-- **Recommendation:** A. It matches the tools launcher at a small cost.
-- **Action:** ask the user, because the review found it outside the branch, and the user chooses when to fix it.
+  - **A.** Remove `NODE_OPTIONS` at the `NodeHelpers::port` child-process boundary. Add a startup case with a project preload. Effort: Small.
+  - **B.** Give the private Node a fixed environment. Pass the org variables needed by agent tools separately when the helper starts an agent. This also covers `NODE_PATH`, but needs a larger helper boundary change. Effort: Medium.
+  - **C.** Refuse an org variable named `NODE_OPTIONS` in settings. This adds a rejection and stops the org using it for its own project. Effort: Small.
+- **Left out:** Removing the variable inside the helper runs too late for a Node preload. Removing it in the runner launcher also removes it from the environment used by agent tools.
+- **Wider fix:** B. It separates the private runtime environment from the project environment.
+- **Previous examples:** The replaced Node tools launcher removed `NODE_OPTIONS` before it started the private Node.
+- **Related:** `crates/cnd-cli/src/environment.rs` now owns saved settings for both Rust commands. `plans/follow-ups/org-env-turns-off-agent-tls-checks.md` covers variables that reach the agent programs.
+- **Recommendation:** A. It protects helper startup at the boundary that owns the private Node.
+- **Action:** ask the user, because the original finding remains outside its feature scope and the user chooses when to change this environment policy.

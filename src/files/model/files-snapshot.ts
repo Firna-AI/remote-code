@@ -1,4 +1,4 @@
-import type { ChangesResponse } from '../../shared/files'
+import type { ChangesResponse } from '../../shared/generated/ChangesResponse'
 import type { FilesError } from '../api/files-errors'
 import type { FailedRepairs } from './failed-repairs'
 import type { FileTree } from './tree-model'

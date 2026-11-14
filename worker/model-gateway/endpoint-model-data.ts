@@ -1,5 +1,4 @@
-import type { Agent } from '../../src/shared/agents'
-
+import type { Agent } from '../../src/shared/generated/Agent'
 export interface EndpointModelRead {
   userId: string
   agent: Agent

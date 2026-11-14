@@ -1,0 +1,46 @@
+---
+source: crates/cnd-runner-interface/tests/helper_wire.rs
+expression: request
+---
+{
+  "type": "start",
+  "requestId": "1",
+  "options": {
+    "cwd": "/repo",
+    "home": "/home/agent",
+    "sessionId": "session-1",
+    "endpoint": "https://machine.test/v1/model/claude",
+    "credential": {
+      "type": "native",
+      "login": {
+        "agent": "claude",
+        "kind": "api-key",
+        "secret": "fake-measurement-key"
+      }
+    },
+    "commitAuthor": {
+      "name": "Alice",
+      "email": "alice@example.test"
+    },
+    "choice": {
+      "agent": "claude",
+      "model": "test-model",
+      "effort": "ultra",
+      "fast": false
+    },
+    "conversationId": null,
+    "instructions": "Saved instructions",
+    "instructionBranches": {
+      "workspaceBranch": "feature",
+      "targetBranch": "main"
+    },
+    "tools": {
+      "machineOrigin": "https://machine.test",
+      "workspaceToken": "fake-workspace-token",
+      "turnId": "turn-1"
+    },
+    "backgroundNoteIds": [
+      "task:old"
+    ]
+  }
+}

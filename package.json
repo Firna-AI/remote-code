@@ -29,8 +29,8 @@
     "desktop:typecheck": "npm --prefix desktop run typecheck",
     "desktop:lint": "npm --prefix desktop run lint",
     "desktop:format:check": "npm --prefix desktop run format:check",
-    "runner:typecheck": "npm --prefix runner run typecheck",
-    "runner:test": "npm --prefix runner run test"
+    "runner:typecheck": "npm --prefix runner/sdk-helper run typecheck",
+    "runner:test": "npm --prefix runner/sdk-helper test"
   },
   "dependencies": {
     "@firna/ui": "4.0.0",

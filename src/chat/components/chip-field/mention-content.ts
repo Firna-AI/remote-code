@@ -13,7 +13,7 @@ import {
   type LexicalNode,
   type NodeKey,
 } from 'lexical'
-import type { FileEntry } from '../../../shared/files'
+import type { FileEntry } from '../../../shared/generated/FileEntry'
 import { mentionAt, mentionText } from '../../../shared/mention-text'
 import { findMentioned, type MentionTree } from '../../mentions/MentionsContext'
 import {

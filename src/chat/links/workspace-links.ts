@@ -1,5 +1,5 @@
+import type { Workspace } from '../../shared/generated/Workspace'
 import { parseRoute, routes } from '../../app/router'
-import type { Workspace } from '../../shared/workspaces'
 
 /** A part of the text of a message field: plain text, or a link. */
 export type TextPart =

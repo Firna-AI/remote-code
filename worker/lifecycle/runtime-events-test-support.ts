@@ -1,9 +1,8 @@
 import { expect } from 'vitest'
-
+import type { StartStep } from '../../src/shared/generated/StartStep'
 import { array } from '../chat/agent-events'
 import type { SocketInbox } from '../chat/adapter-sockets.test-support'
 import { counter, record } from '../chat/inputs'
-import type { StartStep } from '../../src/shared/workspaces'
 
 export async function publicHistory(inbox: SocketInbox) {
   const events: Record<string, unknown>[] = []

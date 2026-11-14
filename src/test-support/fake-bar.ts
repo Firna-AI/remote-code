@@ -1,14 +1,14 @@
+import type { Session } from '../shared/generated/Session'
+import type { Workspace } from '../shared/generated/Workspace'
+import type { BranchChangedFile } from '../shared/generated/BranchChangedFile'
+import type { ChangesResponse } from '../shared/generated/ChangesResponse'
+import type { MessageSender } from '../shared/generated/MessageSender'
 import { continuedBranch } from '../../docs/mockups/src/fixtures/barActions'
 import type { WorkspaceEvent } from '../shared/events'
-import {
-  filePaths,
-  type BranchChangedFile,
-  type ChangesResponse,
-} from '../shared/files'
+import { filePaths } from '../shared/files'
 import { githubPaths, type GitHubMergeMethod } from '../shared/github'
-import type { MessageSender } from '../shared/messages'
-import type { Session } from '../shared/sessions'
-import { workspacePaths, type Workspace } from '../shared/workspaces'
+
+import { workspacePaths } from '../shared/workspaces'
 import type { FakeApiServer } from './fake-api'
 import { FAKE_IDS, FAKE_TIME } from './fixtures/core'
 import { FAKE_FILE_PATH, toolFixtures } from './fixtures/tools'

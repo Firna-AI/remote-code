@@ -1,5 +1,5 @@
-import type { RunnerEvent } from '../../src/shared/runner'
-import type { StartStep } from '../../src/shared/workspaces'
+import type { RunnerEvent } from '../../src/shared/generated/RunnerEvent'
+import type { StartStep } from '../../src/shared/generated/StartStep'
 import { HttpError } from '../http'
 import { parseRunnerFileEvent } from '../files/runner-input'
 import { array } from './agent-events'

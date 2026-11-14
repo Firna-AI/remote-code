@@ -9,7 +9,7 @@ import {
   GitPullRequestDraft,
   MessageSquareWarning,
 } from 'lucide-react'
-import type { Timestamp } from '../shared/api'
+import type { Timestamp } from '../shared/generated/Timestamp'
 import type { GitHubBanner, GitHubCheck, PullRequest } from '../shared/github'
 import { isFailedCheck, isFinishedCheck } from './checkStatus'
 import { countOf, formatTimeAgo } from './format'

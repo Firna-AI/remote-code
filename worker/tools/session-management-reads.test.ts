@@ -7,7 +7,6 @@ import {
 } from '../../src/shared/agent-session-paths'
 import { DEVICE_TEST_NOW } from '../devices/clock.test-support'
 import { sessionLink } from '../../src/shared/session-link'
-import { listedSessions } from '../../tools/session-responses'
 import {
   OTHER_WORKSPACE,
   OUTER_WORKSPACE,
@@ -46,9 +45,10 @@ it('pages all sessions in stable creation order with explicit bounds and more fl
   ] as const) {
     const response = await machineRead(active, path + query)
     expect(response.status).toBe(200)
-    const result = listedSessions(await response.json())
+    const result = record(await response.json())
+    if (!Array.isArray(result.sessions)) throw new Error('Missing sessions.')
     expect(
-      result.sessions.map(({ id }) => id),
+      result.sessions.map((session: unknown) => string(record(session).id)),
       query,
     ).toEqual(ids)
     expect(result.hasMore, query).toBe(more)

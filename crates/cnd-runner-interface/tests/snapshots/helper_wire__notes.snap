@@ -1,0 +1,11 @@
+---
+source: crates/cnd-runner-interface/tests/helper_wire.rs
+expression: output
+---
+{
+  "type": "background.notes",
+  "ids": [
+    "task:old",
+    "cron:new"
+  ]
+}

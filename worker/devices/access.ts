@@ -1,5 +1,6 @@
-import type { DeviceSender } from '../../src/shared/device'
-import { TOOL_TURN_HEADER } from '../../tools/context'
+import type { DeviceSender } from '../../src/shared/generated/DeviceSender'
+
+import { TOOL_TURN_HEADER } from '../../src/shared/agent-tools'
 import type { WorkspaceChat } from '../chat/backend'
 import { tokenWorkspace } from '../chat/queries'
 import type { AppEnv } from '../env'

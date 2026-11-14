@@ -5,11 +5,7 @@ import { createToolsHarness, type ToolsHarness } from '../previews/test-support'
 import { decrypt } from '../security/crypto'
 import { TEST_TIME } from '../test-support/harness'
 import { createTerminalHandler } from './handler'
-import {
-  installTerminalService,
-  startWorkspaceTerminal,
-  terminalStartCommand,
-} from './service'
+import { startWorkspaceTerminal, terminalStartCommand } from './service'
 
 let harness: ToolsHarness
 beforeAll(async () => {
@@ -22,29 +18,8 @@ afterAll(async () => {
   await harness.dispose()
 })
 
-it('installs an enabled ttyd service without an image password and caches a workspace secret from run storage', async () => {
+it('caches separate workspace secrets from run storage without exposing a password', async () => {
   const seed = await harness.seed()
-  const commands: string[] = []
-  await installTerminalService(
-    {
-      runCommand: async (_id, command) => {
-        commands.push(command)
-        return { exitCode: 0, stdout: '', stderr: '', timedOut: false }
-      },
-    },
-    'build-sandbox',
-  )
-  expect(commands).toHaveLength(1)
-  expect(commands[0].startsWith("sudo -n -- /bin/sh -c '")).toBe(true)
-  expect(commands[0]).toContain('systemctl enable conductive-terminal.service')
-  expect(commands[0]).toContain(
-    'ExecStartPre=+/usr/local/lib/conductive/terminal-password',
-  )
-  expect(commands[0]).toContain('--writable')
-  expect(commands[0]).toContain('User=user')
-  expect(commands[0]).toContain('WorkingDirectory=/home/user')
-  expect(commands[0]).toContain('--interface 0.0.0.0')
-  expect(commands[0]).toContain('--credential')
   await startWorkspaceTerminal(
     harness.env,
     seed.orgId,
@@ -64,7 +39,7 @@ it('installs an enabled ttyd service without an image password and caches a work
   )
   expect(command).toContain('systemctl start conductive-terminal.service')
   expect(command).not.toContain('/etc/conductive')
-  expect(commands[0]).not.toContain(row?.ciphertext)
+  expect(command).not.toContain(row?.ciphertext)
   await harness.env.DB.prepare(
     `INSERT INTO workspaces (id, org_id, repository_id, owner_user_id, name, branch,
      sandbox_id, state, created_at, updated_at)

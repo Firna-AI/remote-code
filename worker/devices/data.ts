@@ -1,4 +1,6 @@
-import type { Workspace, WorkspaceState } from '../../src/shared/workspaces'
+import type { Workspace } from '../../src/shared/generated/Workspace'
+import type { WorkspaceState } from '../../src/shared/generated/WorkspaceState'
+
 import { HttpError } from '../http'
 import { workspaceNameColumn } from '../data/workspace-name'
 

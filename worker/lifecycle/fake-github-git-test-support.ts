@@ -7,7 +7,7 @@ import {
 } from 'node:http'
 import { dirname, join } from 'node:path'
 
-import { TOOL_TURN_HEADER } from '../../tools/context'
+import { TOOL_TURN_HEADER } from '../../src/shared/agent-tools'
 
 interface GitRequest {
   method: string

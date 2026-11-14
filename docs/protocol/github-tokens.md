@@ -62,11 +62,10 @@ rules. A decision number names a dated record, as
 - In an agent turn, the author is the sender of the turn, the member whose
   message started the turn. A message that another member sends during the
   turn does not change the author.
-- A sandbox keeps the agent runner of its org image, also after a resume.
-  In a sandbox whose runner gives an agent no turn author, the commits of
-  each agent turn name the workspace owner. The member starts a new
-  workspace after an admin runs Build computer to get the turn sender as
-  the author.
+- In a sandbox whose runner gives an agent no turn author, the commits of
+  each agent turn name the workspace owner. An update of the sandbox
+  software gives such a sandbox a newer runner at a later start, as
+  [Updates](sandbox-software.md#updates) says.
 - Outside an agent turn, such as in the shared terminal or in the startup
   script, the author is the workspace owner.
 - The author of the first commit that the app pushes to an empty

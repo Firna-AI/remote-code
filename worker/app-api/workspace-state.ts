@@ -1,4 +1,5 @@
-import type { Workspace } from '../../src/shared/workspaces'
+import type { Workspace } from '../../src/shared/generated/Workspace'
+
 import type { AppEnv } from '../env'
 import type { ChatWorkspaceSummary } from '../chat/workspace-summary'
 import { HttpError } from '../http'

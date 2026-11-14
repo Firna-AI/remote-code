@@ -1,12 +1,14 @@
+import type { GitHubSummary } from '../shared/generated/GitHubSummary'
+import type { WorkspaceState } from '../shared/generated/WorkspaceState'
 import { describe, expect, test } from 'vitest'
-import type { GitHubSummary } from '../shared/github'
+
 import { orgSettingsPaths, type ImageBuild } from '../shared/org-settings'
 import {
   routinesPath,
   type RoutineRun,
   type RoutinesResponse,
 } from '../shared/routines'
-import { workspacesPath, type WorkspaceState } from '../shared/workspaces'
+import { workspacesPath } from '../shared/workspaces'
 import { FakeApiServer } from '../test-support/fake-api'
 import {
   coreFixtures,

@@ -9,3 +9,5 @@ coverage
 public/_site
 package-lock.json
 *.md
+target/
+*.rs

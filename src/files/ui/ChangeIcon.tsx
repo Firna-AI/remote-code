@@ -4,7 +4,7 @@ import {
   SquarePlus,
   type LucideIcon,
 } from 'lucide-react'
-import type { ChangeKind } from '../../shared/files'
+import type { ChangeKind } from '../../shared/generated/ChangeKind'
 import styles from './ChangeIcon.module.css'
 
 /**

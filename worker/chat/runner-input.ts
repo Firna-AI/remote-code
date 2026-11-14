@@ -1,8 +1,6 @@
-import {
-  RUNNER_SUPPORTED_LOGIN_KINDS,
-  type RunnerEventEnvelope,
-  type RunnerLoginKind,
-} from '../../src/shared/runner'
+import type { RunnerEventEnvelope } from '../../src/shared/generated/RunnerEventEnvelope'
+import type { RunnerLoginKind } from '../../src/shared/generated/RunnerLoginKind'
+import { RUNNER_SUPPORTED_LOGIN_KINDS } from '../../src/shared/runner'
 import { parseAgentEvent } from './agent-events'
 import { counter, identifier, invalidInput, number, record } from './inputs'
 import { parseOtherEvent } from './other-events'

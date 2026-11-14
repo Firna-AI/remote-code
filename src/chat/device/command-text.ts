@@ -1,3 +1,4 @@
+import type { DeviceCommandRecord } from '../../shared/generated/DeviceCommandRecord'
 import type { LucideIcon } from 'lucide-react'
 import {
   Ban,
@@ -7,10 +8,7 @@ import {
   MonitorOff,
   TimerOff,
 } from 'lucide-react'
-import {
-  deviceCommandSucceeded,
-  type DeviceCommandRecord,
-} from '../../shared/device'
+import { deviceCommandSucceeded } from '../../shared/device'
 import { stateLabel } from '../../shared/transcript/command-words'
 import type { StatusTone } from '../../../docs/mockups/src/components/common/StatusText'
 

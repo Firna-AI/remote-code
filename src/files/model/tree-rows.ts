@@ -1,4 +1,4 @@
-import type { FileEntry } from '../../shared/files'
+import type { FileEntry } from '../../shared/generated/FileEntry'
 import { splitPath } from '../navigation'
 import type { FileTree } from './tree-model'
 

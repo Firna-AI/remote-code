@@ -127,36 +127,22 @@ The harness reset clears factories.
 The runner boundary uses plain TypeScript types.
 Tests need no Cloudflare Durable Object or real WebSocket.
 
-[runnerHarness](../../runner/test-support/harness.ts) connects a `Runner` to `FakeDurableObjectEndpoint`.
 [connectFilesRunner](../files/test-support/runner.ts) connects `FakeRunner` to a backend handler.
+`FakeRunnerConnection` adapts the handler to the connector. Its constructor
+receives runner messages. Its `reply` method sends workspace messages.
 
-The runner implementation injects `endpoint.connect` as its `RunnerConnector`.
-A backend test uses `FakeRunner` with its own connector.
-`FakeRunnerConnection` adapts that backend's message handler into the connector.
-Its constructor receives runner messages. Its `reply` method sends workspace messages.
-
-`runner.commands` records turn, steer, interrupt, model, file read, and diff commands.
-`runner.emit` sends numbered events. `runner.reply` sends a file or diff result.
-`runner.pendingEvents` shows the unconfirmed outbox.
-Close a connection explicitly to test a drop. Reconnect the same runner to keep its outbox.
-Set `endpoint.confirmEvents = false` to retain unconfirmed events.
-`runner.sendEnvelope` can inject duplicates and gaps.
-The endpoint stores each event once and confirms only contiguous event numbers.
-It requests a resend when a number is missing.
-It joins valid runner file parts before it emits a complete browser file event.
-It preserves the current-branch commit count and the raw status count, and the absence of each in older reports.
-Pending parts stay on the endpoint across reconnects.
-Set `refuseEvent` to return `too_large`, `invalid`, or `turn_not_active`.
-The endpoint stores one workspace refusal marker and confirms that event number.
-An accepted event remains in `runnerEvents`. A refused event has only its marker.
-These fakes do not implement production byte checks, event validation, or turn state.
-File read and diff results go to `endpoint.fileResponses`, outside chat history.
+`runner.commands` records turns, messages, interrupts, model changes, file
+reads, and diffs. `runner.emit` sends numbered events. `runner.reply` sends
+file replies. Reconnect the same fake runner to keep its outbox.
+`runner.sendEnvelope` injects duplicates and gaps. Tests of the production
+workspace object check validation, ordering, storage, replay, and masking.
+Rust tests own the runner's transport, saved state, and report assembly.
 
 Use [recorded file events and replies](../../src/test-support/recorded-files.ts)
 for the runner's file reports.
 `recordedRunnerFileEvents` has four complete reports, with full reports as part 1 of 1.
 It keeps the current file tests' order and ends the tree at revision 2.
-`recordedMultipartRunnerFileEvents` has eight events for the fake endpoint and future part joining.
+`recordedMultipartRunnerFileEvents` has eight events for multipart assembly checks.
 It includes two-part trees and changes and consecutive tree deltas at revisions 2 and 3.
 Both samples include file creation, a rename, a removal, and dirty branch work.
 Read replies also cover file content, a diff, and a size error.

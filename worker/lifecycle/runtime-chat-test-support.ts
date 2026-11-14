@@ -1,5 +1,5 @@
+import type { RunnerEvent } from '../../src/shared/generated/RunnerEvent'
 import { sessionsPath, sessionPaths } from '../../src/shared/sessions'
-import type { RunnerEvent } from '../../src/shared/runner'
 import { record } from '../chat/inputs'
 import { FIRST_MESSAGE } from './durable-test-support'
 import type { realRuntimeFixture } from './real-runtime-test-support'

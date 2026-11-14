@@ -1,14 +1,11 @@
+import type { WorkspaceStart } from '../../../shared/generated/WorkspaceStart'
 import { newWorkspaceConversations } from '../../../../docs/mockups/src/fixtures/newWorkspaceConversations'
 import { startErrors } from '../../../../docs/mockups/src/fixtures/starting'
 import {
   chatHistoryPath,
   type WorkspaceEventEnvelope,
 } from '../../../shared/events'
-import {
-  workspacePath,
-  workspacesPath,
-  type WorkspaceStart,
-} from '../../../shared/workspaces'
+import { workspacePath, workspacesPath } from '../../../shared/workspaces'
 import type { FakeApiServer } from '../../../test-support/fake-api'
 import { fakeGitHub } from '../../../test-support/fake-tool-routes'
 import {

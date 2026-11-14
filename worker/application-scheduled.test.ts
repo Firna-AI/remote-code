@@ -2,6 +2,7 @@ import { afterEach, beforeAll, beforeEach, expect, it } from 'vitest'
 
 import { createApp } from './application'
 import { SOFTWARE } from './lifecycle/backend-test-support'
+import { withSoftwareRelease } from './lifecycle/software-release-test-support'
 import { readBuildHistory } from './lifecycle/build-data'
 import { heldOperation } from './test-support/held-operation'
 import {
@@ -20,8 +21,6 @@ beforeAll(async () => {
 })
 beforeEach(async () => {
   fixture = await realRuntimeFixture(bundle)
-  fixture.env.CONDUCTIVE_RUNNER_ARCHIVE_URL = SOFTWARE.url
-  fixture.env.CONDUCTIVE_RUNNER_ARCHIVE_SHA256 = SOFTWARE.sha256
 })
 afterEach(async () => fixture.dispose())
 
@@ -61,7 +60,10 @@ it('starts a lifted org daily refresh at the next scheduled repair', async () =>
     }
     return response
   }
-  const application = createApp({ now: () => now })
+  const application = createApp({
+    now: () => now,
+    fetch: withSoftwareRelease(fixture.boat.fetch),
+  })
   await application.scheduled(event, fixture.env)
   const advancing = coordinator.tick()
   try {

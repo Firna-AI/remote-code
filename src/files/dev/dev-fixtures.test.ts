@@ -1,5 +1,6 @@
 import { expect, it } from 'vitest'
-import { filePaths, type FileResponse } from '../../shared/files'
+import type { FileResponse } from '../../shared/generated/FileResponse'
+import { filePaths } from '../../shared/files'
 import { FakeApiServer } from '../../test-support/fake-api'
 import { FAKE_IDS } from '../../test-support/fixtures/core'
 import { errorFromBody } from '../api/files-errors'

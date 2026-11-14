@@ -24,6 +24,7 @@
     - The image scripts write the env file to `/run/ascii-secrets/env.sh` and use systemd. A provider whose `/run` is on the saved disk must keep that file off the saved disk.
     - The `hydrated` field of a sandbox is an optional Boat detail. The contract suite leaves out `fork`, because no production code calls it.
   - Other Boat coupling, found on 9 November 2026: systemd services and `apt-get` in `image/install.sh` and `worker/terminal/service.ts`, the env file in `image/runner-start.sh`, `image/git-credential-helper.sh`, and `worker/terminal/scripts.ts`, the promised base image in `src/shared/base-image.ts`, Boat's desktop stream and computer tools, and the restart near day 14 that keeps a Boat disk.
+  - Current owners after the Rust software port: `image/install-system.sh` and `image/release/` own the systemd services. `worker/lifecycle/image-software.ts` and `worker/terminal/service.ts` own apt packages. `crates/cnd-cli/src/environment.rs` replaces the deleted credential launcher as a saved-settings reader. `image/runner-start.sh` and `worker/terminal/scripts.ts` still read the env file.
   - A second provider changes provider facts of the legal pages, `src/marketing/terms.ts` and `src/marketing/privacy.ts`: the account, the provider's country, its regions, and the transfer safeguards.
   - Dated research of 9 November 2026. Each fact needs a new check before any choice:
     - **E2B**, for outages only: E2B Pro ran only 100 sandboxes at once.

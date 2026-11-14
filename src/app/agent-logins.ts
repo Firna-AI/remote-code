@@ -1,5 +1,5 @@
+import type { Agent } from '../shared/generated/Agent'
 import type { AccountResponse, AgentLoginStatus } from '../shared/account'
-import type { Agent } from '../shared/agents'
 import type { Store } from './store'
 
 /**

@@ -3,14 +3,14 @@
 - **Severity:** Medium. **Effort:** Small. **Confidence:** High. **Harder later:** No.
 - **Kind:** Post-merge task.
 - **Added:** 2026-11-10, from the post-merge follow-up of the plan `plans/repository-context-folder.md`, branch `calummoore/repo-context-attachments`.
-- **Location:** the section Attachments of `docs/protocol/messages-and-attachments.md`, the section The context folder of `docs/protocol/repository-folders.md`, the deployed app, and a cloud computer from an org image that a build made before the deploy.
-- **Reason:** the check needs the merged Worker on the deployed app, and a real cloud computer that still has the runner from before that deploy.
+- **Location:** the section Attachments of `docs/protocol/messages-and-attachments.md`, the section The context folder of `docs/protocol/repository-folders.md`, the deployed app, and a cloud computer whose running protocol 2 runner predates context-folder support.
+- **Reason:** the check needs the merged Worker on the deployed app, and a still-running protocol 2 runner without context-folder support. An older image does not prove the active runner version.
 
 - **Terms:**
   - **Context folder:** the folder `.context` at the top of the workspace's repository folder. Attached files go to its folder `attachments`.
   - **Runner:** the agent runner, the program of the app in each cloud computer. It runs the agents and reports the files of the workspace.
-  - **Org image:** the prepared cloud computer image of an org. Each build installs the newest runner. A refresh keeps the installed runner.
-  - **Older runner:** a runner from an org image that a build made before the deploy of the merge. It does not know the context folder. It must use runner protocol version 2, because a workspace refuses each other version, as `docs/protocol/version-pins.md` says. So the build must come after the runner moved to version 2 on 10 November 2026.
+  - **Org image:** the prepared cloud computer image of an org. Each build installs the newest runner. Automatic software updates can replace the runner at a later start.
+  - **Older runner:** a running process from before context-folder support. It does not know the context folder. It must use runner protocol version 2, because a workspace refuses each other version, as `docs/protocol/version-pins.md` says. So the build must come after the runner moved to version 2 on 10 November 2026.
 - **Background:**
   - On 10 November 2026, the user chose that the Worker copies each attached file into the repository folder of the workspace (decision 242).
     [Attachments](../../docs/protocol/messages-and-attachments.md#attachments)
@@ -27,11 +27,11 @@
   - Under an older runner, a note that an agent writes in `.context/` shows in Changes. This is an accepted limit, so this item does not check notes.
 - **Task:**
   1. Wait until the `Deploy` run of the merge commit passes.
-  2. Choose a test org whose org image a build made before that deploy. Refreshes do not matter, because a refresh keeps the installed runner. Do not press **Build computer** for that org until this check ends.
-  3. Create a new workspace from that image. Send its first message to a model of either agent, with no file. Wait until the workspace is ready.
+  2. Find a still-running protocol 2 process from before context-folder support. Record its release and process start time. Do not stop, resume, or restart that workspace before this check ends. A later start can bootstrap or activate newer software. If no such process remains, record this case as blocked.
+  3. Open a new session in that running workspace. Send a message to a model of either agent, with no file. Keep its cloud computer running.
   4. Open the Terminal tab. Run these commands, and check each result:
      - `pwd` prints the repository folder, such as `/home/user/code/<name>`. This item calls it `<repository folder>`.
-     - `grep -c -x -F '/.context/' "$(git rev-parse --git-path info/exclude)"` prints `0`. A `1` shows a new runner, so choose another org.
+     - `grep -c -x -F '/.context/' "$(git rev-parse --git-path info/exclude)"` prints `0`. A `1` shows context-folder support, so choose another running older workspace.
      - `test -e .context && echo present || echo absent` prints `absent`.
      - `git check-ignore -v .context/attachments/probe` prints nothing. So no rule of the repository hides the folder.
   5. On the device that uploads the file, make the file `Context Check.TXT` with one line: `The code word is <word>.` Choose a new `<word>`, such as `marigold-47`.
@@ -50,6 +50,6 @@
   9. In the app, open **Changes** and **All files**. Check that neither lists `.context` or a file in it.
   10. Save the replies, the command output, and the deployed commit under `.context/` of the workspace that runs this check. Leave out each credential.
 - **Impact if no action:** Workspaces from older org images get attached files at the new path at once after the deploy. If the provider does not make the missing folders, each message with files fails its turn there. If the `.gitignore` of the Worker does not work, attached files show in Changes, and a commit of all changes can take them in.
-- **Needs:** The merged change, deployed to `conductive.build` by the `Deploy` workflow. A test org whose org image a build made before that deploy, with one repository that has the GitHub App. A Claude or Codex login of the test account. A device that can make the test file and compute a SHA-256.
+- **Needs:** The merged change, deployed to `conductive.build` by the `Deploy` workflow. A test org with a still-running protocol 2 runner without context-folder support and one repository that has the GitHub App. A Claude or Codex login of the test account. A device that can make the test file and compute a SHA-256.
 - **Done when:** Every check of steps 4 and 7 to 9 passes on the deployed app. A failed check gets its own follow-up item, and this item stays open until a rerun of that check passes. Then delete this item.
-- **Related:** `plans/follow-ups/context-folder-live-new-runner.md` checks the same files with a new runner, after a new image build. When both items use the same org, run this item first, because that build gives new workspaces the new runner.
+- **Related:** `plans/follow-ups/context-folder-live-new-runner.md` checks the same files with current software. Run this older-process check before any software activation in that workspace. Record the active release and process start time as evidence.

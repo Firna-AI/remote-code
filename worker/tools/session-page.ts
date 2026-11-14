@@ -1,4 +1,5 @@
-import type { AgentListSessionsRequest } from '../../src/shared/agent-sessions'
+import type { AgentListSessionsRequest } from '../../src/shared/generated/AgentListSessionsRequest'
+
 import { HttpError } from '../http'
 
 function invalidInput(): never {

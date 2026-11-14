@@ -1,4 +1,5 @@
-import type { Workspace } from '../../shared/workspaces'
+import type { Workspace } from '../../shared/generated/Workspace'
+
 import type { MenuAnchor } from '../ui/menu-place'
 
 /** The menu keys open the menu of a row this far below it, as the mockups draw it. */

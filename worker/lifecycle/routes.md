@@ -18,11 +18,6 @@ Run the browser gate first, and pass its `RequestContext`. The handler
 returns `null` for every other route. `env` is a `LifecycleEnvironment`
 from [`runtime.ts`](runtime.ts). The caller gives these options:
 
-- `software`: the runner archive for each new build and refresh, as the
-  [image README](../../image/README.md#the-runner-archive) says.
-  `runnerSoftware` in [`configuration.ts`](../configuration.ts) reads it
-  from two Worker variables, as
-  [Deployment inputs](../../docs/deployment.md#the-runner-archive) says.
 - `acceptFirstMessage`: the hook of the chat backend. After the admission
   and for each repeat, it stores the queued first message of that admission
   and returns it. So it must be idempotent for the message and session IDs.
@@ -34,8 +29,8 @@ from [`runtime.ts`](runtime.ts). The caller gives these options:
   gives it its work, so the work continues when the browser closes.
 
 `chatLifecycleRoute` makes the runtime with `workspaceRuntime` and
-`imageRuntime`. It gives `software` as a getter, so only a build or a
-refresh reads the archive variables. It gives `acceptFirstMessage` to
+`imageRuntime`. A build or refresh reads the newest release through
+`latestSoftwareRelease`, as [release files](../../image/README.md#conductive-release-files) describes. It gives `acceptFirstMessage` to
 `acceptLifecycleFirstMessage` of the workspace object.
 
 For a read or a resume, the `projectWorkspace` of `chatLifecycleRoute`

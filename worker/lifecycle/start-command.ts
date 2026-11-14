@@ -1,9 +1,10 @@
-import type { CommitAuthor } from '../../src/shared/commit-author'
+import type { CommitAuthor } from '../../src/shared/generated/CommitAuthor'
 import { shellQuote } from './commands'
 import { defaultBranchCommand } from './default-branch-command'
 import { repositoryLocation } from './repository-locations'
+import type { StartupBootstrap } from './software-bootstrap'
 import { workspaceStartupCommand } from './image-software'
-import type { WorkspaceRow } from './workspace-data'
+import type { WorkspaceRow } from './workspace-row'
 import type { WorkspaceStartJob } from './start-types'
 
 /** Startup and repository commands share the same detached output journal. */
@@ -11,9 +12,15 @@ export function workspacePhaseCommand(
   row: WorkspaceRow,
   job: WorkspaceStartJob,
   owner: CommitAuthor | null,
+  bootstrap?: StartupBootstrap,
 ): string {
   if (job.phase === 'startup')
-    return workspaceStartupCommand(job.startupScript, owner)
+    return workspaceStartupCommand(
+      job.startupScript,
+      owner,
+      'workspace',
+      bootstrap,
+    )
   const directory = repositoryLocation(
     job.repositoryLocations,
     row.repositoryId,

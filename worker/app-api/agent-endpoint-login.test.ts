@@ -1,7 +1,6 @@
 import { afterAll, beforeAll, beforeEach, expect, it } from 'vitest'
-
+import type { Agent } from '../../src/shared/generated/Agent'
 import { ACCOUNT_PATHS, agentLoginPath } from '../../src/shared/account'
-import type { Agent } from '../../src/shared/agents'
 import { GET_STARTED_PATH } from '../../src/shared/onboarding'
 import { agentLoginContext } from '../chat/queries'
 import { decrypt } from '../security/crypto'

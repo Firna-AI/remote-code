@@ -3,7 +3,7 @@
 - **Severity:** Medium. **Likelihood:** Rare. **Effort:** Small. **Confidence:** High. **Harder later:** No.
 - **Kind:** Fix after merge.
 - **Added:** 2026-11-10, from checked review finding 4 on `calummoore/github-status-bar-actions`.
-- **Location:** `worker/files/handlers.ts`, `worker/files/data.ts`, `worker/files/content.ts`, `worker/files/runner.test.ts`, `worker/lifecycle/continue-data.ts`, and `runner/src/comparison-base.ts`.
+- **Location:** `worker/files/handlers.ts`, `worker/files/data.ts`, `worker/files/content.ts`, `worker/files/runner.test.ts`, `worker/lifecycle/continue-data.ts`, and `crates/cnd-runner/src/repository/changes.rs`.
 - **Reason:** This rare defect has a Worker-only fix that reaches every runner image at the next deploy and costs the same later.
 
 - **Terms:**

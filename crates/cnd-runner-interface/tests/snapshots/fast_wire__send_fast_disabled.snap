@@ -1,0 +1,8 @@
+---
+source: crates/cnd-runner-interface/tests/fast_wire.rs
+expression: send
+---
+{
+  "fast": false,
+  "text": "Standard speed"
+}

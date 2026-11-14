@@ -1,4 +1,4 @@
-import type { Agent } from '../../src/shared/agents'
+import type { Agent } from '../../src/shared/generated/Agent'
 import {
   CONNECTION_CHECK_MS,
   type ConnectionScheduler,

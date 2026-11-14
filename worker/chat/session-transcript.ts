@@ -1,7 +1,5 @@
-import type {
-  SessionTranscriptResponse,
-  TranscriptDetail,
-} from '../../src/shared/sessions'
+import type { TranscriptDetail } from '../../src/shared/generated/TranscriptDetail'
+import type { SessionTranscriptResponse } from '../../src/shared/sessions'
 import { SessionMarkdown } from '../../src/shared/transcript/session-markdown'
 import { configuredModels } from '../app-api/models'
 import { workspaceLink } from '../data/workspace-link'

@@ -1,7 +1,6 @@
 import { afterAll, beforeAll, beforeEach, expect, it } from 'vitest'
 
-import { MACHINE_PATHS } from '../../src/shared/agent-tools'
-import { TOOL_TURN_HEADER } from '../../tools/context'
+import { MACHINE_PATHS, TOOL_TURN_HEADER } from '../../src/shared/agent-tools'
 import { HttpError } from '../http'
 import { createHarness, type TestHarness } from '../test-support/harness'
 import { publishToolImage, TOOL_MODELS } from './list-test-support'

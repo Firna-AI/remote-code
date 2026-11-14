@@ -1,10 +1,8 @@
-import type {
-  ChangesResponse,
-  DiffResponse,
-  FileResponse,
-  FileTreeResponse,
-} from '../../src/shared/files'
-import type { RunnerFileCommand } from '../../src/shared/runner-files'
+import type { ChangesResponse } from '../../src/shared/generated/ChangesResponse'
+import type { DiffResponse } from '../../src/shared/generated/DiffResponse'
+import type { FileResponse } from '../../src/shared/generated/FileResponse'
+import type { FileTreeResponse } from '../../src/shared/generated/FileTreeResponse'
+import type { RunnerFileCommand } from '../../src/shared/generated/RunnerFileCommand'
 import { RunnerFiles } from './runner'
 import { FilesState } from './state'
 import type { FilesStorage } from './storage'

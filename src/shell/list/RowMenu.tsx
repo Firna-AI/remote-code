@@ -1,3 +1,4 @@
+import type { Workspace } from '../../shared/generated/Workspace'
 import { useRef, useState } from 'react'
 import { classes } from '../../../docs/mockups/src/components/common/classes'
 import menuStyles from '../../../docs/mockups/src/components/common/Menu.module.css'
@@ -8,7 +9,7 @@ import type {
 import { OwnerChoices, useOwnerChoices } from '../../members/OwnerChoices'
 import { nameLabel } from '../../shared/name-label'
 import type { Section } from '../../shared/sections'
-import type { Workspace } from '../../shared/workspaces'
+
 import { useMembersApi } from '../settings/members-api'
 import type { MenuEntry } from '../ui/Menu'
 import { MenuList } from '../ui/MenuList'

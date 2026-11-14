@@ -1,0 +1,10 @@
+---
+source: crates/cnd-runner-interface/tests/helper_wire.rs
+expression: output
+---
+{
+  "type": "event",
+  "event": {
+    "type": "thinking"
+  }
+}

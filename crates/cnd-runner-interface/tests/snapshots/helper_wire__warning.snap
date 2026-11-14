@@ -1,0 +1,8 @@
+---
+source: crates/cnd-runner-interface/tests/helper_wire.rs
+expression: output
+---
+{
+  "type": "warning",
+  "message": "Computer tools unavailable"
+}

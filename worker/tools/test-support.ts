@@ -1,11 +1,9 @@
 import { vi } from 'vitest'
+import type { AgentChoice } from '../../src/shared/generated/AgentChoice'
 import { routes } from '../../src/app/router'
-
-import { MACHINE_PATHS } from '../../src/shared/agent-tools'
+import { MACHINE_PATHS, TOOL_TURN_HEADER } from '../../src/shared/agent-tools'
 import { sessionLink } from '../../src/shared/session-link'
-import type { AgentChoice, AgentModel } from '../../src/shared/agents'
-import { createWorkspaceToolClient } from '../../tools/client'
-import { TOOL_ENV, TOOL_TURN_HEADER } from '../../tools/context'
+import type { AgentModel } from '../../src/shared/generated/AgentModel'
 import { requestBodyEntry } from '../http/request-body'
 import { hash } from '../security/crypto'
 import { TEST_TIME, type TestHarness } from '../test-support/harness'
@@ -17,7 +15,7 @@ import type {
 } from './services'
 
 export const TOOL_TEST_ORIGIN = 'https://machine.conductive.test'
-export const TOOL_TEST_TOKEN = 'workspace-token-for-tools-tests'
+const TOOL_TEST_TOKEN = 'workspace-token-for-tools-tests'
 export const TOOL_TEST_TURN = 'turn-from-teammate'
 export const OWNER_CHOICE = {
   agent: 'codex',
@@ -200,19 +198,6 @@ export async function toolFixture(harness: TestHarness) {
   const env = { ...harness.env, MACHINE_ORIGIN: TOOL_TEST_ORIGIN }
   const entry = requestBodyEntry(createAgentToolsHandler(env, services))
   const handler = (request: Request) => entry(request, env)
-  const requests: Request[] = []
-  const send = async (request: Request) => {
-    requests.push(request.clone())
-    return handler(request)
-  }
-  const client = createWorkspaceToolClient(
-    {
-      machineOrigin: TOOL_TEST_ORIGIN,
-      workspaceToken: TOOL_TEST_TOKEN,
-      turnId: TOOL_TEST_TURN,
-    },
-    send,
-  )
   const request = (
     init: RequestInit = {},
     url = `${TOOL_TEST_ORIGIN}${MACHINE_PATHS.workspaces}`,
@@ -228,34 +213,7 @@ export async function toolFixture(harness: TestHarness) {
   }
   const create = (body: unknown, headers?: HeadersInit) =>
     request({ method: 'POST', body: JSON.stringify(body), headers })
-  return { db, handler, client, send, request, create, requests, services }
+  return { db, request, create, services }
 }
 
 export type ToolFixture = Awaited<ReturnType<typeof toolFixture>>
-
-export function toolOutput() {
-  const stdout: string[] = []
-  const stderr: string[] = []
-  return {
-    stdout,
-    stderr,
-    output: {
-      stdout: (text: string) => {
-        stdout.push(text)
-      },
-      stderr: (text: string) => {
-        stderr.push(text)
-      },
-    },
-  }
-}
-
-export const TOOL_TEST_ENVIRONMENT = {
-  [TOOL_ENV.machineOrigin]: TOOL_TEST_ORIGIN,
-  [TOOL_ENV.workspaceToken]: TOOL_TEST_TOKEN,
-  [TOOL_ENV.turnId]: TOOL_TEST_TURN,
-}
-
-export async function* inputLines(lines: readonly string[] = []) {
-  for (const line of lines) yield line
-}

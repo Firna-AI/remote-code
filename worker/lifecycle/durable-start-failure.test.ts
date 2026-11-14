@@ -1,6 +1,5 @@
 import { expect, it } from 'vitest'
-
-import type { WorkspaceStart } from '../../src/shared/workspaces'
+import type { WorkspaceStart } from '../../src/shared/generated/WorkspaceStart'
 import { FIRST_MESSAGE, lifecycleFixture } from './durable-test-support'
 
 const ERROR = {

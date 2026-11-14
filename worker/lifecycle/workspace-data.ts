@@ -1,44 +1,17 @@
+import type { WorkspaceRow } from './workspace-row'
+import type { Workspace } from '../../src/shared/generated/Workspace'
+import type { WorkspaceState } from '../../src/shared/generated/WorkspaceState'
 import { activeOrgIdPredicate } from '../data/org-access'
 import { workspaceNameColumn } from '../data/workspace-name'
 import { presentWorkspace } from '../data/workspace-link'
 import { requireActiveOrg } from '../data/user-access'
 import type { User } from '../../src/shared/api'
 import type { SendMessageRequest } from '../../src/shared/messages'
-import type { Workspace, WorkspaceState } from '../../src/shared/workspaces'
+
 import { workspaceRestoreUntil } from '../../src/shared/workspaces'
 import { HttpError } from '../http'
 import { leasedImage, type LeasedImage } from './image-leases'
 import type { RepositoryLocation } from './repository-locations'
-
-export interface WorkspaceRow {
-  id: string
-  number: number
-  orgId: string
-  repositoryId: string
-  sectionId: string
-  ownerUserId: string
-  githubLogin: string
-  displayName: string | null
-  avatarUrl: string | null
-  name: string | null
-  branch: string
-  baseBranch?: string | null
-  sandboxId: string | null
-  providerAccount: string
-  state: WorkspaceState
-  github: Workspace['github']
-  createdAt: number
-  updatedAt: number
-  archivedAt: number | null
-  stoppedAt: number | null
-  nextDiskKeepaliveAt: number | null
-  agent: Workspace['choice']['agent']
-  model: string
-  effort: Workspace['choice']['effort']
-  fast: number
-  sessionId: string
-  firstTurnId: string
-}
 
 const columns = `w.id, w.number, w.org_id AS orgId, w.repository_id AS repositoryId,
   w.section_id AS sectionId, w.owner_user_id AS ownerUserId,

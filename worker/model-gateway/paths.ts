@@ -1,5 +1,5 @@
+import type { Agent } from '../../src/shared/generated/Agent'
 import { MACHINE_PATHS } from '../../src/shared/agent-tools'
-import type { Agent } from '../../src/shared/agents'
 import type { AgentLoginKind } from '../chat/login-kind'
 
 export const codexTokenPaths = {

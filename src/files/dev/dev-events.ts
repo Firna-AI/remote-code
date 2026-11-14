@@ -1,4 +1,5 @@
-import type { DiffResponse, FileEvent } from '../../shared/files'
+import type { DiffResponse } from '../../shared/generated/DiffResponse'
+import type { FileEvent } from '../../shared/files'
 import type { FakeApiServer } from '../../test-support/fake-api'
 import { FAKE_IDS, FAKE_TIME } from '../../test-support/fixtures/core'
 import { recordedRunnerFileEvents } from '../../test-support/recorded-files'

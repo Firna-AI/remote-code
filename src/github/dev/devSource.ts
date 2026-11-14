@@ -1,6 +1,6 @@
+import type { MessageSender } from '../../shared/generated/MessageSender'
 import { browserDelay } from '../../app/events'
 import { githubPaths, type BannerState } from '../../shared/github'
-import type { MessageSender } from '../../shared/messages'
 import { FakeApiServer } from '../../test-support/fake-api'
 import { scenarioFetch } from '../../test-support/fake-bar-dev'
 import { FAKE_IDS, FAKE_TIME } from '../../test-support/fixtures/core'

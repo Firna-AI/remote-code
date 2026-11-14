@@ -1,8 +1,6 @@
+import type { DeviceCommandRecord } from '../../shared/generated/DeviceCommandRecord'
 import { Laptop } from 'lucide-react'
-import type {
-  DeviceApprovalAction,
-  DeviceCommandRecord,
-} from '../../shared/device'
+import type { DeviceApprovalAction } from '../../shared/device'
 import pane from '../../../docs/mockups/src/components/chat/ChatPane.module.css'
 import styles from '../../../docs/mockups/src/components/chat/PendingCommand.module.css'
 import { macLabel } from '../../shared/transcript/command-words'

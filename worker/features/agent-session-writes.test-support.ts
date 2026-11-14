@@ -3,7 +3,7 @@ import type { WebSocket } from 'miniflare'
 import { expect } from 'vitest'
 
 import { sessionsPath, sessionPaths } from '../../src/shared/sessions'
-import { TOOL_TURN_HEADER } from '../../tools/context'
+import { TOOL_TURN_HEADER } from '../../src/shared/agent-tools'
 import { CLAUDE } from '../chat/harness.test-support'
 import { record, string } from '../chat/inputs'
 import { closeSockets } from '../chat/adapter-sockets.test-support'
@@ -16,7 +16,6 @@ import {
   OUTER_ORG,
   OUTER_WORKSPACE,
   OUTER_TOKEN,
-  OUTER_SOFTWARE,
 } from '../chat/integration/outer-seed.test-support'
 import {
   requestRunner,
@@ -35,8 +34,6 @@ export async function agentWriteFixture(
     persistencePath: await mkdtemp(directory + 'case-'),
     configuration: {
       CONDUCTIVE_DEFAULT_CHOICE: JSON.stringify(CLAUDE),
-      CONDUCTIVE_RUNNER_ARCHIVE_URL: OUTER_SOFTWARE.url,
-      CONDUCTIVE_RUNNER_ARCHIVE_SHA256: OUTER_SOFTWARE.sha256,
       CONDUCTIVE_MODELS: JSON.stringify([
         { ...CLAUDE, label: 'Test Claude', efforts: ['high', 'max'] },
       ]),

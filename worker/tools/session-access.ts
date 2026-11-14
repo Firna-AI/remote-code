@@ -1,4 +1,5 @@
-import type { AgentWorkspaceSummary } from '../../src/shared/agent-tools'
+import type { AgentWorkspaceSummary } from '../../src/shared/generated/AgentWorkspaceSummary'
+
 import { requireActiveOrg } from '../data/user-access'
 import { workspaceLink } from '../data/workspace-link'
 import { workspaceNameColumn } from '../data/workspace-name'

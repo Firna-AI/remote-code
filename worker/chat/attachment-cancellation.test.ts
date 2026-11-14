@@ -1,10 +1,13 @@
 import { afterAll, beforeAll, beforeEach, expect, it } from 'vitest'
 import type { SendMessageResponse } from '../../src/shared/messages'
 import { retryMessagePath } from '../../src/shared/sessions'
-import { createHarness, type TestHarness } from '../test-support/harness'
+import {
+  TEST_TIME,
+  createHarness,
+  type TestHarness,
+} from '../test-support/harness'
 import { FakeRunner } from '../test-support/fake-runner'
-import { attachmentFixture, held } from './attachment.test-support'
-import { connectAttachmentEngine } from './attachment-engine.test-support'
+import { attachmentFixture } from './attachment.test-support'
 import { WORKSPACE_ID } from './harness.test-support'
 import {
   lifecycleSnapshot,
@@ -22,7 +25,7 @@ beforeEach(async () => {
 afterAll(async () => {
   await harness.dispose()
 })
-it('cancels a running copy failure before the real engine starts Try again without a Worker wait', async () => {
+it('sends copy-failure cancellation before Try again without waiting for the old turn end', async () => {
   let fail = true
   const fixture = await attachmentFixture(harness, {
     attachmentSandboxId: async () => 'sandbox-cancellation',
@@ -38,19 +41,8 @@ it('cancels a running copy failure before the real engine starts Try again witho
   )
   runner.emit({ type: 'runner.ready' })
   await fixture.drain()
-  const engine = await connectAttachmentEngine(fixture, runner)
-  const exit = held<void>()
   try {
-    await fixture.send(session.id, 'live-start')
-    await engine.drain()
-    const original = messageCommands(runner, 'live-start')[0]
-    if (original?.type !== 'turn') throw new Error('The live turn is missing.')
-    const provider = engine.providers.latest
-    provider.stop = async () => {
-      provider.stops++
-      await exit.promise
-      provider.closed = true
-    }
+    const original = await startTurn(fixture, runner, session.id, 'live-start')
     expect(
       (await fixture.sendAttachment(session.id, 'live-file', [file.id])).status,
     ).toBe(202)
@@ -63,25 +55,28 @@ it('cancels a running copy failure before the real engine starts Try again witho
     expect(response.status).toBe(202)
     const retry: SendMessageResponse = await response.json()
     await fixture.drainAttachments()
-    const beforeExit = {
-      commands: runner.commands.map((command) => command.type),
-      providers: engine.providers.processes.length,
-      stops: provider.stops,
-    }
-    exit.resolve()
-    await engine.drain()
-    expect(engine.providers.processes).toHaveLength(2)
-    expect(
-      engine.providers.latest.messages.map((input) => input.message.id),
-    ).toEqual([retry.message.id])
-    expect(beforeExit).toEqual({
-      commands: ['turn', 'interrupt', 'turn'],
-      providers: 1,
-      stops: 1,
+    expect(runner.commands.map((command) => command.type)).toEqual([
+      'turn',
+      'interrupt',
+      'turn',
+    ])
+    expect(messageCommands(runner, retry.message.id)).toMatchObject([
+      { type: 'turn', message: { id: retry.message.id } },
+    ])
+    const retryCommand = messageCommands(runner, retry.message.id)[0]
+    if (retryCommand?.type !== 'turn')
+      throw new Error('The retry turn is missing.')
+    runner.emit({
+      type: 'turn.started',
+      sessionId: session.id,
+      turnId: retryCommand.turnId,
+      senderId: fixture.owner.id,
+      choice: retryCommand.message.choice,
+      startedAt: TEST_TIME,
+      messageIds: [retry.message.id],
     })
-    expect(
-      engine.events.filter((event) => event.type === 'turn.failed'),
-    ).toEqual([])
+    runner.emit(terminalEvent(original, 'stopped'))
+    await fixture.drain()
     expect(
       await fixture.chat.store.read(WORKSPACE_ID, (view) =>
         view.turn(original.turnId),
@@ -99,8 +94,6 @@ it('cancels a running copy failure before the real engine starts Try again witho
       await fixture.chat.store.read(WORKSPACE_ID, (view) => view.pending()),
     ).toEqual([])
   } finally {
-    exit.resolve()
-    await engine.drain()
     runner.disconnect()
   }
 })

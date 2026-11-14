@@ -1,4 +1,5 @@
-import type { Timestamp } from './api'
+import type { GitHubSummary } from './generated/GitHubSummary'
+import type { Timestamp } from './generated/Timestamp'
 import { workspacePath } from './workspaces'
 
 export const githubPaths = {
@@ -110,16 +111,6 @@ export function checksSummary(
     return 'checks-running'
   return checks.length > 0 ? 'checks-passed' : null
 }
-
-/**
- * The GitHub state of a workspace, which its list mark shows: the state of
- * the pull request bar of its branch. A branch without a pull request, and
- * a pull request closed without a merge, have none.
- */
-export type GitHubSummary = Exclude<
-  BannerState,
-  'none' | 'no-commits' | 'closed'
->
 
 export function githubSummary(banner: GitHubBanner): GitHubSummary | null {
   const { state } = banner

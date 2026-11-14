@@ -1,4 +1,5 @@
-import { workspacePath, type Workspace } from '../shared/workspaces'
+import type { Workspace } from '../shared/generated/Workspace'
+import { workspacePath } from '../shared/workspaces'
 import { readWorkspaceResponse } from './api/read-workspaces'
 import { ArchiveModel, type ArchiveAction } from './archive-model'
 import type { RunningWrite } from './archive-overlay'

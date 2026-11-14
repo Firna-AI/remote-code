@@ -1,0 +1,14 @@
+---
+source: crates/cnd-runner-interface/tests/helper_wire.rs
+expression: request
+---
+{
+  "type": "model",
+  "requestId": "3",
+  "choice": {
+    "agent": "codex",
+    "model": "test-model",
+    "effort": "xhigh",
+    "fast": false
+  }
+}

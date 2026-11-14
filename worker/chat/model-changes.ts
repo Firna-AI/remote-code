@@ -1,4 +1,5 @@
-import type { Session, ChangeModelResponse } from '../../src/shared/sessions'
+import type { Session } from '../../src/shared/generated/Session'
+import type { ChangeModelResponse } from '../../src/shared/sessions'
 import type { User } from '../../src/shared/api'
 import { HttpError } from '../http'
 import { choice, draft, identifier } from './inputs'

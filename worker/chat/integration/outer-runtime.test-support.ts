@@ -6,6 +6,7 @@ import {
 
 import type { AppEnv, HttpFetch } from '../../env'
 import { LifecycleBoat } from '../../lifecycle/lifecycle-boat-test-support'
+import { withSoftwareRelease } from '../../lifecycle/software-release-test-support'
 import { FakeGitHub } from '../../test-support/fake-github'
 import { TEST_ORIGIN } from '../../test-support/harness'
 import {
@@ -22,8 +23,6 @@ type OuterConfiguration = Partial<
     AppEnv,
     | 'CONDUCTIVE_MODELS'
     | 'CONDUCTIVE_DEFAULT_CHOICE'
-    | 'CONDUCTIVE_RUNNER_ARCHIVE_URL'
-    | 'CONDUCTIVE_RUNNER_ARCHIVE_SHA256'
     | 'GITHUB_APP_PRIVATE_KEY'
     | 'GITHUB_WEBHOOK_SECRET'
     | 'PREVIEW_DOMAIN'
@@ -137,10 +136,11 @@ export async function createOuterRuntime(
                     : await incoming.arrayBuffer(),
                   redirect: 'manual',
                 })
-                const fallback =
+                const fallback = withSoftwareRelease(
                   new URL(request.url).hostname === 'boat.dev'
                     ? boat.fetch
-                    : github.fetch
+                    : github.fetch,
+                )
                 const response = await (options.outbound
                   ? options.outbound(request, fallback)
                   : fallback(request))

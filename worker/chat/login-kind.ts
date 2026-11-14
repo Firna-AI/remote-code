@@ -1,5 +1,6 @@
-import type { Agent } from '../../src/shared/agents'
-import type { RunnerLogin, RunnerLoginKind } from '../../src/shared/runner'
+import type { Agent } from '../../src/shared/generated/Agent'
+import type { RunnerLogin } from '../../src/shared/generated/RunnerLogin'
+import type { RunnerLoginKind } from '../../src/shared/generated/RunnerLoginKind'
 import { readEndpointAddress } from '../../src/shared/endpoint-address'
 
 export type AgentLoginKind =

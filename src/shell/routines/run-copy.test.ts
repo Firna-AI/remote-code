@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest'
-import type { MessageSender } from '../../shared/messages'
+import type { MessageSender } from '../../shared/generated/MessageSender'
 import type { RoutinePullRequestEvent, RoutineRun } from '../../shared/routines'
 import { FAKE_TIME, fakeUser } from '../../test-support/fixtures/core'
 import { pullRequestTrigger } from '../../test-support/fixtures/routine-runs'

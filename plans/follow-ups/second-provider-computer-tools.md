@@ -3,7 +3,7 @@
 - **Severity:** Medium. **Effort:** Medium. **Confidence:** High. **Harder later:** No.
 - **Kind:** Needs decision.
 - **Added:** 2026-11-09, decision 216 of `plans/sandbox-provider-groundwork.md`, branch `calummoore/vercel-sandbox-provider`.
-- **Location:** "Computer tools" in `docs/protocol/agent-tools.md:249`, and `runner/src/providers/computer-mcp.ts:31`.
+- **Location:** "Computer tools" in `docs/protocol/agent-tools.md:249`, and `runner/sdk-helper/src/providers/computer-mcp.ts:31`.
 - **Reason:** The question applies only after a second sandbox provider is chosen, and `plans/follow-ups/choose-second-sandbox-provider.md` makes that choice after the launch. Boat is the only provider until then.
 
 - **Source:** Design. **Category:** Docs or spec.
@@ -12,7 +12,7 @@
   - **Cua Driver:** an open-source computer-use driver that can run as such an MCP server.
 - **Background:**
   - "Computer tools" in `docs/protocol/agent-tools.md` says that the agents keep Boat's computer tools, the MCP server `computer` that every sandbox has. The agent runner gives these tools to the agents for browser work on the desktop of the sandbox.
-  - Boat writes the `computer` entry into `/home/user/.claude.json` at each start. `runner/src/providers/computer-mcp.ts` reads that entry and only passes it on.
+  - Boat writes the `computer` entry into `/home/user/.claude.json` at each start. `runner/sdk-helper/src/providers/computer-mcp.ts` reads that entry and only passes it on.
   - When the entry is missing, the runner warns "Computer tools are unavailable. The sandbox computer server settings could not be read." Then it runs the agents without computer tools.
   - The server needs a screen and Chrome in the sandbox.
   - The app hides the Desktop tool for now, as "Desktop" in `docs/protocol/workspace-tools.md` says. The agents still use the computer tools.

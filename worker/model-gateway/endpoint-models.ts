@@ -1,4 +1,4 @@
-import type { Agent } from '../../src/shared/agents'
+import type { Agent } from '../../src/shared/generated/Agent'
 import { readEndpointAddress } from '../../src/shared/endpoint-address'
 import type { AgentLogin } from '../chat/login-kind'
 import type { HttpFetch } from '../env'

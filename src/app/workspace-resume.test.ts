@@ -1,5 +1,6 @@
 import { describe, expect, test } from 'vitest'
-import { workspacePaths, type WorkspaceStart } from '../shared/workspaces'
+import type { WorkspaceStart } from '../shared/generated/WorkspaceStart'
+import { workspacePaths } from '../shared/workspaces'
 import { FakeApiServer } from '../test-support/fake-api'
 import { FAKE_IDS, FAKE_TIME } from '../test-support/fixtures/core'
 import { workspaceFixtures } from '../test-support/fixtures/workspaces'

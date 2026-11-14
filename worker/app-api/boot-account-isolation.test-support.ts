@@ -1,7 +1,6 @@
 import { expect } from 'vitest'
-
+import type { AgentChoice } from '../../src/shared/generated/AgentChoice'
 import { ACCOUNT_PATHS, agentLoginPath } from '../../src/shared/account'
-import type { AgentChoice } from '../../src/shared/agents'
 import { GET_STARTED_PATH } from '../../src/shared/onboarding'
 import { readShortcutKeyText } from '../../src/shared/shortcut-key'
 import type { TestHarness } from '../test-support/harness'

@@ -1,4 +1,5 @@
-import { orgPath, type Timestamp } from './api'
+import type { Timestamp } from './generated/Timestamp'
+import { orgPath } from './api'
 import type { BaseImage } from './base-image'
 
 export const orgSettingsPaths = {

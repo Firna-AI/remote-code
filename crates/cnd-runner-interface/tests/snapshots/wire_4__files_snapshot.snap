@@ -1,0 +1,29 @@
+---
+source: crates/cnd-runner-interface/tests/wire_4.rs
+assertion_line: 23
+description: Current protocol JSON. Optional fields stay absent; nullable fields stay null.
+expression: message
+---
+{
+  "type": "event",
+  "streamId": "stream-1",
+  "eventNumber": 9007199254740991,
+  "occurredAt": 1730000000000,
+  "event": {
+    "type": "files.snapshot",
+    "tree": {
+      "revision": 1,
+      "partNumber": 1,
+      "partCount": 1,
+      "entries": [
+        {
+          "path": "new.txt",
+          "displayPath": "masked.txt",
+          "name": "new.txt",
+          "kind": "file",
+          "change": null
+        }
+      ]
+    }
+  }
+}

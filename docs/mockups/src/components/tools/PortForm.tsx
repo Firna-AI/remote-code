@@ -1,6 +1,6 @@
 import { InputFrame } from '@firna/ui/input'
 import { Globe } from 'lucide-react'
-import type { ListeningPort } from '../../../../../src/shared/ports'
+import type { ListeningPort } from '../../../../../src/shared/generated/ListeningPort'
 import { noop } from '../../noop'
 import { paths } from '../../paths'
 import { ActionButton } from '../common/actions'

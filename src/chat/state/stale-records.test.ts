@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest'
-import type { AgentChoice } from '../../shared/agents'
+import type { AgentChoice } from '../../shared/generated/AgentChoice'
 import { sessionPath, sessionPaths } from '../../shared/sessions'
 import { workspacePaths } from '../../shared/workspaces'
 import { FAKE_IDS, FAKE_TIME } from '../../test-support/fixtures/core'

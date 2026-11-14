@@ -1,9 +1,11 @@
+import type { AgentModel } from '../../shared/generated/AgentModel'
+import type { Workspace } from '../../shared/generated/Workspace'
 import type { Readable } from '../../app/store'
 import type { AccountResponse } from '../../shared/account'
-import type { AgentModel } from '../../shared/agents'
+
 import type { MembersResponse } from '../../shared/members'
 import type { OrgSummary } from '../../shared/orgs'
-import type { Workspace } from '../../shared/workspaces'
+
 import type { ChatSnapshot, ChatStore } from './chat-snapshot'
 
 /**

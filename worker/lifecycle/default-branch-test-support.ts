@@ -10,7 +10,7 @@ import {
 import { join, resolve } from 'node:path'
 import process from 'node:process'
 
-import { TOOL_TURN_HEADER } from '../../tools/context'
+import { TOOL_TURN_HEADER } from '../../src/shared/agent-tools'
 import type { CommandResult } from '../sandbox/provider'
 import { isolatedProcessEnvironment } from '../test-support/process-environment'
 import type { backendFixture } from './backend-test-support'

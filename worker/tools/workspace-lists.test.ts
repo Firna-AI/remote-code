@@ -1,8 +1,7 @@
 import { afterAll, beforeAll, beforeEach, expect, it } from 'vitest'
 
-import type { AgentListWorkspacesResponse } from '../../src/shared/agent-workspaces'
-import { MACHINE_PATHS } from '../../src/shared/agent-tools'
-import { TOOL_TURN_HEADER } from '../../tools/context'
+import type { AgentListWorkspacesResponse } from '../../src/shared/generated/AgentListWorkspacesResponse'
+import { MACHINE_PATHS, TOOL_TURN_HEADER } from '../../src/shared/agent-tools'
 import { createHarness, type TestHarness } from '../test-support/harness'
 import { toolFixture, TOOL_TEST_ORIGIN, type ToolFixture } from './test-support'
 

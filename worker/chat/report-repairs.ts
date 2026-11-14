@@ -1,7 +1,5 @@
-import type {
-  RunnerReportKind,
-  RunnerReportRefresh,
-} from '../../src/shared/runner'
+import type { RunnerReportKind } from '../../src/shared/generated/RunnerReportKind'
+import type { RunnerReportRefresh } from '../../src/shared/generated/RunnerReportRefresh'
 import type { ChatData } from './types'
 
 export interface StoredReportRepair {

@@ -1,20 +1,14 @@
-import credentialScript from '../../image/git-credential-helper.mjs?raw'
-import credentialStart from '../../image/git-credential-helper.sh?raw'
-import githubCli from '../../image/github-cli.sh?raw'
-import runtimeInstall from '../../image/install-runtime.sh?raw'
-import installScript from '../../image/install.sh?raw'
-import runnerService from '../../image/conductive-runner.service?raw'
-import runnerStart from '../../image/runner-start.sh?raw'
-import previewRelayService from '../../image/conductive-preview-relay.service?raw'
-import previewRelaySocket from '../../image/conductive-preview-relay.socket?raw'
-import previewRelayStart from '../../image/preview-relay-start.sh?raw'
-import diskCacheRule from '../../image/60-conductive-disk-cache.rules?raw'
-import { MACHINE_PATHS } from '../../src/shared/agent-tools'
-import type { CommitAuthor } from '../../src/shared/commit-author'
+import type { CommitAuthor } from '../../src/shared/generated/CommitAuthor'
 import { HttpError, isRecord } from '../http'
-import { terminalInstallCommand } from '../terminal/service'
-import { shellQuote, writeFileCommand } from './commands'
-import { IMAGE_NODE_RUNTIME, imageRuntimeScript } from './image-runtime'
+import { terminalPackagesCommand } from '../terminal/service'
+import { privilegedCommand } from '../terminal/privileged'
+import { shellQuote } from './commands'
+import {
+  bootstrapDownload,
+  startupBootstrap,
+  type StartupBootstrap,
+} from './software-bootstrap'
+import type { SoftwareRelease } from './software-release'
 import { savedScriptCommand, type SavedScript } from './saved-script'
 
 export interface ImageSoftwareArtifact {
@@ -61,36 +55,23 @@ export function readImageSoftware(value: unknown): ImageSoftwareArtifact {
   return { url: url.href, sha256: value.sha256.toLowerCase() }
 }
 
-export function installImageSoftware(artifact: ImageSoftwareArtifact): string {
-  const files: Readonly<Record<string, string>> = {
-    'install.sh': installScript,
-    'install-runtime.sh': runtimeInstall,
-    'runner-start.sh': runnerStart.replaceAll(
-      '@RUNNER_PATH@',
-      MACHINE_PATHS.runner,
-    ),
-    'git-credential-helper.sh': credentialStart,
-    'git-credential-helper.mjs': credentialScript,
-    'github-cli.sh': githubCli,
-    'conductive-runner.service': runnerService,
-    'preview-relay-start.sh': previewRelayStart,
-    'conductive-preview-relay.service': previewRelayService,
-    'conductive-preview-relay.socket': previewRelaySocket,
-    '60-conductive-disk-cache.rules': diskCacheRule,
-  }
+export function installImageSoftware(release: SoftwareRelease): string {
   return [
     'set -eu',
-    'sudo -n install -d -m 700 -o user -g user /opt/conductive/staged',
-    ...Object.entries(files).map(([name, text]) =>
-      writeFileCommand(
-        `/opt/conductive/staged/${name}`,
-        imageRuntimeScript(text),
-        '644',
-      ),
+    terminalPackagesCommand(),
+    privilegedCommand(
+      [
+        'set -eu',
+        'umask 022',
+        'apt-get install -y gh',
+        bootstrapDownload(release),
+        `"$conductive_bootstrap/conductive" update check --bootstrap --server ${shellQuote(release.server)}`,
+        '"$conductive_bootstrap/conductive" update apply',
+        'test -x /opt/conductive/current/conductive',
+        'test -f /opt/conductive/current/complete',
+        '/opt/conductive/current/conductive update started',
+      ].join('\n'),
     ),
-    `sudo -n sh /opt/conductive/staged/install-runtime.sh ${shellQuote(IMAGE_NODE_RUNTIME.url)} ${shellQuote(IMAGE_NODE_RUNTIME.sha256)} ${shellQuote(IMAGE_NODE_RUNTIME.directory)}`,
-    `sudo -n sh /opt/conductive/staged/install.sh ${shellQuote(artifact.url)} ${shellQuote(artifact.sha256)}`,
-    terminalInstallCommand(),
   ].join('\n')
 }
 
@@ -115,6 +96,7 @@ export function workspaceStartupCommand(
   script: SavedScript,
   owner: CommitAuthor | null,
   mode: 'workspace' | 'retention' = 'workspace',
+  bootstrap?: StartupBootstrap,
 ): string {
   const path =
     mode === 'retention'
@@ -133,8 +115,9 @@ export function workspaceStartupCommand(
     ]),
     ...(mode === 'workspace'
       ? [
+          ...(bootstrap ? [startupBootstrap(bootstrap)] : []),
           'touch /run/conductive/workspace-ready',
-          'sudo -n systemctl restart conductive-runner.service',
+          'sudo -n flock /run/conductive/bootstrap-activate.lock systemctl restart conductive-runner.service',
         ]
       : []),
   ].join('\n')

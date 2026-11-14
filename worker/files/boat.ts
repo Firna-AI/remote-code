@@ -1,4 +1,4 @@
-import type { FileResponse } from '../../src/shared/files'
+import type { FileResponse } from '../../src/shared/generated/FileResponse'
 import { decodeUtf8 } from '../../src/shared/utf8'
 import type { AppEnv, HttpFetch } from '../env'
 import { HttpError } from '../http'

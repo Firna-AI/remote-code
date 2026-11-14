@@ -1,3 +1,4 @@
+import type { Workspace } from '../../shared/generated/Workspace'
 import {
   useLayoutEffect,
   useRef,
@@ -19,7 +20,7 @@ import { routes } from '../../app/router'
 import { ownPress } from '../../app/pointer-drag'
 import { formatAgo } from '../../app/time'
 import { nameLabel } from '../../shared/name-label'
-import type { Workspace } from '../../shared/workspaces'
+
 import { useApp } from '../context'
 import { AppLink, isPlainClick } from '../ui/AppLink'
 import { IconButton } from '../ui/actions'

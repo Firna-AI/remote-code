@@ -1,5 +1,7 @@
+import type { AgentModel } from '../../shared/generated/AgentModel'
 import type { ReactNode } from 'react'
 import { ArrowRight, CircleAlert, FolderGit2, Hammer, Plug } from 'lucide-react'
+import type { AgentChoice } from '../../shared/generated/AgentChoice'
 import { Notice } from '../../../docs/mockups/src/components/common/Notice'
 import { firstBuildCopy as buildCopy } from '../../../docs/mockups/src/screens/firstBuildCopy'
 import type { ApiError } from '../../app/api/client'
@@ -10,11 +12,7 @@ import type { CreateState } from '../../app/new-workspace-model'
 import { routes } from '../../app/router'
 import { useStore, valueOf } from '../../app/store'
 import { formatElapsed, useNow } from '../../app/time'
-import {
-  modelLabel,
-  type AgentChoice,
-  type AgentModel,
-} from '../../shared/agents'
+import { modelLabel } from '../../shared/agents'
 import type { ImageBuild } from '../../shared/org-settings'
 import type { OrgSummary } from '../../shared/orgs'
 import { useApp, useOrgAccess, useOrgModel } from '../context'

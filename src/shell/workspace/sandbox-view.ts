@@ -1,10 +1,11 @@
+import type { Workspace } from '../../shared/generated/Workspace'
 import type {
   ArchiveRestore,
   SandboxNoticeState,
   SandboxPanelState,
 } from '../../../docs/mockups/src/components/workspace/sandboxNoticeState'
 import type { ApiError } from '../../app/api/client'
-import type { Workspace } from '../../shared/workspaces'
+
 import type { SandboxState } from './features'
 import { orgRefusal, refusedStart } from './SandboxNotice'
 

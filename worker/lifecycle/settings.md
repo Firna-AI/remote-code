@@ -8,7 +8,7 @@ The lifecycle code reads `LifecycleEnvironment` from
 [`runtime.ts`](runtime.ts). [Deployment inputs](../../docs/deployment.md)
 gives each binding, variable, and secret that it reads, such as
 `WORKSPACES`, `MACHINE_ORIGIN`, `BOAT_API_KEY`, `BOAT_ORG_ID`,
-`GITHUB_APP_PRIVATE_KEY`, and the runner archive variables.
+`GITHUB_APP_PRIVATE_KEY`, and optional `CONDUCTIVE_RELEASE_SERVER`.
 
 Each provider start captures the encrypted org env values and their secret
 marks. The start-log masker and the workspace object output filter use

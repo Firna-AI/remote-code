@@ -1,14 +1,11 @@
+import type { AgentModel } from '../../shared/generated/AgentModel'
 import { ExternalLink } from 'lucide-react'
-import {
-  effortLabels,
-  findModel,
-  type Agent,
-  type AgentChoice,
-  type AgentModel,
-  type Effort,
-} from '../../shared/agents'
-import type { ShortcutHint } from '../../shell/shortcuts/shortcut-hints'
+import type { Agent } from '../../shared/generated/Agent'
+import type { AgentChoice } from '../../shared/generated/AgentChoice'
+import type { Effort } from '../../shared/generated/Effort'
+import { effortLabels, findModel } from '../../shared/agents'
 import { effortFor, fastFor } from '../state/format'
+import type { ShortcutHint } from '../../shell/shortcuts/shortcut-hints'
 import type { MenuEntry } from '../ui/Menu'
 
 const agentOrder: readonly Agent[] = ['claude', 'codex']

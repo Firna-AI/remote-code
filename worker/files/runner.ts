@@ -1,5 +1,6 @@
-import type { DiffResponse, FileResponse } from '../../src/shared/files'
-import type { RunnerFileCommand } from '../../src/shared/runner-files'
+import type { DiffResponse } from '../../src/shared/generated/DiffResponse'
+import type { FileResponse } from '../../src/shared/generated/FileResponse'
+import type { RunnerFileCommand } from '../../src/shared/generated/RunnerFileCommand'
 import { HttpError, isRecord } from '../http'
 import { parseDiff, parseFile } from './content'
 import {

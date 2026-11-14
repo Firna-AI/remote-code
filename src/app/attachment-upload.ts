@@ -1,6 +1,6 @@
+import type { Attachment } from '../shared/generated/Attachment'
 import {
   attachmentUploadUrl,
-  type Attachment,
   type AttachmentUploadTarget,
 } from '../shared/messages'
 import type { ApiClient } from './api/client'

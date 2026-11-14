@@ -1,7 +1,7 @@
+import type { DevicePairing } from '../../shared/generated/DevicePairing'
 import { useEffect, useMemo, useSyncExternalStore } from 'react'
 import { ApiError, type ApiClient } from '../../app/api/client'
 import type {
-  DevicePairing,
   DeviceSettings,
   DeviceSettingsResponse,
 } from '../../shared/device'

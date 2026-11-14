@@ -1,3 +1,4 @@
+import type { Workspace } from '../../shared/generated/Workspace'
 import { orgPath, type OrgRole, type User } from '../../shared/api'
 import { routes } from '../../app/router'
 import {
@@ -7,7 +8,7 @@ import {
 } from '../../shared/members'
 import { orgSettingsPaths } from '../../shared/org-settings'
 import { deleteOrgPath, restoreOrgPath } from '../../shared/orgs'
-import { workspacesPath, type Workspace } from '../../shared/workspaces'
+import { workspacesPath } from '../../shared/workspaces'
 import type { FakeRouteWriter } from '../../test-support/fake-api-routes'
 import {
   coreFixtures,

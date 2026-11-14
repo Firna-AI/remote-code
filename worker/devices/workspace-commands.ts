@@ -1,4 +1,5 @@
-import type { DeviceCommandRecord } from '../../src/shared/device'
+import type { DeviceCommandRecord } from '../../src/shared/generated/DeviceCommandRecord'
+
 import {
   deviceObject,
   deviceRequired,

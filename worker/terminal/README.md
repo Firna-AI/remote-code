@@ -3,10 +3,9 @@
 This area connects the app terminal to a private ttyd port. It also keeps
 the workspace shell: one tmux session for each workspace, which outlives
 each connection.
-It is the only owner of the terminal software in a sandbox. That software
-is ttyd, tmux, their two systemd services, the launcher, the shell server,
-and the password program.
-The [sandbox software](../../image/README.md) holds no terminal file.
+This area owns the ttyd and tmux package install and the terminal script sources.
+The [sandbox software](../../image/README.md) packages those scripts and their
+systemd units in each release.
 The production Worker forwards both terminal paths to the workspace object.
 Its feature handler keeps one terminal connection owner.
 The browser uses the [shared terminal contract](../../src/shared/terminal.ts).
@@ -24,32 +23,22 @@ carries no browser cookie, header, or query. It carries the
 [port credential](../sandbox/README.md#port-credentials) of the client, Basic
 auth with the workspace password, and the `tty` subprotocol.
 
-Run `terminalInstallCommand()` in the software command of each org image
-build. The build runs that command detached and writes its output to the
-build log. The image lifecycle owner must first authorize that org's build
-sandbox. The command installs the `ttyd` and `tmux` packages with
-`apt-get`. Then it writes these files:
+The software command of each org image build, refresh, and software image
+build runs `terminalPackagesCommand()`. It installs `ttyd` and `tmux` with apt.
+It stops and masks the package's ttyd service, which uses the terminal port.
+The detached build command streams its output to the build log.
+The release installer supplies both terminal units and their scripts.
+It enables the ttyd unit, which requires the shell server unit.
+It starts nothing and puts no password in the image.
 
-- `/usr/local/lib/conductive/terminal`: the launcher, which runs ttyd.
-- `/usr/local/lib/conductive/terminal-password`: the password program.
-- `/usr/local/lib/conductive/terminal-sessions`: the shell server, which
-  starts the tmux server.
-- `conductive-terminal.service`: the ttyd unit. The command enables it.
-- `conductive-terminal-sessions.service`: the shell server unit.
-
-The command puts no password in the image, and it starts nothing.
-`installTerminalService(provider, sandboxId)` runs the same command for a
-caller that needs a synchronous install hook. A refresh does not run the
-command. So a change to these files reaches the new workspaces of an org
-only after its next build. A workspace keeps the files of the image that it
-started from, also after a resume. So the pull request of each change to
-these files says that an existing workspace needs a new workspace to get
-the change.
+Release updates bring terminal script and unit changes to existing workspaces.
+The program downloads them in the background and applies them at a later
+runner start. A workspace without the program receives the background
+bootstrap at its next normal start. Apt packages remain part of image builds.
 
 For an existing shell, `tmux set-option -g mouse on` enables scrolling
 immediately. Run it inside that workspace's Terminal tab. The setting lasts
-until the sandbox stops. A rebuilt image gives new workspaces the setting
-at each start.
+until the sandbox stops. The release script enables it at each later terminal start.
 
 One quoted privileged-command helper owns the root commands.
 Both units require a nonsecret enable marker under `/run`.
@@ -211,10 +200,11 @@ runtime folders. One test runs the folder hook in a real interactive Bash.
 It moves the folder of the shell as a restore does, and it writes the
 marker later. It checks that the shell stays in the old view until the
 marker exists, moves once, keeps `OLDPWD`, and stays at a later move of
-the folder. It also checks that the hook exports no variable. The install
-test runs `terminalInstallCommand()` with fake `sudo`, `apt-get`, and
-`systemctl` commands. The
-[restore watch tests](../lifecycle/restore-watch.test.ts) of the lifecycle
+the folder. It also checks that the hook exports no variable. The package
+test runs `terminalPackagesCommand()` with fake `sudo`, `apt-get`, and
+`systemctl` commands. The unit tests read the release units and system installer.
+The lifecycle tests check that the package service is masked before release activation.
+The [restore watch tests](../lifecycle/restore-watch.test.ts) of the lifecycle
 check when the Worker writes the marker. Run the tests of this area with
 `npm run test -- worker/terminal`.
 
@@ -227,17 +217,17 @@ Terminal status reads remain available.
 - [handler.ts](handler.ts) exports `createTerminalHandler`.
 - [connections.ts](connections.ts) owns terminal registration, expiry, and scheduled access checks.
 - [The shared connection reader](../security/connection-access.ts) reads each session, membership, and sandbox identity in one batch.
-- [service.ts](service.ts) exports `terminalInstallCommand`, which installs both packages, the three programs, and both units. It also exports the image hook `installTerminalService`, the setup command `terminalStartCommand`, the password read `startWorkspaceTerminal`, the marker writer `markTerminalRestoreEnded`.
+- [service.ts](service.ts) exports `terminalPackagesCommand`, which installs the apt packages without replacing release files. It also exports the setup command `terminalStartCommand`, the password read `startWorkspaceTerminal`, the marker writer `markTerminalRestoreEnded`.
 - [The shared terminal contract](../../src/shared/terminal.ts) owns `TERMINAL_PORT`.
 - [scripts.ts](scripts.ts) builds the password program, the launcher, and the shell server with `credentialScript`, `launcherScript`, and `sessionServerScript`. It also holds the marker path `TERMINAL_RESTORE_MARKER`, and it builds the folder hook with `terminalPromptCommand`.
 - [credentials.ts](credentials.ts) encrypts the locally generated workspace password.
 - [store.ts](store.ts) binds each cached password to its current sandbox ID and provider account.
 - [privileged.ts](privileged.ts) quotes installation and service control commands.
 - [protocol.ts](protocol.ts) adds server authentication to ttyd's first JSON message. It passes each later frame through unchanged.
-- [scripts.test.ts](scripts.test.ts) and [install.test.ts](install.test.ts) run the programs and the install command with fakes.
+- [scripts.test.ts](scripts.test.ts) and [install.test.ts](install.test.ts) run the scripts and package command with fakes. They also read the release units.
 - [The tools adapter](../previews/provider.ts) exposes the private port.
 - [The sandbox provider](../sandbox/README.md) owns credentials, the port credential, fixed routes, and bounded file reads.
-- [The workspace lifecycle](../lifecycle/README.md) runs the install command in each build. After the startup script of each create and resume, it runs the setup command and then the password read. Its restore watch calls `markTerminalRestoreEnded`.
+- [The workspace lifecycle](../lifecycle/README.md) runs the package command in each build. After the startup script of each create and resume, it runs the setup command and then the password read. Its restore watch calls `markTerminalRestoreEnded`.
 
 See [terminal, previews, and desktop](../../docs/protocol/terminal-previews-and-desktop.md#terminal) and
 [workspace tools](../../docs/protocol/workspace-tools.md#terminal).

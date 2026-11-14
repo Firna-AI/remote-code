@@ -1,5 +1,6 @@
+import type { Workspace } from '../../../shared/generated/Workspace'
 import { act, useEffect, useState } from 'react'
-import type { Workspace } from '../../../shared/workspaces'
+
 import { accessibleName, byRole } from '../../../test-support/dom-queries'
 import { FAKE_IDS } from '../../../test-support/fixtures/core'
 import { workspaceFixtures } from '../../../test-support/fixtures/workspaces'

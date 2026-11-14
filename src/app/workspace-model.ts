@@ -1,7 +1,7 @@
+import type { Workspace } from '../shared/generated/Workspace'
 import {
   workspacePath,
   workspacePaths,
-  type Workspace,
   type WorkspaceResponse,
 } from '../shared/workspaces'
 import type { ApiError } from './api/client'

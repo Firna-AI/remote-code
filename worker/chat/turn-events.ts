@@ -1,4 +1,4 @@
-import type { AgentChatEvent } from '../../src/shared/chat-events'
+import type { AgentChatEvent } from '../../src/shared/generated/AgentChatEvent'
 import { HttpError } from '../http'
 import { markSent } from './messages'
 import { readRunnerEventIdentity } from './runner-event-identity'

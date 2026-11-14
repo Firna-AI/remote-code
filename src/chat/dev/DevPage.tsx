@@ -1,8 +1,10 @@
+import type { Workspace } from '../../shared/generated/Workspace'
+import type { WorkspaceState } from '../../shared/generated/WorkspaceState'
 import { useCallback, useState } from 'react'
 import { FolderGit2, GitBranch } from 'lucide-react'
 import { useFileDropGuard } from '../../app/file-drags'
 import { nameLabel } from '../../shared/name-label'
-import type { Workspace, WorkspaceState } from '../../shared/workspaces'
+
 import { StatusGlyph } from '../../../docs/mockups/src/components/workspaces/StatusGlyph'
 import header from '../../../docs/mockups/src/components/workspace/WorkspaceHeader.module.css'
 import { ThisMacSection } from '../device/ThisMacSection'

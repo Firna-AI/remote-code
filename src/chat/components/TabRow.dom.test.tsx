@@ -1,9 +1,10 @@
+import type { Session } from '../../shared/generated/Session'
 // @vitest-environment happy-dom
 import { act } from 'react'
 import { describe, expect, it, vi } from 'vitest'
 import tabScroll from '../../../docs/mockups/src/components/workspace/TabScroll.module.css'
 import { testNavigation } from '../../files/files-test-kit'
-import { sessionPath, type Session } from '../../shared/sessions'
+import { sessionPath } from '../../shared/sessions'
 import {
   byRole,
   byText,

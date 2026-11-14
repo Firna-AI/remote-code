@@ -1,10 +1,10 @@
+import type { DevicePairing } from '../../src/shared/generated/DevicePairing'
 import {
   DEVICE_FRAME_LIMIT_BYTES,
   DEVICE_HEARTBEAT_MS,
   DEVICE_OUTPUT_LIMIT_BYTES,
   DEVICE_REPLACED_CLOSE_CODE,
   DEVICE_REPLACED_CLOSE_REASON,
-  type DevicePairing,
   type DeviceSettingsAction,
 } from '../../src/shared/device'
 import {

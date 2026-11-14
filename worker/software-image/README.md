@@ -8,7 +8,8 @@ The [org lifecycle](../lifecycle/README.md) owns org builds and their pins.
 
 ## Responsibilities
 
-- Compute the version from the exact tools and image software commands.
+- Compute the version from the release version and the exact release install command.
+- Install the workspace CLI and MCP server as part of the release program.
 - Keep each attempt, phase, resource intent, command offset, and output in D1.
 - Build one image at a time in the default provider account.
 - Recover resource requests and detached commands after a lost reply.
@@ -21,9 +22,16 @@ Its JSON body supplies `tokenDigest`. Its Bearer header supplies the deploy
 run's token. The gate refuses browser headers. It checks the digest against
 `CONDUCTIVE_DEPLOY_TOKEN_SHA256` and accepts the token for 30 minutes after
 `CF_VERSION_METADATA.timestamp`.
-A valid request advances the Worker's configured runner software and returns
+A valid request reads the newest sandbox release and advances its build. It returns
 `state`, `phase`, `version`, and new `output`. A failed attempt also returns
 `error` and `keptOutput`. Responses disable caching.
+
+The Worker reads `releases/latest/conductive/x86_64-unknown-linux-musl`.
+`CONDUCTIVE_RELEASE_SERVER` sets the base URL and defaults to `https://runner.conductive.build`.
+The saved job captures the verified program URL, digest, release version, and server.
+The build uses the program for check, apply, and initial confirmation.
+It installs `gh`, `ttyd`, and `tmux` separately with apt.
+A release lookup failure fails the deploy request with a clear software-release error.
 
 A ready image is reused. An older unfinished version fails before the new
 version starts. A failed attempt restarts only for another token digest.
@@ -46,7 +54,7 @@ The tests use local D1 and the lifecycle fake provider.
 
 ### Key Code
 
-- [version.ts](version.ts): the hash of the tools commands and the software command.
+- [version.ts](version.ts): the hash of the release version and software command.
 - [route.ts](route.ts) and [deploy-gate.ts](deploy-gate.ts): the machine route and token gate.
 - [build.ts](build.ts): admission, version replacement, and resumable advancement.
 - [steps.ts](steps.ts): sandbox readiness, commands, snapshot, and publication.

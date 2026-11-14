@@ -1,4 +1,5 @@
-import { ATTACHMENT_MAX_BYTES, type Attachment } from '../shared/messages'
+import type { Attachment } from '../shared/generated/Attachment'
+import { ATTACHMENT_MAX_BYTES } from '../shared/messages'
 import { ApiError } from './api/client'
 import { asApiError } from './store'
 

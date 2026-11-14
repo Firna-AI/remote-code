@@ -3,7 +3,7 @@
 - **Severity:** Medium. **Effort:** Small. **Confidence:** High. **Harder later:** No.
 - **Kind:** Post-merge check.
 - **Added:** 2026-11-13, from the post-merge task of the fast mode plan on branch `calummoore/bern-mapm`.
-- **Location:** `runner/src/providers/claude.ts`, `runner/src/providers/codex.ts`, `docs/protocol/fast-mode.md`.
+- **Location:** `runner/sdk-helper/src/providers/claude.ts`, `runner/sdk-helper/src/providers/codex.ts`, `docs/protocol/fast-mode.md`.
 - **Reason:** Only the test deployment has real agent logins. The branch checked the requests of both agent programs against a local capture server, with no real model call.
 
 - **Terms:**

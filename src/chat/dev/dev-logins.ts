@@ -1,7 +1,8 @@
+import type { Session } from '../../shared/generated/Session'
+import type { UserMessage } from '../../shared/generated/UserMessage'
 import { followUpDraft } from '../../../docs/mockups/src/fixtures/conversations'
 import { ACCOUNT_PATHS, type AgentLoginStatus } from '../../shared/account'
-import type { UserMessage } from '../../shared/messages'
-import type { Session, SessionsResponse } from '../../shared/sessions'
+import type { SessionsResponse } from '../../shared/sessions'
 import {
   workspaceViewPath,
   type WorkspaceTab,

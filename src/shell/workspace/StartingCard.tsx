@@ -1,8 +1,9 @@
 import { Loader } from '@firna/ui/loader'
 import { useSharedUiTheme } from '@firna/ui/theme'
+import type { StartStep } from '../../shared/generated/StartStep'
+import type { WorkspaceStart } from '../../shared/generated/WorkspaceStart'
 import styles from '../../../docs/mockups/src/components/workspace/StartingCard.module.css'
 import { formatElapsed, useNow } from '../../app/time'
-import type { StartStep, WorkspaceStart } from '../../shared/workspaces'
 import workspace from './workspace.module.css'
 
 /**

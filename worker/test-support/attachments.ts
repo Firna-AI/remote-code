@@ -1,5 +1,5 @@
+import type { Attachment } from '../../src/shared/generated/Attachment'
 import { attachmentPath } from '../../src/shared/attachment-paths'
-import type { Attachment } from '../../src/shared/messages'
 
 export function fakeAttachments(
   ids: readonly string[],

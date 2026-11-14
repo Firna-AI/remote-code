@@ -1,5 +1,6 @@
+import type { WorkspaceState } from '../../src/shared/generated/WorkspaceState'
 import { HttpError } from '../http'
-import type { WorkspaceState } from '../../src/shared/workspaces'
+
 import { workspaceTokenResourcePredicate } from './workspace-token-access'
 import { suspendedOrgError } from './org-access'
 

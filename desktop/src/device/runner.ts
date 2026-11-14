@@ -1,7 +1,6 @@
-import type {
-  DeviceCommandInput,
-  DeviceCommandResult,
-} from '../../../src/shared/device.ts'
+import type { DeviceCommandInput } from '../../../src/shared/generated/DeviceCommandInput.js'
+import type { DeviceCommandResult } from '../../../src/shared/generated/DeviceCommandResult.js'
+
 import type { DeviceClock } from './clock.js'
 import { captureOutput } from './output.js'
 import type { CommandProcess, LaunchCommand } from './process.js'

@@ -1,9 +1,9 @@
+import type { RunnerEventEnvelope } from '../../src/shared/generated/RunnerEventEnvelope'
 import { boundChatEvent } from '../../src/shared/event-limits'
 import {
   OutputSanitizer,
   type HeldOutput,
 } from '../../src/shared/output-sanitizer'
-import type { RunnerEventEnvelope } from '../../src/shared/runner'
 import type { AppEnv } from '../env'
 import { runningOutputSecrets } from '../lifecycle/output-secrets'
 import { decrypt, encrypt } from '../security/crypto'

@@ -1,8 +1,6 @@
-import type {
-  DeviceCommandRecord,
-  DevicePairing,
-  DeviceToWorker,
-} from '../../../src/shared/device.ts'
+import type { DeviceCommandRecord } from '../../../src/shared/generated/DeviceCommandRecord.js'
+import type { DevicePairing } from '../../../src/shared/generated/DevicePairing.js'
+import type { DeviceToWorker } from '../../../src/shared/device.ts'
 import type { DeviceClock } from './clock.js'
 import type { DeviceFiles } from './files.js'
 import { createPermissionStore } from './permissions.js'

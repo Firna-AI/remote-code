@@ -1,10 +1,11 @@
+import type { Workspace } from '../../shared/generated/Workspace'
 // @vitest-environment happy-dom
 
 import { act, useState } from 'react'
 import { describe, expect, test } from 'vitest'
 import { groupWorkspaces } from '../../app/sections'
 import type { Section } from '../../shared/sections'
-import type { Workspace } from '../../shared/workspaces'
+
 import { byRole } from '../../test-support/dom-queries'
 import { FakeApiServer } from '../../test-support/fake-api'
 import { FAKE_IDS, FAKE_TIME } from '../../test-support/fixtures/core'

@@ -1,4 +1,4 @@
-import type { Session } from '../../src/shared/sessions'
+import type { Session } from '../../src/shared/generated/Session'
 
 type OptionalSessionFields =
   | 'startedBy'

@@ -1,11 +1,9 @@
+import type { ChangesResponse } from '../shared/generated/ChangesResponse'
+import type { RunnerFileEvent } from '../shared/generated/RunnerFileEvent'
+import type { RunnerFileResponse } from '../shared/generated/RunnerFileResponse'
 import type { PathState } from '../../docs/mockups/src/fixtures/maskedFiles'
 import type { WorkspaceEventEnvelope } from '../shared/events'
-import type {
-  ChangesResponse,
-  FileEvent,
-  RunnerFileEvent,
-} from '../shared/files'
-import type { RunnerFileResponse } from '../shared/runner-files'
+import type { FileEvent } from '../shared/files'
 import { FAKE_IDS, FAKE_TIME } from './fixtures/core'
 import { toolFixtures } from './fixtures/tools'
 

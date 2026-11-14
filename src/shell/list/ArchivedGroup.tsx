@@ -1,9 +1,10 @@
+import type { Workspace } from '../../shared/generated/Workspace'
 import { ChevronDown, ChevronRight } from 'lucide-react'
 import { useState } from 'react'
 import styles from '../../../docs/mockups/src/components/workspaces/SectionList.module.css'
 import type { ArchiveAction } from '../../app/archive-model'
 import type { SectionGroup } from '../../app/sections'
-import type { Workspace } from '../../shared/workspaces'
+
 import type { RowMenus } from './row-menu'
 import { WorkspaceRow, type RowVariant } from './WorkspaceRow'
 

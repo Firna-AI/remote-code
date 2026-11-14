@@ -1,7 +1,5 @@
-import {
-  DEVICE_COMMAND_PATH,
-  type DeviceCommandRecord,
-} from '../../src/shared/device'
+import type { DeviceCommandRecord } from '../../src/shared/generated/DeviceCommandRecord'
+import { DEVICE_COMMAND_PATH } from '../../src/shared/device'
 import {
   deviceObject,
   readDeviceCommandInput,

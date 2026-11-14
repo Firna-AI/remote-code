@@ -1,8 +1,8 @@
+import type { RunnerPortsUpdated } from '../../src/shared/generated/RunnerPortsUpdated'
 import {
   PORT_FOLDER_MAX_CHARACTERS,
   PORT_NAME_MAX_CHARACTERS,
   PORT_REPORT_MAX_PORTS,
-  type RunnerPortsUpdated,
 } from '../../src/shared/ports'
 import { counter, invalidInput, record, string } from './inputs'
 

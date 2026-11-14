@@ -1,5 +1,5 @@
 import { CircleAlert, MessageSquarePlus, Plug, X } from 'lucide-react'
-import type { Agent } from '../../shared/agents'
+import type { Agent } from '../../shared/generated/Agent'
 import {
   linkedReasonText,
   linkedTitle,

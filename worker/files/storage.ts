@@ -1,4 +1,5 @@
-import type { ChangesResponse, FileTreeResponse } from '../../src/shared/files'
+import type { ChangesResponse } from '../../src/shared/generated/ChangesResponse'
+import type { FileTreeResponse } from '../../src/shared/generated/FileTreeResponse'
 import { isRecord } from '../http'
 import { invalidFileResponse } from './errors'
 import { natural, parseChanges, parseTree } from './parsers'

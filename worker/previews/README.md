@@ -161,9 +161,11 @@ Marked errors keep the descriptor, including 401, 403, and the relay's 502 for a
 The response header allowlist removes the mark before the browser gets the answer.
 
 When the relay socket unit is missing or inactive, the open and the proxy refuse with
-409 `preview_relay_unavailable`. The message says:
-"Previews need newer cloud computer software. Start a new workspace after an admin runs Build computer."
-The image build installs the relay. An existing workspace keeps its image's software.
+409 `preview_relay_unavailable`.
+Image builds install the relay through the newest release.
+Existing workspaces download release updates in the background.
+A later runner start applies each complete update.
+A workspace without the program receives a background bootstrap at its next normal start.
 systemd holds the relay port in the socket unit while the service restarts.
 The Worker checks the socket state, so a service restart does not trigger the software refusal.
 

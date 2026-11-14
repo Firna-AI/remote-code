@@ -1,9 +1,5 @@
 import { afterAll, beforeAll, beforeEach, expect, it } from 'vitest'
-
-import type { RunnerEvent } from '../../src/shared/runner'
-import { ProcPortScanner } from '../../runner/src/proc-ports'
-import { PortReporter } from '../../runner/src/ports'
-import { procFixture } from '../../runner/test-support/proc'
+import type { RunnerEvent } from '../../src/shared/generated/RunnerEvent'
 import { createHarness, type TestHarness } from '../test-support/harness'
 import { createChatFixture, WORKSPACE_ID } from './harness.test-support'
 import { captureEnvironment } from './runner-output.test-support'
@@ -34,46 +30,15 @@ it('stores and streams masked bounded port reports to every tab and replays them
   const first = await fixture.tab()
   const second = await fixture.tab()
   const runner = await fixture.connect()
-  const proc = procFixture()
-  proc.sockets([{ port: 3001 }])
-  proc.process(
-    '10',
-    ['3001'],
-    [
-      'node',
-      '/repo/development-server-entry-point',
-      'secretpass',
-      '--token=UNSELECTED',
-    ],
-    `/home/user/code/web/secretpass/${'z'.repeat(115)}`,
-    '/usr/local/bin/node',
-  )
-  const scanner = new ProcPortScanner({
-    uid: 1000,
-    home: '/home/user',
-    cwd: '/home/user/code/web',
-    reader: proc.reader,
-  })
-  const candidates: Extract<RunnerEvent, { type: 'ports.updated' }>[] = []
-  const reporter = new PortReporter(
-    { scan: () => scanner.scan(), schedule: () => () => {} },
-    async (event) => {
-      candidates.push(event)
-    },
-    (message) => {
-      throw new Error(message)
-    },
-  )
-  await reporter.refresh()
-  await reporter.refresh()
-  const candidate = candidates.at(-1)
-  if (!candidate)
-    throw new Error('The scanner did not emit its stable candidates.')
   const event: RunnerEvent = {
     type: 'ports.updated',
     ports: [
       { port: 3000, name: 'x'.repeat(40), folder: 'x'.repeat(120) },
-      ...candidate.ports,
+      {
+        port: 3001,
+        name: 'development-server-entry-point secretpass',
+        folder: `/home/user/code/web/secretpass/${'z'.repeat(115)}`,
+      },
       { port: 5173, name: 'visible', folder: null },
     ],
   }

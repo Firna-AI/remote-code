@@ -1,7 +1,7 @@
 // @vitest-environment happy-dom
 
 import { describe, expect, test } from 'vitest'
-import type { FileEntry } from '../../shared/files'
+import type { FileEntry } from '../../shared/generated/FileEntry'
 import { accessibleName } from '../../test-support/dom-queries'
 import { FAKE_IDS } from '../../test-support/fixtures/core'
 import { mount, press } from '../../test-support/mount'

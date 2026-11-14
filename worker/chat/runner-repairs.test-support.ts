@@ -1,9 +1,7 @@
+import type { RunnerEvent } from '../../src/shared/generated/RunnerEvent'
+import type { RunnerReportKind } from '../../src/shared/generated/RunnerReportKind'
 import type { WorkspaceEvent } from './workspace-events'
-import {
-  RUNNER_EVENT_MAX_BYTES,
-  type RunnerEvent,
-  type RunnerReportKind,
-} from '../../src/shared/runner'
+import { RUNNER_EVENT_MAX_BYTES } from '../../src/shared/runner'
 import type { FakeRunner } from '../test-support/fake-runner'
 import { WORKSPACE_ID, type ChatFixture } from './harness.test-support'
 

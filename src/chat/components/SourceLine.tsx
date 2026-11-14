@@ -1,7 +1,8 @@
+import type { Session } from '../../shared/generated/Session'
 import type { ReactNode } from 'react'
 import { LinkedLine } from '../../../docs/mockups/src/components/chat/LinkedLine'
 import { nameLabel } from '../../shared/name-label'
-import type { Session } from '../../shared/sessions'
+
 import type { ChatSnapshot } from '../state/chat-snapshot'
 import controls from '../ui/controls.module.css'
 import type { TranscriptInsert } from '../../shared/transcript/transcript-entries'

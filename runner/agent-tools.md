@@ -23,7 +23,8 @@ without computer tools.
 ## Workspace tools
 
 Both agents also get the `conductive` workspace MCP server. It runs
-`/usr/local/bin/conductive mcp`, which the image builder installs.
+`/usr/local/bin/conductive mcp`. The sandbox release supplies the Rust
+program. Its system installer links the public command to the active release.
 Its settings hold no URL, token, or login. Codex forwards the three
 [tool environment names](../tools/README.md#use) to its stdio child.
 
@@ -87,15 +88,15 @@ A member without a display name gets
 
 ## Key code
 
-- [message.ts](src/providers/message.ts) gives `providerMessage`, which
+- [message.ts](sdk-helper/src/providers/message.ts) gives `providerMessage`, which
   puts the sender line with the member ID of each message before its
   text. The stored message and the chat never hold that line.
-- [instructions.ts](src/instructions.ts) gives `agentInstructions`, which
+- [instructions.rs](../crates/cnd-runner/src/engine/instructions.rs) builds the session instructions, which
   holds the workspace tool guidance of each new session: the call names,
   the access rules, and the choice of an owner ID.
-- [workspace-tools.ts](src/providers/workspace-tools.ts) binds runtime tool
-  credentials to the runner connection. Each provider start adds the
-  current turn ID in its environment.
-- [computer-mcp.ts](src/providers/computer-mcp.ts) gives `readComputerServer`,
+- [provider.rs](../crates/cnd-runner/src/engine/provider.rs) derives the workspace tool
+  context from the runner connection and the active turn.
+  [environment.ts](sdk-helper/src/providers/environment.ts) puts that context in each agent environment.
+- [computer-mcp.ts](sdk-helper/src/providers/computer-mcp.ts) gives `readComputerServer`,
   which reads the sandbox's `computer` entry at each agent start.
   It sends warnings through `ProviderOptions.warn`.

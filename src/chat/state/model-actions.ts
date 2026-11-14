@@ -1,6 +1,6 @@
+import type { AgentChoice } from '../../shared/generated/AgentChoice'
 import { readyIds } from '../../app/draft-files'
 import { markedFiles } from '../../app/draft-file-state'
-import type { AgentChoice } from '../../shared/agents'
 import type {
   ChangeModelRequest,
   ChangeModelResponse,

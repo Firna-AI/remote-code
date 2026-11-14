@@ -1,19 +1,9 @@
 import { expect, it } from 'vitest'
 
-import { credentialLauncher } from './credential-launcher-test-support'
+import { githubCliFixture } from './github-cli-test-support'
 
 it('authenticates each GitHub CLI invocation afresh and preserves arguments, input, and exit status', async () => {
-  const launcher = await credentialLauncher(
-    `globalThis.fetch = async (url, options) => {
-      const turn = new Request(url, options).headers.get('X-Conductive-Turn-Id')
-      return Response.json({ token: turn ? 'agent-github-token' : 'owner-github-token' })
-    }`,
-    {
-      CONDUCTIVE_MACHINE_ORIGIN: 'https://machine.conductive.test',
-      CONDUCTIVE_TURN_ID: 'stale-saved-turn',
-      WORKSPACE_TOKEN: 'workspace-token',
-    },
-  )
+  const launcher = await githubCliFixture()
   try {
     const before = await launcher.files()
     const args = [
@@ -59,15 +49,7 @@ it('authenticates each GitHub CLI invocation afresh and preserves arguments, inp
 })
 
 it('stops the GitHub CLI when authentication fails and keeps credentials out of errors', async () => {
-  const launcher = await credentialLauncher(
-    `globalThis.fetch = async () => Response.json(
-      { token: 'must-stay-private' }, { status: 401 },
-    )`,
-    {
-      CONDUCTIVE_MACHINE_ORIGIN: 'https://machine.conductive.test',
-      WORKSPACE_TOKEN: 'workspace-token',
-    },
-  )
+  const launcher = await githubCliFixture(true)
   try {
     const cases = [
       { args: ['issue', 'list'], free: false },

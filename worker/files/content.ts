@@ -1,4 +1,5 @@
-import type { DiffResponse, FileResponse } from '../../src/shared/files'
+import type { DiffResponse } from '../../src/shared/generated/DiffResponse'
+import type { FileResponse } from '../../src/shared/generated/FileResponse'
 import { isRecord } from '../http'
 import { FileTooLargeError, invalidFileResponse } from './errors'
 import { natural } from './parsers'

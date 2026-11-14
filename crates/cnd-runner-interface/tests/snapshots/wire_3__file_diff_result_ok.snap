@@ -1,0 +1,23 @@
+---
+source: crates/cnd-runner-interface/tests/wire_3.rs
+assertion_line: 17
+description: Current protocol JSON. Optional fields stay absent; nullable fields stay null.
+expression: message
+---
+{
+  "type": "file.diff.result",
+  "requestId": "request-1",
+  "result": {
+    "ok": true,
+    "diff": {
+      "path": "a.txt",
+      "displayPath": "masked.txt",
+      "baseBranch": "main",
+      "displayBaseBranch": "masked-main",
+      "oldContent": null,
+      "newContent": "hi\n",
+      "patch": "patch text",
+      "binary": false
+    }
+  }
+}

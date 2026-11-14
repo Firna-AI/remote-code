@@ -1,6 +1,6 @@
 import { recordedCreationJob } from './creation-claims'
 import { retryCreationIdentity } from './retry-creation-data'
-import type { WorkspaceRow } from './workspace-data'
+import type { WorkspaceRow } from './workspace-row'
 import type { WorkspaceRuntime } from './workspace-runtime'
 import { WORKSPACE_START_TIME_LIMIT_MS } from './job-time-limit'
 

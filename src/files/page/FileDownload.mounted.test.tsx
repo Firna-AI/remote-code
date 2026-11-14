@@ -2,7 +2,8 @@
 
 import { act } from 'react'
 import { expect, it, onTestFinished, vi } from 'vitest'
-import { filePaths, type DiffResponse } from '../../shared/files'
+import type { DiffResponse } from '../../shared/generated/DiffResponse'
+import { filePaths } from '../../shared/files'
 import { FakeApiServer } from '../../test-support/fake-api'
 import { accessibleName } from '../../test-support/dom-queries'
 import { FAKE_IDS } from '../../test-support/fixtures/core'

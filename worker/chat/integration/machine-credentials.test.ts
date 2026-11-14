@@ -1,10 +1,13 @@
 import type { WebSocket } from 'miniflare'
 import { afterEach, beforeAll, expect, it } from 'vitest'
 
-import { MACHINE_PATHS } from '../../../src/shared/agent-tools'
+import {
+  MACHINE_PATHS,
+  TOOL_TURN_HEADER,
+} from '../../../src/shared/agent-tools'
 import { chatHistoryPath } from '../../../src/shared/events'
 import { sessionPaths } from '../../../src/shared/sessions'
-import { TOOL_TURN_HEADER } from '../../../tools/context'
+
 import { IMAGE_SOURCE_CREDENTIAL_PATH } from '../../lifecycle/image-sources/credential'
 import { saveGitHubTokens } from '../../security/github-tokens'
 import { closeSockets } from '../adapter-sockets.test-support'

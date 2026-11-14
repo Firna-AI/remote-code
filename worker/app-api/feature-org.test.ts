@@ -10,7 +10,7 @@ import {
 } from '../chat/integration/outer-runtime.test-support'
 import type { AppEnv } from '../env'
 import { readBuildHistory, readBuildJob } from '../lifecycle/build-data'
-import { SOFTWARE } from '../lifecycle/backend-test-support'
+import { withSoftwareRelease } from '../lifecycle/software-release-test-support'
 import { createShellOrg } from './feature-org'
 import { shellRepositoryId } from './feature-repositories-data'
 import { shellGitHubCatalog } from './feature-shell.test-support'
@@ -40,12 +40,10 @@ async function setup() {
   const env = {
     ...active.env,
     WORKSPACES: bindings.WORKSPACES,
-    CONDUCTIVE_RUNNER_ARCHIVE_URL: SOFTWARE.url,
-    CONDUCTIVE_RUNNER_ARCHIVE_SHA256: SOFTWARE.sha256,
   }
   let sequence = 0
   const dependencies = {
-    fetch: active.github.fetch,
+    fetch: withSoftwareRelease(active.github.fetch),
     now: () => 3_000_000_000_000,
     randomToken: () => `first-build-${++sequence}`,
   }

@@ -1,4 +1,4 @@
-import type { RunnerLogin } from '../../src/shared/runner'
+import type { RunnerLogin } from '../../src/shared/generated/RunnerLogin'
 import type { HttpFetch } from '../env'
 import { codexRouting } from './codex-routing'
 import type { CodexGatewayAuth } from './codex-auth'

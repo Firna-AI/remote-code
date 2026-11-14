@@ -1,5 +1,5 @@
+import type { WorkspaceToRunner } from '../../src/shared/generated/WorkspaceToRunner'
 import type { WorkspaceSocketMessage } from '../../src/shared/events'
-import type { WorkspaceToRunner } from '../../src/shared/runner'
 import type { WorkspaceChat } from '../chat/backend'
 import type { BrowserPeer, RunnerPeer } from '../chat/types'
 

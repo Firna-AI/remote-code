@@ -1,5 +1,6 @@
+import type { Workspace } from '../../shared/generated/Workspace'
 import { helpGroupLabel } from '../../../docs/mockups/src/components/feedback/feedbackCopy'
-import type { Workspace } from '../../shared/workspaces'
+
 import { routes } from '../router'
 import { groupWorkspaces } from '../sections'
 import { valueOf } from '../store'

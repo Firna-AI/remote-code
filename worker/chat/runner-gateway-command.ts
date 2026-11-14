@@ -1,9 +1,7 @@
-import type {
-  RunnerCommand,
-  RunnerMessageDuringTurn,
-  RunnerTurnCredential,
-  RunnerTurn,
-} from '../../src/shared/runner'
+import type { RunnerCommand } from '../../src/shared/generated/RunnerCommand'
+import type { RunnerMessageDuringTurn } from '../../src/shared/generated/RunnerMessageDuringTurn'
+import type { RunnerTurnCredential } from '../../src/shared/generated/RunnerTurnCredential'
+import type { RunnerTurn } from '../../src/shared/generated/RunnerTurn'
 import { chatGptSignInCopy } from '../../docs/mockups/src/components/settings/chatGptSignInCopy'
 import type { WorkspaceTurnTokens } from '../model-gateway/workspace'
 import type { AgentLogin } from './login-kind'

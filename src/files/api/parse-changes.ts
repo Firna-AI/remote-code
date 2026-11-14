@@ -1,10 +1,8 @@
-import type {
-  BranchChangedFile,
-  ChangeKind,
-  ChangesResponse,
-  DiffResponse,
-  FileResponse,
-} from '../../shared/files'
+import type { BranchChangedFile } from '../../shared/generated/BranchChangedFile'
+import type { ChangeKind } from '../../shared/generated/ChangeKind'
+import type { ChangesResponse } from '../../shared/generated/ChangesResponse'
+import type { DiffResponse } from '../../shared/generated/DiffResponse'
+import type { FileResponse } from '../../shared/generated/FileResponse'
 import {
   isObject,
   parseItems,

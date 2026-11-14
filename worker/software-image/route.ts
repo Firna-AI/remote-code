@@ -1,5 +1,5 @@
 import type { AppDependencies, AppEnv } from '../env'
-import { runnerSoftware } from '../configuration'
+import { latestSoftwareRelease } from '../lifecycle/software-release'
 import { privateResponse } from '../http'
 import { requestSoftwareImage } from './build'
 import { deployTokenDigest } from './deploy-gate'
@@ -16,7 +16,7 @@ export async function handleSoftwareImage(
     Response.json(
       await requestSoftwareImage(
         { env, dependencies },
-        runnerSoftware(env),
+        await latestSoftwareRelease(env, dependencies.fetch),
         digest,
       ),
     ),

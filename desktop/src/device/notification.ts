@@ -1,4 +1,5 @@
-import type { DeviceCommandRecord } from '../../../src/shared/device.ts'
+import type { DeviceCommandRecord } from '../../../src/shared/generated/DeviceCommandRecord.js'
+
 import { nameLabel } from '../../../src/shared/name-label.ts'
 import { DESKTOP_ORIGIN } from '../../../worker/security/desktop-contract.js'
 

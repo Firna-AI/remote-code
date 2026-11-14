@@ -1,14 +1,15 @@
+import type { DeviceCommandRecord } from '../generated/DeviceCommandRecord'
+import type { ToolCall } from '../generated/ToolCall'
+import type { ChangedFile } from '../generated/ChangedFile'
+import type { UserMessage } from '../generated/UserMessage'
 import { sessionLink } from '../session-link'
-import type { ToolCall } from '../chat-events'
-import type { DeviceCommandRecord } from '../device'
-import type { ChangedFile } from '../files'
+
 import { endReasonText } from '../../../docs/mockups/src/components/chat/endReasonCopy'
 import {
   attachmentForMention,
   textWithAttachmentNames,
 } from '../attachment-mentions'
 import { mentionParts } from '../mention-text'
-import type { UserMessage } from '../messages'
 import {
   leftOutOfCall,
   leftOutOfRun,

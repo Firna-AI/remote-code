@@ -1,5 +1,6 @@
+import type { TranscriptDetail } from '../../shared/generated/TranscriptDetail'
 import { stepShortcutItem } from '../../app/shortcuts/navigation'
-import type { TranscriptDetail } from '../../shared/sessions'
+
 import { useShortcutOffer } from '../../shell/shortcuts/shortcut-context'
 import type { ChatController } from '../state/controller'
 import type { MenuEntry } from '../ui/Menu'

@@ -86,3 +86,55 @@ jobs:
           echo "Static checks: $STATIC. Tests: $TESTS."
           test "$STATIC" = success
           test "$TESTS" = success
+
+  rust:
+    name: Rust gate
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7
+
+      - name: Set up Rust
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt, clippy
+          targets: x86_64-unknown-linux-musl
+
+      - name: Install musl tools
+        run: sudo apt-get update && sudo apt-get install -y musl-tools
+
+      - name: Cache Cargo dependencies
+        uses: Swatinem/rust-cache@v2
+
+      - name: Check Rust format
+        run: cargo fmt --all -- --check
+
+      - name: Lint Rust
+        run: cargo clippy --workspace --all-targets -- -D warnings
+
+      - name: Test Rust
+        run: cargo test --workspace
+
+      - name: Build static program
+        run: cargo build --release --target x86_64-unknown-linux-musl -p cnd-cli
+
+      # The generator formats its output with the root Prettier.
+      - name: Set up Node
+        uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Install root dependencies
+        run: npm ci
+
+      # Fail when a Rust type changed without a new run of the generator.
+      - name: Check the generated types
+        run: |
+          set -euo pipefail
+          cargo run --locked -p cnd-runner-interface --example export_bindings
+          git add -N src/shared/generated
+          if ! git diff --exit-code -- src/shared/generated; then
+            echo '::error::src/shared/generated is out of date. Run cargo run -p cnd-runner-interface --example export_bindings and commit the result.'
+            exit 1
+          fi

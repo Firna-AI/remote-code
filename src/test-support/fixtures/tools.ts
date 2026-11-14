@@ -1,3 +1,8 @@
+import type { ChangesResponse } from '../../shared/generated/ChangesResponse'
+import type { DiffResponse } from '../../shared/generated/DiffResponse'
+import type { FileEntry } from '../../shared/generated/FileEntry'
+import type { FileResponse } from '../../shared/generated/FileResponse'
+import type { FileTreeResponse } from '../../shared/generated/FileTreeResponse'
 import {
   filesFor,
   type PathState,
@@ -7,13 +12,6 @@ import {
   pullRequest,
 } from '../../../docs/mockups/src/fixtures/pullRequests'
 import type { DesktopResponse } from '../../shared/desktop'
-import type {
-  ChangesResponse,
-  DiffResponse,
-  FileEntry,
-  FileResponse,
-  FileTreeResponse,
-} from '../../shared/files'
 import type {
   BannerState,
   GitHubBannerResponse,

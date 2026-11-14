@@ -1,7 +1,6 @@
 import { afterAll, beforeAll, expect, it } from 'vitest'
-
+import type { RunnerFileCommand } from '../../src/shared/generated/RunnerFileCommand'
 import { filePaths } from '../../src/shared/files'
-import type { RunnerFileCommand } from '../../src/shared/runner-files'
 import { chatFilesStorage } from '../chat/files-storage'
 import { WORKSPACE_ID } from '../chat/harness.test-support'
 import { outputFixture } from '../chat/runner-output.test-support'

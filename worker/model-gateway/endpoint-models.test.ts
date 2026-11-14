@@ -1,6 +1,5 @@
 import { afterEach, expect, it, vi } from 'vitest'
-
-import type { Agent } from '../../src/shared/agents'
+import type { Agent } from '../../src/shared/generated/Agent'
 import { FakeModelUpstream } from '../test-support/fake-model-upstream'
 import { readEndpointModels } from './endpoint-models'
 import { deferred } from './http.test-support'

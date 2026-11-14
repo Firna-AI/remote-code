@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from 'vitest'
+import type { AgentChoice } from '../../shared/generated/AgentChoice'
 import { pickChatFiles } from './draft-files.test-support'
-import type { AgentChoice } from '../../shared/agents'
 import { filePaths } from '../../shared/files'
 import { retryMessagePath, sessionPaths } from '../../shared/sessions'
 import { FAKE_IDS, FAKE_TIME } from '../../test-support/fixtures/core'

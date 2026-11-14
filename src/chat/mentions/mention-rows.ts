@@ -1,4 +1,4 @@
-import type { FileEntry } from '../../shared/files'
+import type { FileEntry } from '../../shared/generated/FileEntry'
 import { canMention } from '../../shared/mention-text'
 
 /** The most rows that the list shows. A longer query narrows it. */

@@ -2,10 +2,13 @@ import type { WebSocket } from 'miniflare'
 import { afterEach, beforeAll, expect, it } from 'vitest'
 
 import { readCreated } from '../../../src/app/api/read-workspaces'
-import { MACHINE_PATHS } from '../../../src/shared/agent-tools'
+import {
+  MACHINE_PATHS,
+  TOOL_TURN_HEADER,
+} from '../../../src/shared/agent-tools'
 import { sessionPaths, sessionsPath } from '../../../src/shared/sessions'
 import { workspacesPath } from '../../../src/shared/workspaces'
-import { TOOL_TURN_HEADER } from '../../../tools/context'
+
 import { readWorkspaceToken } from '../../lifecycle/tokens'
 import { saveGitHubTokens } from '../../security/github-tokens'
 import { CLAUDE } from '../harness.test-support'

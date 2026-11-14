@@ -1,3 +1,4 @@
+import type { Workspace } from '../../shared/generated/Workspace'
 import { useState, type ReactNode } from 'react'
 import { useToast } from '@firna/ui/toast'
 import {
@@ -13,7 +14,7 @@ import type { SectionGroup } from '../../app/sections'
 import { useServices } from '../../app/services'
 import { useStore } from '../../app/store'
 import type { User } from '../../shared/api'
-import type { Workspace } from '../../shared/workspaces'
+
 import { useApp, useOrgModel } from '../context'
 import { useViewport } from '../ui/viewport'
 import { shownWorkspaces } from '../workspace/tab-memory'

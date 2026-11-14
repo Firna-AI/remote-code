@@ -1,4 +1,4 @@
-import type { AgentChatEvent } from '../chat-events'
+import type { AgentChatEvent } from '../generated/AgentChatEvent'
 import { endKey, failedKey, stoppedKey, toolKey } from './item-keys'
 import { isEnd, placeInTurn } from './item-placement'
 import type { Transcript, TranscriptItem } from './transcript'

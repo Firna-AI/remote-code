@@ -1,6 +1,7 @@
+import type { Preview } from '../../shared/generated/Preview'
 import { desktopPath } from '../../shared/desktop'
 import type { WorkspaceEvent } from '../../shared/events'
-import type { Preview } from '../../shared/previews'
+
 import { previewsPath } from '../../shared/previews'
 import { terminalPaths } from '../../shared/terminal'
 import { FakeApiServer } from '../../test-support/fake-api'

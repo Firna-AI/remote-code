@@ -9,7 +9,7 @@ import { workspaceOwnerChangedHook } from '../lifecycle/ownership-maintenance'
 import { workspaceRuntime } from '../lifecycle/runtime'
 import { withImageSourceCleanup } from '../lifecycle/image-sources/members'
 import { readImageSchedule, IMAGE_DAY_MS } from '../lifecycle/image-schedule'
-import { runnerSoftware } from '../configuration'
+import { latestSoftwareRelease } from '../lifecycle/software-release'
 import { requireOrgMember } from './permissions'
 import type { MembersHooks } from './route'
 import {
@@ -107,7 +107,7 @@ export function productionMembersHooks(
           ? null
           : {
               orgId: input.orgId,
-              software: runnerSoftware(env),
+              software: await latestSoftwareRelease(env, dependencies.fetch),
               buildId: next.buildId,
               nextAt: next.nextAt,
             }

@@ -1,9 +1,10 @@
+import type { Preview } from '../shared/generated/Preview'
 // @vitest-environment happy-dom
 import { describe, expect, it, vi } from 'vitest'
 import { WorkspaceStream } from '../app/events'
 import { ManualDelay, RecordingEvents } from '../app/test-kit'
 import { ToolEvents } from '../shell/workspace/tools/tool-events'
-import { previewsPath, type Preview } from '../shared/previews'
+import { previewsPath } from '../shared/previews'
 import {
   accessibleName,
   byLabel,

@@ -1,8 +1,12 @@
 import { afterEach, beforeAll, expect, it } from 'vitest'
 
+import {
+  agentSessionMessagesPath,
+  agentSessionTranscriptPath,
+  agentSessionsPath,
+} from '../../src/shared/agent-session-paths'
 import { sessionLink } from '../../src/shared/session-link'
 import { sessionPaths } from '../../src/shared/sessions'
-import { record, text } from '../../tools/input'
 import { outerWorkerBundle } from '../chat/integration/outer-runtime.test-support'
 import {
   OUTER_ORG,
@@ -10,14 +14,15 @@ import {
   OTHER_WORKSPACE,
 } from '../chat/integration/outer-seed.test-support'
 import { CLAUDE } from '../chat/harness.test-support'
-import { mcpRepliesById } from './mcp-test-support'
+import { record, string } from '../chat/inputs'
 import {
-  sessionToolFixture,
-  type SessionToolFixture,
-} from './session-test-support'
+  agentWriteFixture,
+  type AgentWriteFixture,
+} from '../features/agent-session-writes.test-support'
+import { machineRead } from './session-management.test-support'
 
 let bundle: string
-let fixture: SessionToolFixture | undefined
+let fixture: AgentWriteFixture | undefined
 beforeAll(async () => {
   bundle = await outerWorkerBundle('worker/features/entry.test-support.ts')
 })
@@ -25,43 +30,31 @@ afterEach(async () => {
   await fixture?.dispose()
 })
 
-function cliReply(output: Awaited<ReturnType<SessionToolFixture['cli']>>) {
-  expect(output.status, output.stderr.join('')).toBe(0)
-  expect(output.stderr).toEqual([])
-  expect(output.stdout).toHaveLength(1)
-  expect(output.stdout[0]).toMatch(/^\{/)
-  return record(JSON.parse(output.stdout[0]))
+async function reply(
+  response: { status: number; json: () => Promise<unknown> },
+  status = 200,
+) {
+  expect(response.status).toBe(status)
+  return record(await response.json())
 }
 
-function mcpReply(output: Awaited<ReturnType<SessionToolFixture['mcp']>>) {
-  expect(output.status).toBe(0)
-  expect(output.stderr).toEqual([])
-  const reply = mcpRepliesById(output.stdout).call
-  expect(reply).toMatchObject({ result: { isError: false } })
-  const result = record(reply.result)
-  expect(result.content).toEqual([
-    { type: 'text', text: JSON.stringify(result.structuredContent) },
-  ])
-  return record(result.structuredContent)
-}
-
-it('runs CLI session creation, reads, and replayed messages through the stored caller', async () => {
-  const active = (fixture = await sessionToolFixture(bundle))
-  const opaque = await active.cli(['read', '--session', '-missing'], false)
-  expect(opaque.stderr).toEqual([
-    'session_not_found: The session is not available.\n',
-  ])
-  for (const args of [
-    ['read', '--session'],
-    ['list', '--unknown'],
-  ]) {
-    const invalidOptions = await active.cli(args, false)
-    expect(invalidOptions.status).toBe(1)
-    expect(invalidOptions.stderr).toEqual([
-      'Check the session options. Use --help for details.\n',
-    ])
-  }
-  const empty = cliReply(await active.cli(['create', '--title', 'keep_name']))
+it('creates and reads sessions and replays messages through the stored caller', async () => {
+  const active = (fixture = await agentWriteFixture(bundle))
+  const opaque = await machineRead(
+    active,
+    agentSessionTranscriptPath(undefined, '-missing'),
+  )
+  expect(opaque.status).toBe(404)
+  expect(await opaque.json()).toMatchObject({
+    error: {
+      code: 'session_not_found',
+      message: 'The session is not available.',
+    },
+  })
+  const empty = await reply(
+    await active.post(agentSessionsPath(), { title: 'keep_name' }),
+    201,
+  )
   expect(empty).toMatchObject({
     workspace: { id: OUTER_WORKSPACE },
     session: { title: 'keep_name', startedBy: { id: 'member' } },
@@ -70,24 +63,16 @@ it('runs CLI session creation, reads, and replayed messages through the stored c
     resume: { state: 'not_needed', error: null },
   })
   const original = '  Review this change.\nKeep this spacing.  '
-  const created = cliReply(
-    await active.cli([
-      'create',
-      '--workspace',
-      OTHER_WORKSPACE,
-      '--message',
-      original,
-      '--agent',
-      CLAUDE.agent,
-      '--model',
-      CLAUDE.model,
-      '--effort',
-      'max',
-      '--request-id',
-      'cli-create',
-    ]),
+  const created = await reply(
+    await active.post(agentSessionsPath(OTHER_WORKSPACE), {
+      firstMessage: original,
+      model: { agent: CLAUDE.agent, model: CLAUDE.model },
+      effort: 'max',
+      requestId: 'cli-create',
+    }),
+    201,
   )
-  const sessionId = text(record(created.session).id)
+  const sessionId = string(record(created.session).id)
   const link = sessionLink(
     active.env.APP_ORIGIN,
     OUTER_ORG,
@@ -100,25 +85,19 @@ it('runs CLI session creation, reads, and replayed messages through the stored c
     message: { text: original + footer, sender: { id: 'member' } },
     turnId: expect.any(String),
   })
-  const send = [
-    'send',
-    '--workspace',
-    OTHER_WORKSPACE,
-    '--session',
-    sessionId,
-    '--message',
-    '--help',
-    '--request-id',
-    '..',
-  ]
-  const accepted = cliReply(await active.cli(send))
+  const send = () =>
+    active.post(agentSessionMessagesPath(OTHER_WORKSPACE, sessionId), {
+      text: '--help',
+      requestId: '..',
+    })
+  const accepted = await reply(await send(), 202)
   expect(accepted).toMatchObject({
     session: { id: sessionId, link, choice: { ...CLAUDE, effort: 'max' } },
     message: { text: '--help' + footer },
     turnId: created.turnId,
   })
-  expect(cliReply(await active.cli(send))).toEqual(accepted)
-  const listed = cliReply(await active.cli(['list'], false))
+  expect(await reply(await send(), 202)).toEqual(accepted)
+  const listed = await reply(await machineRead(active, agentSessionsPath()))
   expect(listed).toMatchObject({ workspace: { id: OUTER_WORKSPACE } })
   expect(listed.sessions).toEqual(
     expect.arrayContaining([
@@ -129,22 +108,15 @@ it('runs CLI session creation, reads, and replayed messages through the stored c
       }),
     ]),
   )
-  const read = cliReply(
-    await active.cli(
-      [
-        'read',
-        '--workspace',
-        OTHER_WORKSPACE,
-        '--session',
-        sessionId,
-        '--detail',
-        'full',
-        '--start-line',
-        '1',
-        '--start-offset',
-        '0',
-      ],
-      false,
+  const query = new URLSearchParams({
+    detail: 'full',
+    startLine: '1',
+    startOffset: '0',
+  })
+  const read = await reply(
+    await machineRead(
+      active,
+      `${agentSessionTranscriptPath(OTHER_WORKSPACE, sessionId)}?${query}`,
     ),
   )
   expect(read).toMatchObject({
@@ -156,43 +128,27 @@ it('runs CLI session creation, reads, and replayed messages through the stored c
   })
   expect(read.markdown).toContain(original + footer)
   expect(read.markdown).toContain('--help' + footer)
-  const readUrl = new URL(active.requests.at(-1)?.url ?? '')
-  expect(readUrl.searchParams.get('startOffset')).toBe('0')
-  const invalid = await active.cli([
-    'send',
-    '--session',
-    sessionId,
-    '--message',
-    'x',
-    '--model',
-    'orphan',
-  ])
-  expect(invalid.status).toBe(1)
-  expect(invalid.stderr).toEqual([
-    'Choose Claude or Codex for the workspace.\n',
-  ])
 })
 
-it('runs MCP session calls with caller defaults and actionable Worker refusals', async () => {
-  const active = (fixture = await sessionToolFixture(bundle))
-  const created = mcpReply(
-    await active.mcp('create_session', {
-      workspaceId: OTHER_WORKSPACE,
+it('uses caller defaults for session calls and preserves actionable Worker refusals', async () => {
+  const active = (fixture = await agentWriteFixture(bundle))
+  const created = await reply(
+    await active.post(agentSessionsPath(OTHER_WORKSPACE), {
       title: 'MCP review',
     }),
+    201,
   )
-  const sessionId = text(record(created.session).id)
+  const sessionId = string(record(created.session).id)
   expect(created).toMatchObject({
     message: null,
     turnId: null,
     session: { choice: CLAUDE },
   })
-  const sent = mcpReply(
-    await active.mcp('send_message', {
-      workspaceId: OTHER_WORKSPACE,
-      sessionId,
+  const sent = await reply(
+    await active.post(agentSessionMessagesPath(OTHER_WORKSPACE, sessionId), {
       text: '  Work from MCP.  ',
     }),
+    202,
   )
   expect(sent).toMatchObject({
     message: {
@@ -201,18 +157,12 @@ it('runs MCP session calls with caller defaults and actionable Worker refusals',
     turnId: expect.any(String),
     session: { id: sessionId, link: record(created.session).link },
   })
-  const sentInput = record(
-    JSON.parse((await active.requests.at(-1)?.text()) ?? '{}'),
-  )
-  expect(sentInput.requestId).toEqual(expect.any(String))
-  expect(sentInput.requestId).not.toBe('')
-  const listed = mcpReply(await active.mcp('list_sessions', {}, false))
+  const listed = await reply(await machineRead(active, agentSessionsPath()))
   expect(listed.workspace).toMatchObject({ id: OUTER_WORKSPACE })
-  const read = mcpReply(
-    await active.mcp(
-      'read_session',
-      { workspaceId: OTHER_WORKSPACE, sessionId },
-      false,
+  const read = await reply(
+    await machineRead(
+      active,
+      agentSessionTranscriptPath(OTHER_WORKSPACE, sessionId),
     ),
   )
   expect(read).toMatchObject({
@@ -223,30 +173,28 @@ it('runs MCP session calls with caller defaults and actionable Worker refusals',
   expect(read.markdown).toContain('Work from MCP.')
   await active.request(
     sessionPaths.close(OUTER_ORG, OTHER_WORKSPACE, sessionId),
-    {
-      method: 'POST',
-      body: JSON.stringify({ stopRunningTurn: true }),
-    },
+    { method: 'POST', body: JSON.stringify({ stopRunningTurn: true }) },
   )
-  const refused = await active.mcp('send_message', {
-    workspaceId: OTHER_WORKSPACE,
-    sessionId,
-    text: 'Closed',
-  })
-  expect(mcpRepliesById(refused.stdout).call).toMatchObject({
-    result: {
-      isError: true,
-      content: [
-        {
-          type: 'text',
-          text: 'session_closed: Reopen the session to send a message.',
-        },
-      ],
+  const refused = await active.post(
+    agentSessionMessagesPath(OTHER_WORKSPACE, sessionId),
+    { text: 'Closed' },
+  )
+  expect(refused.status).toBe(409)
+  expect(await refused.json()).toMatchObject({
+    error: {
+      code: 'session_closed',
+      message: 'Reopen the session to send a message.',
     },
   })
-  const missing = await active.cli(['read', '--session', 'unknown'], false)
-  expect(missing.status).toBe(1)
-  expect(missing.stderr).toEqual([
-    'session_not_found: The session is not available.\n',
-  ])
+  const missing = await machineRead(
+    active,
+    agentSessionTranscriptPath(undefined, 'unknown'),
+  )
+  expect(missing.status).toBe(404)
+  expect(await missing.json()).toMatchObject({
+    error: {
+      code: 'session_not_found',
+      message: 'The session is not available.',
+    },
+  })
 })

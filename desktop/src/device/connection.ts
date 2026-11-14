@@ -1,11 +1,9 @@
+import type { DevicePairing } from '../../../src/shared/generated/DevicePairing.js'
 import {
   DEVICE_HEARTBEAT_MS,
   DEVICE_LEASE_MS,
 } from '../../../src/shared/device.ts'
-import type {
-  DevicePairing,
-  DeviceToWorker,
-} from '../../../src/shared/device.ts'
+import type { DeviceToWorker } from '../../../src/shared/device.ts'
 import type { DeviceClock } from './clock.js'
 import type { DeviceSession } from './session.js'
 import type { DeviceSocket, SocketEvents } from './transport.js'

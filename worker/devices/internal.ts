@@ -1,7 +1,6 @@
-import type {
-  DeviceCommandRecord,
-  DevicePairing,
-} from '../../src/shared/device'
+import type { DeviceCommandRecord } from '../../src/shared/generated/DeviceCommandRecord'
+import type { DevicePairing } from '../../src/shared/generated/DevicePairing'
+
 import type { AppEnv } from '../env'
 import { HttpError } from '../http'
 import type { Workspace } from '../workspace'

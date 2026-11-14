@@ -1,9 +1,7 @@
-import type {
-  FileEntry,
-  FileTreeChange,
-  FileTreeDelta,
-  FileTreeResponse,
-} from '../../shared/files'
+import type { FileEntry } from '../../shared/generated/FileEntry'
+import type { FileTreeChange } from '../../shared/generated/FileTreeChange'
+import type { FileTreeDelta } from '../../shared/generated/FileTreeDelta'
+import type { FileTreeResponse } from '../../shared/generated/FileTreeResponse'
 import {
   isObject,
   parseItems,

@@ -39,15 +39,21 @@ export async function localSavedScriptFixture(
   const runnerCalls = join(directory, 'runner-calls')
   const systemGitConfig = join(directory, 'system-gitconfig')
   const install = join(directory, 'install.sh')
+  const software = join(directory, 'software')
   const mappedPaths = new Map([
     [legacyRepositoryDirectory(repositoryId), repository],
     ['/run/conductive', runtime],
+    ['/opt/conductive', software],
     ['/run/ascii-secrets/env.sh', environment],
     [scriptPaths.install, install],
     ['/home/user/code', join(directory, 'code')],
     ['/tmp/conductive-lifecycle', join(directory, 'command-journal')],
   ])
   await mkdir(repository)
+  await mkdir(join(software, 'current'), { recursive: true })
+  await writeFile(join(software, 'current/conductive'), '#!/bin/sh\nexit 0\n', {
+    mode: 0o755,
+  })
   await writeFile(
     environment,
     mode === 'build'
@@ -59,12 +65,24 @@ export async function localSavedScriptFixture(
         ].join('\n'),
     { mode: 0o600 },
   )
+  const pathPattern = new RegExp(
+    [...mappedPaths.keys()]
+      .map((path) => path.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))
+      .join('|'),
+    'g',
+  )
+  function mapCommandPaths(text: string): string {
+    const marker = '__CONDUCTIVE_ISOLATED_SCRIPT_ROOT__'
+    return text
+      .replaceAll(directory, marker)
+      .replace(pathPattern, (path: string) => mappedPaths.get(path) ?? path)
+      .replaceAll(marker, directory)
+  }
   function mapPath(path: string): string {
-    for (const [source, target] of mappedPaths)
-      path = path.replaceAll(source, target)
-    if (!path.startsWith(`${directory}/`))
+    const mapped = mapCommandPaths(path)
+    if (!mapped.startsWith(`${directory}/`))
       throw new Error('A script path leaves its isolated sandbox')
-    return path
+    return mapped
   }
   async function readOptional(path: string): Promise<string | null> {
     try {
@@ -102,15 +120,15 @@ export async function localSavedScriptFixture(
           'install -d -m 700 /run/conductive',
         )
         .replaceAll(
-          'sudo -n systemctl restart conductive-runner.service',
+          'sudo -n flock /run/conductive/bootstrap-activate.lock systemctl restart conductive-runner.service',
           `printf "%s\\n" runner-restarted >> "${runnerCalls}"`,
         )
+        .replaceAll('sudo -n -- /bin/sh -c ', '/bin/sh -c ')
         .replaceAll(
           'sudo -n git config --system ',
           `git config --file ${shellQuote(systemGitConfig)} `,
         )
-      for (const [source, target] of mappedPaths)
-        mapped = mapped.replaceAll(source, target)
+      mapped = mapCommandPaths(mapped)
       const unmapped = mapped.replaceAll(directory, '<isolated-sandbox>')
       if (/\/(?:run|opt|home\/user|tmp|\.git)(?:\/|\b)/.test(unmapped))
         throw new Error('A script command keeps a production path')

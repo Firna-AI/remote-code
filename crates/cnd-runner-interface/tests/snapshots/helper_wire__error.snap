@@ -1,0 +1,10 @@
+---
+source: crates/cnd-runner-interface/tests/helper_wire.rs
+expression: output
+---
+{
+  "type": "error",
+  "requestId": "4",
+  "code": "agent_failed",
+  "message": "Request failed"
+}

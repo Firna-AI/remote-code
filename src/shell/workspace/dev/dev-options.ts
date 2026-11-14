@@ -1,7 +1,7 @@
+import type { RunnerReportKind } from '../../../shared/generated/RunnerReportKind'
 import { bannerStates } from '../../../../docs/mockups/src/fixtures/pullRequests'
 import type { FileListKind } from '../../../files/navigation'
 import type { BannerState } from '../../../shared/github'
-import type { RunnerReportKind } from '../../../shared/runner'
 import {
   readScenario,
   type BarScenario,

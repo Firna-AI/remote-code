@@ -1,3 +1,4 @@
+import type { RunnerEvent } from '../../src/shared/generated/RunnerEvent'
 import {
   readEnvelope,
   readStoredEvents,
@@ -8,7 +9,6 @@ import type {
   ChatHistoryResponse,
   WorkspaceEventEnvelope,
 } from './workspace-events'
-import type { RunnerEvent } from '../../src/shared/runner'
 import { createRunnerLimitsFixture } from './runner-limits.test-support'
 import { choice, context } from './runner-fixtures.test-support'
 import type { ChatData } from './types'

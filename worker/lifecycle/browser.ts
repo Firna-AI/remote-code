@@ -1,4 +1,4 @@
-import type { UserMessage } from '../../src/shared/messages'
+import type { UserMessage } from '../../src/shared/generated/UserMessage'
 import {
   buildEventsPath,
   buildPath,
@@ -17,7 +17,7 @@ import { requireOrgMember } from './access'
 import { readBuild, readBuildHistory } from './build-data'
 import { buildEventsResponse } from './build-stream'
 import { startImageBuild, type ImageRuntime } from './image-builds'
-import type { ImageSoftwareArtifact } from './image-software'
+import { latestSoftwareRelease } from './software-release'
 import { createWorkspaceInput } from './request-parser'
 import { resumeWorkspace } from './workspace-resume'
 import { workspaceResponse } from './workspace-response'
@@ -28,7 +28,6 @@ import type {
 import { createWorkspace } from './workspaces'
 
 export interface LifecycleBrowserOptions {
-  software: ImageSoftwareArtifact
   /** Milestone 7 stores this message/session and resolves real attachments. */
   acceptFirstMessage(first: FirstWorkspaceMessage): Promise<UserMessage>
   projectWorkspace?(response: WorkspaceResponse): Promise<WorkspaceResponse>
@@ -80,7 +79,10 @@ export async function handleLifecycleRequest(
         orgId,
         userId: context.user.id,
         kind: 'build',
-        software: options.software,
+        software: await latestSoftwareRelease(
+          runtime.env,
+          runtime.dependencies.fetch,
+        ),
       })
       return privateResponse(
         Response.json(await readBuild(runtime.env.DB, orgId, id), {
@@ -94,7 +96,10 @@ export async function handleLifecycleRequest(
       orgId,
       userId: context.user.id,
       kind: 'refresh',
-      software: options.software,
+      software: await latestSoftwareRelease(
+        runtime.env,
+        runtime.dependencies.fetch,
+      ),
     })
     return privateResponse(
       Response.json(await readBuild(runtime.env.DB, orgId, id), {

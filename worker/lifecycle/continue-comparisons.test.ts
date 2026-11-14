@@ -1,14 +1,9 @@
 import { rm } from 'node:fs/promises'
 import { join } from 'node:path'
-
 import { expect, it } from 'vitest'
-
-import { FileReporter } from '../../runner/src/files'
-import { Repository } from '../../runner/src/repository'
-import type { RunnerFileEvent } from '../../src/shared/files'
 import { continueNativeFixture } from './continue-native.test-support'
 
-it('keeps the retained reporter and diffs on the current workspace base after Continue and its default rename', async () => {
+it('keeps the fetched comparison base current after Continue and its default rename', async () => {
   for (const baseBranch of ['main', 'trunk']) {
     const f = await continueNativeFixture()
     await f.git('branch', 'main', 'origin/main')
@@ -19,29 +14,14 @@ it('keeps the retained reporter and diffs on the current workspace base after Co
     )
     await f.git('config', 'branch.owner/old.gh-merge-base', 'main')
     const old = await f.git('rev-parse', 'main')
-    const repository = new Repository(f.directory)
-    const events: RunnerFileEvent[] = []
-    const reporter = new FileReporter(repository, 'main', async (event) => {
-      events.push(event)
-    })
-    await reporter.refresh(true)
-    const beforeFetch = events.length
+    expect(await f.git('diff', 'origin/main...HEAD', '--', 'clash.txt')).toBe(
+      '',
+    )
     await f.git('fetch', '--quiet', 'origin')
-    await reporter.refresh()
-    expect(events).toHaveLength(beforeFetch)
-    expect(events.at(-1)).toMatchObject({
-      type: 'changes.updated',
-      changes: {
-        baseBranch: 'main',
-        summary: { files: 0, added: 0, removed: 0 },
-        files: [],
-      },
-    })
-    expect(await repository.diff('clash.txt', 'main')).toMatchObject({
-      baseBranch: 'main',
-      oldContent: 'original\n',
-      newContent: 'original\n',
-    })
+    expect(await f.git('diff', 'origin/main...HEAD', '--', 'clash.txt')).toBe(
+      '',
+    )
+    expect(await f.git('show', 'HEAD:clash.txt')).toBe('original\n')
     if (baseBranch === 'trunk') {
       await f.remoteGit('update-ref', 'refs/heads/trunk', f.latest)
       await f.remoteGit('update-ref', '-d', 'refs/heads/main')
@@ -50,25 +30,15 @@ it('keeps the retained reporter and diffs on the current workspace base after Co
     f.job.baseBranch = baseBranch
     expect((await f.fetch()).exitCode).toBe(0)
     expect((await f.move()).exitCode).toBe(0)
-    await reporter.refresh()
-    expect(events.at(-1), baseBranch).toMatchObject({
-      type: 'changes.updated',
-      changes: {
-        baseBranch,
-        files: [],
-        summary: { files: 0, added: 0, removed: 0 },
-      },
-    })
-    expect(await repository.changes('main')).toMatchObject({
-      baseBranch,
-      files: [],
-    })
-    expect(await repository.diff('clash.txt', baseBranch)).toMatchObject({
-      baseBranch,
-      oldContent: 'new base content\n',
-      newContent: 'new base content\n',
-      patch: '',
-    })
+    expect(await f.git('symbolic-ref', 'refs/remotes/origin/HEAD')).toBe(
+      `refs/remotes/origin/${baseBranch}\n`,
+    )
+    expect(await f.git('diff', `origin/${baseBranch}...HEAD`)).toBe('')
+    expect(await f.git('status', '--porcelain')).toBe('')
+    expect(await f.git('show', `origin/${baseBranch}:clash.txt`)).toBe(
+      'new base content\n',
+    )
+    expect(await f.git('show', 'HEAD:clash.txt')).toBe('new base content\n')
     expect(await f.git('rev-parse', 'main')).toBe(old)
     expect(await f.git('branch', '--show-current')).toBe('owner/new\n')
     expect(
@@ -127,8 +97,6 @@ it('repairs default metadata after a switched move loses its result without anot
       'refs/heads/',
     ),
   ).toBe(branches)
-  expect(await new Repository(f.directory).changes('main')).toMatchObject({
-    baseBranch: 'trunk',
-    files: [],
-  })
+  expect(await f.git('diff', 'origin/trunk...HEAD')).toBe('')
+  expect(await f.git('status', '--porcelain')).toBe('')
 })

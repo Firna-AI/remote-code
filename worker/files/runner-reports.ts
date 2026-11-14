@@ -1,8 +1,6 @@
-import type {
-  FileEvent,
-  RunnerFileEvent,
-  RunnerFileRevisionPart,
-} from '../../src/shared/files'
+import type { RunnerFileEvent } from '../../src/shared/generated/RunnerFileEvent'
+import type { RunnerFileRevisionPart } from '../../src/shared/generated/RunnerFileRevisionPart'
+import type { FileEvent } from '../../src/shared/files'
 import {
   emptySequence,
   loadReportState,

@@ -3,7 +3,7 @@
 - **Severity:** Medium. **Effort:** Small. **Confidence:** Medium. **Harder later:** No.
 - **Kind:** Post-merge task.
 - **Added:** 2026-11-11, from the live retest of the fork after a login switch on branch `calummoore/openai-subscription-token-support` (pull request #177).
-- **Location:** `runner/src/providers/codex-thread.ts`, and the rule in the section "Agents" of `docs/protocol/agents-and-sessions.md`.
+- **Location:** `runner/sdk-helper/src/providers/codex-thread.ts`, and the rule in the section "Agents" of `docs/protocol/agents-and-sessions.md`.
 - **Reason:** the live retest of 11 November 2026 had no encrypted reasoning item to carry, so it could not show whether a real backend accepts the other backend's reasoning.
 
 - **Terms:**

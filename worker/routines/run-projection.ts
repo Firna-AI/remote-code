@@ -1,5 +1,6 @@
+import type { WorkspaceState } from '../../src/shared/generated/WorkspaceState'
 import type { RoutineRun } from '../../src/shared/routines'
-import type { WorkspaceState } from '../../src/shared/workspaces'
+
 import type { StoredRoutineRun } from './run-record-data'
 import { readRunChoice, readRunTrigger } from './stored-run'
 

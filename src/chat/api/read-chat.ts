@@ -1,17 +1,15 @@
-import type { Agent, AgentChoice, Effort } from '../../shared/agents'
-import {
-  readTurnSpeed,
-  type ChatEvent,
-  type RunnerEventRefused,
-  type ToolCall,
-} from '../../shared/chat-events'
-import type {
-  Attachment,
-  MessageDraft,
-  MessageSender,
-  UserMessage,
-} from '../../shared/messages'
-import type { Session } from '../../shared/sessions'
+import type { Session } from '../../shared/generated/Session'
+import type { Agent } from '../../shared/generated/Agent'
+import type { AgentChoice } from '../../shared/generated/AgentChoice'
+import type { Effort } from '../../shared/generated/Effort'
+import type { ToolCall } from '../../shared/generated/ToolCall'
+import type { Attachment } from '../../shared/generated/Attachment'
+import type { MessageSender } from '../../shared/generated/MessageSender'
+import type { UserMessage } from '../../shared/generated/UserMessage'
+import type { ChatEvent, RunnerEventRefused } from '../../shared/chat-events'
+import type { MessageDraft } from '../../shared/messages'
+
+import { readTurnSpeed } from '../../shared/chat-events'
 import { readStopRequester } from './read-stop'
 import { readChangedFile } from './read-changed-file'
 import { readContinued } from './read-continued'

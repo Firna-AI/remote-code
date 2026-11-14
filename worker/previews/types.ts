@@ -1,4 +1,5 @@
-import type { WorkspaceState } from '../../src/shared/workspaces'
+import type { WorkspaceState } from '../../src/shared/generated/WorkspaceState'
+
 import type { HttpFetch } from '../env'
 import type { ConnectionScheduler } from '../security/connection-access'
 

@@ -1,5 +1,6 @@
+import type { Session } from '../../shared/generated/Session'
 import { RotateCcw, Square } from 'lucide-react'
-import type { Session } from '../../shared/sessions'
+
 import { nameLabel } from '../../shared/name-label'
 import type { Overlay } from '../state/chat-snapshot'
 import { formatAgo } from '../state/format'

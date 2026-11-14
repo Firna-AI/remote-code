@@ -1,7 +1,5 @@
-import type {
-  AgentReadSessionRequest,
-  AgentTranscriptWindow,
-} from '../../src/shared/agent-sessions'
+import type { AgentReadSessionRequest } from '../../src/shared/generated/AgentReadSessionRequest'
+import type { AgentTranscriptWindow } from '../../src/shared/generated/AgentTranscriptWindow'
 
 interface Line {
   start: number

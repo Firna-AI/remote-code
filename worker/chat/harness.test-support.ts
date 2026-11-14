@@ -1,5 +1,5 @@
+import type { AgentChoice } from '../../src/shared/generated/AgentChoice'
 import { MACHINE_PATHS } from '../../src/shared/agent-tools'
-import type { AgentChoice } from '../../src/shared/agents'
 import type {
   NewestChatHistoryResponse,
   WorkspaceEventEnvelope,

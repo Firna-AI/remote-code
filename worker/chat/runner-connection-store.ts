@@ -1,7 +1,5 @@
-import {
-  RUNNER_SUPPORTED_LOGIN_KINDS,
-  type RunnerLoginKind,
-} from '../../src/shared/runner'
+import type { RunnerLoginKind } from '../../src/shared/generated/RunnerLoginKind'
+import { RUNNER_SUPPORTED_LOGIN_KINDS } from '../../src/shared/runner'
 import { isRecord } from '../http'
 import type { ChatData, ChatStorage, RunnerWorkspaceRecord } from './types'
 

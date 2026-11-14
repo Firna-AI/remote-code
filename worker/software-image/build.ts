@@ -1,7 +1,7 @@
 import {
-  readImageSoftware,
-  type ImageSoftwareArtifact,
-} from '../lifecycle/image-software'
+  readSoftwareRelease,
+  type SoftwareRelease,
+} from '../lifecycle/software-release'
 import {
   IMAGE_BUILD_TIME_LIMIT_MS,
   JobTimeLimit,
@@ -52,7 +52,7 @@ export async function advanceSoftwareImage(
       let error: string | null = null
       if (
         (await softwareVersion(
-          readImageSoftware(JSON.parse(image.softwareJson)),
+          readSoftwareRelease(JSON.parse(image.softwareJson)),
         )) !== image.version
       )
         error = SOFTWARE_IMAGE_REPLACED
@@ -107,10 +107,10 @@ export async function advanceSoftwareImage(
 
 export async function requestSoftwareImage(
   runtime: SoftwareImageRuntime,
-  artifact: ImageSoftwareArtifact,
+  artifact: SoftwareRelease,
   tokenDigest: string,
 ): Promise<SoftwareImageResult> {
-  artifact = readImageSoftware(artifact)
+  artifact = readSoftwareRelease(artifact)
   const version = await softwareVersion(artifact)
   const account = DEFAULT_PROVIDER_ACCOUNT
   for (const old of await softwareImages(runtime.env.DB, account)) {

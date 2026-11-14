@@ -1,0 +1,29 @@
+[package]
+name = "cnd-release"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+rust-version.workspace = true
+description = "Conductive release parts and archive publishing"
+publish = false
+
+[dependencies]
+clap = { version = "4.6.7", features = ["derive"] }
+cli-release-interface = { workspace = true }
+flate2 = "1.1.11"
+internal-error = { workspace = true }
+semver = "1.0.28"
+serde = { version = "1.0.229", features = ["derive"] }
+serde_json = "1.0.154"
+sha2 = "0.11.1"
+tar = "0.4.46"
+thiserror = "2.0.21"
+url = "2.5.8"
+
+[lints]
+workspace = true
+
+[dev-dependencies]
+cli-updater = { workspace = true }
+tempfile = "3.27.0"

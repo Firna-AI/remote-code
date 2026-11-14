@@ -1,4 +1,5 @@
-import type { AgentChoice, Effort } from '../../src/shared/agents'
+import type { AgentChoice } from '../../src/shared/generated/AgentChoice'
+import type { Effort } from '../../src/shared/generated/Effort'
 import type {
   MessageDraft,
   SendMessageRequest,

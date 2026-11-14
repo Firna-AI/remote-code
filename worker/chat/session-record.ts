@@ -1,4 +1,5 @@
-import type { Session } from '../../src/shared/sessions'
+import type { Session } from '../../src/shared/generated/Session'
+
 import { HttpError } from '../http'
 import type { ChatTransaction } from './store'
 

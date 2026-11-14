@@ -1,4 +1,4 @@
-import type { FileResponse } from '../../shared/files'
+import type { FileResponse } from '../../shared/generated/FileResponse'
 import { fileText, type FileText } from '../model/file-text'
 
 /**

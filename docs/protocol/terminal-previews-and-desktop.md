@@ -115,14 +115,16 @@ decision number names a dated record, as
   preview of a large dev server slow.
 - A revoked or an unknown hostname gets no answer from any sandbox.
 - The preview relay is the app's own service in the sandbox, as
-  [Sandbox software](../architecture/components.md#sandbox-software) says. Each preview
+  [Sandbox software](../architecture/sandbox-software.md) says. Each preview
   request goes through it to the previewed server, the server on the port
   of the preview.
 - An answer that does not come from the preview relay never reaches the browser.
 - The Worker refuses previews with 409 `preview_relay_unavailable` without
   a running relay, because the app is not live and the Worker keeps one route.
   Decision 219 rejects a direct fallback, installation at preview open,
-  startup by the Worker, and software updates at each workspace start.
+  startup by the Worker, and a software install that each workspace start
+  waits for. A sandbox without the relay gets it with an update of its
+  software, as [Updates](sandbox-software.md#updates) says.
 - Through the relay, each request reaches the previewed server with
   `Host: localhost:<port>`, as a browser in the sandbox would send it
   (decision 218).

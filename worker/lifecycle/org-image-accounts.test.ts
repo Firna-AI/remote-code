@@ -133,7 +133,6 @@ it('retains another account current image while it finishes an older saved clean
     previousRepositoryLocations: [],
     software: SOFTWARE,
     previousImageName: 'secondary-image',
-    previousRunnerProtocolVersion: null,
     now: TEST_TIME,
   })
   await assignBuildSandbox(db, 'saved-cleanup-build', 'saved-builder', 'boat')

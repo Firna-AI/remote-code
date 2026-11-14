@@ -1,0 +1,31 @@
+[workspace]
+members = ["crates/*"]
+resolver = "2"
+
+[workspace.package]
+version = "0.1.0"
+edition = "2024"
+license = "UNLICENSED"
+authors = ["Conductive"]
+rust-version = "1.98.1"
+
+[workspace.dependencies]
+cnd-runner = { path = "crates/cnd-runner" }
+cnd-credential = { path = "crates/cnd-credential" }
+cnd-relay = { path = "crates/cnd-relay" }
+cnd-tools = { path = "crates/cnd-tools" }
+cnd-runner-interface = { path = "crates/cnd-runner-interface" }
+cnd-release = { path = "crates/cnd-release" }
+cli-updater = { git = "https://github.com/futex-ai/cli-release.git", rev = "53a1dd3426226a9d25defb4a899d3c9a430a3941" }
+cli-release-interface = { git = "https://github.com/futex-ai/cli-release.git", rev = "53a1dd3426226a9d25defb4a899d3c9a430a3941" }
+internal-error = { git = "https://github.com/futex-ai/internal-error.git", rev = "6477922a1c4db8c3e35189af69f0147464004b99" }
+
+[workspace.lints.rust]
+missing_docs = "warn"
+unreachable_pub = "warn"
+unsafe_code = "forbid"
+
+[workspace.lints.clippy]
+unwrap_used = "deny"
+expect_used = "deny"
+panic = "deny"

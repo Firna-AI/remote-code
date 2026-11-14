@@ -1,4 +1,4 @@
-import type { Agent } from '../shared/agents'
+import type { Agent } from '../shared/generated/Agent'
 import { sessionAddressPath } from '../shared/session-link'
 import { INVITE_CODE_ERROR_PARAMETER } from '../shared/waitlist'
 

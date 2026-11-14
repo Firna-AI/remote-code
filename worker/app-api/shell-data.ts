@@ -1,6 +1,6 @@
 import type { Repository } from '../../src/shared/org-settings'
 import type { Section } from '../../src/shared/sections'
-import type { WorkspaceRow } from '../lifecycle/workspace-data'
+import type { WorkspaceRow } from '../lifecycle/workspace-row'
 import { activeOrgIdPredicate } from '../data/org-access'
 import { requireActiveOrg } from '../data/user-access'
 import { workspaceNameColumn } from '../data/workspace-name'

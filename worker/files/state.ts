@@ -1,4 +1,5 @@
-import type { ChangesResponse, FileTreeResponse } from '../../src/shared/files'
+import type { ChangesResponse } from '../../src/shared/generated/ChangesResponse'
+import type { FileTreeResponse } from '../../src/shared/generated/FileTreeResponse'
 import { parseFileEvent } from './parsers'
 import {
   loadFiles,

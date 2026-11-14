@@ -1,8 +1,6 @@
+import type { RunnerToWorkspace } from '../../src/shared/generated/RunnerToWorkspace'
+import type { WorkspaceToRunner } from '../../src/shared/generated/WorkspaceToRunner'
 import type { RunnerConnection } from '../../src/shared/runner-transport'
-import type {
-  RunnerToWorkspace,
-  WorkspaceToRunner,
-} from '../../src/shared/runner'
 
 /** An in-memory socket. Tests close it explicitly, without sleeps or real ports. */
 export class FakeRunnerConnection<

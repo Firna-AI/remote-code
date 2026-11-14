@@ -1,3 +1,4 @@
+import type { Session } from '../../shared/generated/Session'
 // @vitest-environment happy-dom
 
 import { act } from 'react'
@@ -10,7 +11,6 @@ import {
   sessionPaths,
   sessionsPath,
   sessionTranscriptPath,
-  type Session,
 } from '../../shared/sessions'
 import type { FilesTab } from '../../files/navigation'
 import type { ShortcutCommandId } from '../../shared/shortcut-commands'

@@ -1,5 +1,4 @@
-import type { Timestamp } from '../shared/api'
-
+import type { Timestamp } from '../shared/generated/Timestamp'
 const second = 1_000
 const minute = 60 * second
 const hour = 60 * minute

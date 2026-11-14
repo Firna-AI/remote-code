@@ -1,4 +1,4 @@
-import type { Timestamp } from './api'
+import type { Timestamp } from './generated/Timestamp'
 import { workspacePath } from './workspaces'
 
 export function desktopPath(orgId: string, workspaceId: string): string {

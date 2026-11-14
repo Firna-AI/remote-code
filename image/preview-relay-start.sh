@@ -1,3 +1,3 @@
 #!/bin/sh
 set -eu
-exec @CONDUCTIVE_NODE@ /opt/conductive/software/runner/relay.mjs
+exec "${1:-/opt/conductive/current/conductive}" relay

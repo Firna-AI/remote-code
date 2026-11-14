@@ -3,10 +3,10 @@ import { sessionLink } from '../../src/shared/session-link'
 import type { WebSocket } from 'miniflare'
 import { afterEach, beforeAll, expect, it } from 'vitest'
 
-import { MACHINE_PATHS } from '../../src/shared/agent-tools'
+import { MACHINE_PATHS, TOOL_TURN_HEADER } from '../../src/shared/agent-tools'
 import { chatHistoryPath } from '../../src/shared/events'
 import { sessionsPath, sessionPaths } from '../../src/shared/sessions'
-import { TOOL_TURN_HEADER } from '../../tools/context'
+
 import { closeSockets } from '../chat/adapter-sockets.test-support'
 import { CLAUDE } from '../chat/harness.test-support'
 import { record, string } from '../chat/inputs'

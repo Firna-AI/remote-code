@@ -1,0 +1,35 @@
+---
+source: crates/cnd-runner-interface/tests/helper_wire.rs
+expression: request
+---
+{
+  "type": "send",
+  "requestId": "2",
+  "input": {
+    "type": "message",
+    "commandId": "message-2",
+    "sessionId": "session-1",
+    "turnId": "turn-1",
+    "message": {
+      "id": "message-2",
+      "sessionId": "session-1",
+      "sender": {
+        "id": "alice",
+        "githubLogin": "alice",
+        "displayName": null,
+        "avatarUrl": null
+      },
+      "text": "Hello\nworld",
+      "attachments": [],
+      "choice": {
+        "agent": "claude",
+        "model": "test-model",
+        "effort": "high",
+        "fast": false
+      },
+      "createdAt": 1730000000000,
+      "state": "sent"
+    },
+    "attachments": []
+  }
+}

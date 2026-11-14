@@ -1,8 +1,6 @@
+import type { RunnerToWorkspace } from '../../src/shared/generated/RunnerToWorkspace'
+import type { WorkspaceToRunner } from '../../src/shared/generated/WorkspaceToRunner'
 import type { WorkspaceSocketMessage } from '../../src/shared/events'
-import type {
-  RunnerToWorkspace,
-  WorkspaceToRunner,
-} from '../../src/shared/runner'
 import type { RunnerConnectionRequest } from '../../src/shared/runner-transport'
 import { FakeRunner } from '../test-support/fake-runner'
 import { FakeRunnerConnection } from '../test-support/runner-connection'

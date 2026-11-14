@@ -77,7 +77,6 @@ it('lists every workspace of the authenticated org, including other owners and a
     ],
   }
   expect(await response.json()).toEqual(expected)
-  await expect(fixture.client.list()).resolves.toEqual(expected)
   expect(response.headers.get('Cache-Control')).toBe('no-store')
   expect(response.headers.get('Referrer-Policy')).toBe('no-referrer')
   expect(fixture.services.callingTurn).not.toHaveBeenCalled()

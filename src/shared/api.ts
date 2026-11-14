@@ -39,8 +39,5 @@ export interface ApiErrorBody {
   }
 }
 
-/** Wire dates are Unix milliseconds. IDs and model names are opaque strings. */
-export type Timestamp = number
-
 /** Writes with no fields still send an empty JSON object through the app gate. */
 export type EmptyRequest = Record<string, never>

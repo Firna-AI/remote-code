@@ -86,6 +86,22 @@ provider retries, logs, snapshot leases, and refresh timers.
 The [software image area](../software-image/README.md) builds the shared
 image that a build of an org without an org image starts from.
 
+Org builds and refreshes install the newest sandbox release through `conductive`.
+A first build from a software image runs this step too.
+Refreshes then snapshot without running the org install script.
+The Worker validates release metadata from `CONDUCTIVE_RELEASE_SERVER`,
+which defaults to `https://runner.conductive.build`.
+A failed build lookup fails the build. A failed startup lookup prints a warning.
+
+A normal workspace startup bootstraps a missing program in a detached root job.
+Downloads never hold the lock used by runner restarts.
+Activation shares `/run/conductive/bootstrap-activate.lock` with the restart.
+The first activation confirms its installation before it releases that lock.
+The release program includes the workspace CLI and MCP server.
+Its system installer links `/usr/local/bin/conductive` to the active program.
+Disk retention starts do not bootstrap or restart the runner.
+[Installation](../../image/install.md) gives the command sequence and release layout.
+
 ## Settings
 
 [Lifecycle settings](settings.md) gives the environment inputs and captured secret values.
@@ -119,6 +135,9 @@ At the end of Restore, the delete goes through the ledger-aware cleanup of [`cle
 A confirmed missing archived disk uses that batch too.
 
 ### Key Code
+
+- [software-release.ts](software-release.ts): reads and validates the newest release JSON.
+- [software-bootstrap.ts](software-bootstrap.ts): verifies downloads and serializes first activation with runner restarts.
 
 [Key code](key-code.md) lists the entry points of the lifecycle code, and
 the guides that give the entry points of each part.

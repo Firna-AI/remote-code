@@ -3,7 +3,7 @@
 - **Severity:** Medium. **Effort:** Small. **Confidence:** High. **Harder later:** No.
 - **Kind:** Post-merge task.
 - **Added:** 2026-11-10, from the plan `plans/commit-author-in-cloud-computers.md` of pull request #181, branch `calummoore/git-identity-error`.
-- **Location:** `worker/chat/runner-delivery.ts` and `runner/src/providers/environment.ts`.
+- **Location:** `worker/chat/runner-delivery.ts` and `runner/sdk-helper/src/providers/environment.ts`.
 - **Reason:** the check needs the merged change, a new org image build, and two members.
 
 - **Terms:**

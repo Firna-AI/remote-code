@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest'
-import type { Attachment } from '../shared/messages'
+import type { Attachment } from '../shared/generated/Attachment'
 import { deferred, type Deferred } from '../test-support/mount'
 import { runFileJob, uploadingFile, type DraftFile } from './draft-files'
 

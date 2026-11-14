@@ -1,6 +1,5 @@
 import { expect, it } from 'vitest'
-
-import type { FileResponse } from '../../shared/files'
+import type { FileResponse } from '../../shared/generated/FileResponse'
 import { fileText } from './file-text'
 
 function readText(

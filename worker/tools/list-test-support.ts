@@ -1,4 +1,4 @@
-import type { AgentModel } from '../../src/shared/agents'
+import type { AgentModel } from '../../src/shared/generated/AgentModel'
 import { SOFTWARE } from '../lifecycle/backend-test-support'
 import { seedPublishedImage } from '../lifecycle/published-image-test-support'
 import type { SelectedRepository } from '../lifecycle/settings-data'

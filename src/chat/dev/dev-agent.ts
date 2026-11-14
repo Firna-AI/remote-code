@@ -1,5 +1,6 @@
-import type { ChatEvent, ToolCall } from '../../shared/chat-events'
-import type { UserMessage } from '../../shared/messages'
+import type { ToolCall } from '../../shared/generated/ToolCall'
+import type { UserMessage } from '../../shared/generated/UserMessage'
+import type { ChatEvent } from '../../shared/chat-events'
 import type { Clock } from '../ui/clock'
 import type { DevScript } from './dev-answers'
 import type { DevStream } from './dev-stream'

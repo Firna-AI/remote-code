@@ -1,4 +1,5 @@
-import type { Attachment, SendMessageRequest } from '../../shared/messages'
+import type { Attachment } from '../../shared/generated/Attachment'
+import type { SendMessageRequest } from '../../shared/messages'
 import { withSession, type PendingMessage } from './chat-snapshot'
 import type { ChatContext } from './context'
 import { takeReply } from './linked-replies'

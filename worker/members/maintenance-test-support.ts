@@ -1,4 +1,5 @@
-import type { WorkspaceState } from '../../src/shared/workspaces'
+import type { WorkspaceState } from '../../src/shared/generated/WorkspaceState'
+
 import { TEST_TIME, type TestHarness } from '../test-support/harness'
 import type {
   DeletedOrgMaintenance,

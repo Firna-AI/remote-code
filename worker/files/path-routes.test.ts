@@ -6,9 +6,8 @@ import {
   it,
   onTestFinished,
 } from 'vitest'
-
+import type { RunnerFileCommand } from '../../src/shared/generated/RunnerFileCommand'
 import { filePaths } from '../../src/shared/files'
-import type { RunnerFileCommand } from '../../src/shared/runner-files'
 import { createHarness, type TestHarness } from '../test-support/harness'
 import { setupFilesHttp } from './test-support/http'
 import { connectWorkspaceFiles } from './test-support/runner'

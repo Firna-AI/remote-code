@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest'
-import type { AgentChatEvent, TurnSpeed } from '../../shared/chat-events'
+import type { AgentChatEvent } from '../../shared/generated/AgentChatEvent'
+import type { TurnSpeed } from '../../shared/generated/TurnSpeed'
 import { count, turn } from './event-kit'
 import { renderChat } from './render-kit'
 

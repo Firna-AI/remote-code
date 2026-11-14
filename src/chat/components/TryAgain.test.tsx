@@ -1,10 +1,10 @@
 import { describe, expect, it, vi } from 'vitest'
+import type { UserMessage } from '../../shared/generated/UserMessage'
 import type { ChatEvent } from '../../shared/chat-events'
 import {
   chatHistoryPath,
   type WorkspaceEventEnvelope,
 } from '../../shared/events'
-import type { UserMessage } from '../../shared/messages'
 import { sessionsPath } from '../../shared/sessions'
 import { FAKE_IDS, FAKE_TIME } from '../../test-support/fixtures/core'
 import { workspaceFixtures } from '../../test-support/fixtures/workspaces'

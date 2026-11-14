@@ -1,3 +1,4 @@
+import type { Workspace } from '../../shared/generated/Workspace'
 import { expect, test } from 'vitest'
 import { AppModel } from '../../app/app-model'
 import { valueOf } from '../../app/store'
@@ -14,7 +15,6 @@ import {
   workspacePath,
   workspacePaths,
   workspacesPath,
-  type Workspace,
 } from '../../shared/workspaces'
 import { FakeApiServer } from '../../test-support/fake-api'
 import {

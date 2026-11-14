@@ -1,8 +1,8 @@
 import { Buffer } from 'node:buffer'
 import { expect, vi } from 'vitest'
+import type { FileResponse } from '../../shared/generated/FileResponse'
+import type { Attachment } from '../../shared/generated/Attachment'
 import type { FilesResult } from '../../files/api/files-errors'
-import type { FileResponse } from '../../shared/files'
-import type { Attachment } from '../../shared/messages'
 import { FAKE_ORIGIN, FAKE_TIME } from '../../test-support/fixtures/core'
 
 export function setupDevWindow(): void {

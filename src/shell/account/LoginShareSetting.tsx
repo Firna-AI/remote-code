@@ -1,6 +1,6 @@
 import { useState } from 'react'
+import type { Agent } from '../../shared/generated/Agent'
 import { LoginShare } from '../../../docs/mockups/src/components/settings/LoginShare'
-import type { Agent } from '../../shared/agents'
 import { useApp } from '../context'
 import { useAction } from '../ui/useAction'
 

@@ -1,15 +1,14 @@
+import type { WorkspaceState } from '../../src/shared/generated/WorkspaceState'
+import type { WorkspaceStart } from '../../src/shared/generated/WorkspaceStart'
 import type { SendMessageRequest } from '../../src/shared/messages'
 import type { WorkspacePlatform } from './workspace-platform'
 
-export type LifecyclePublisher = WorkspacePlatform['publish']
-import type {
-  WorkspaceStart,
-  WorkspaceState,
-} from '../../src/shared/workspaces'
 import type {
   RetentionCommandPort,
   RetentionCommandState,
 } from './retention-command'
+
+export type LifecyclePublisher = WorkspacePlatform['publish']
 
 export const IDLE_MS = 30 * 60 * 1_000
 export const DISK_KEEPALIVE_MS = 13 * 24 * 60 * 60 * 1_000

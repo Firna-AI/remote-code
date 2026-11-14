@@ -1,4 +1,5 @@
-import type { Session, SessionsResponse } from '../../shared/sessions'
+import type { Session } from '../../shared/generated/Session'
+import type { SessionsResponse } from '../../shared/sessions'
 import type { ChatSnapshot } from './chat-snapshot'
 import { withTranscript, type ChatContext } from './context'
 import { applyMoves, claimMoves, saveMovedView } from './model-moves'

@@ -1,4 +1,4 @@
-import type { AgentChoice } from '../../src/shared/agents'
+import type { AgentChoice } from '../../src/shared/generated/AgentChoice'
 import type { GitHubSnapshot } from './contracts'
 
 export const SQLITE_WORKSPACE_ID = 'github-workspace'

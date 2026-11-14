@@ -1,7 +1,8 @@
+import type { Session } from '../../shared/generated/Session'
 import { describe, expect, it, vi } from 'vitest'
-import type { AgentChoice } from '../../shared/agents'
+import type { AgentChoice } from '../../shared/generated/AgentChoice'
 import { chatHistoryPath } from '../../shared/events'
-import type { Session } from '../../shared/sessions'
+
 import { sessionsPath } from '../../shared/sessions'
 import { FAKE_IDS, FAKE_TIME, fakeUser } from '../../test-support/fixtures/core'
 import { senderSnapshot } from '../../test-support/fixtures/workspaces'

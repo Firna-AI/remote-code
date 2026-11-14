@@ -3,13 +3,13 @@
 - **Severity:** Medium. **Likelihood:** Common. **Effort:** Small. **Confidence:** High. **Harder later:** No.
 - **Kind:** Outside the scope.
 - **Added:** 2026-11-10, from review round 1 of the branch `calummoore/git-identity-error` (pull request #181).
-- **Location:** `image/git-credential-helper.mjs:45`, `image/github.md`, section "Git credential helper", `src/marketing/docs/terminal-and-previews.md:47` and `:53`, `src/marketing/docs/pull-requests.md:34`, `src/marketing/docs/security.md:36` and `:49`, and the comparison notes in `src/marketing/from-conductor/areas/cloud.ts:72` and `src/marketing/from-conductor/areas/review-and-merge.ts:103` and `:141`.
+- **Location:** `crates/cnd-credential/src/service.rs`, `image/github.md`, section "Git credential helper", `src/marketing/docs/terminal-and-previews.md:47` and `:53`, `src/marketing/docs/pull-requests.md:34`, `src/marketing/docs/security.md:36` and `:49`, and the comparison notes in `src/marketing/from-conductor/areas/cloud.ts:72` and `src/marketing/from-conductor/areas/review-and-merge.ts:103` and `:141`.
 - **Reason:** the commit author change did not touch the credential helper, and the fix changes who can push from the shared terminal.
 
 - **Terms:**
   - **Cloud computer:** the sandbox of one workspace. The agents, the
     shared terminal, and Git run there.
-  - **Credential helper:** `image/git-credential-helper.mjs`, which the
+  - **Credential helper:** `conductive git-credential` in `crates/cnd-credential/`, which the
     image installs as Git's credential helper and as the token source of
     the `gh` wrapper.
   - **Turn ID:** `CONDUCTIVE_TURN_ID`, which the runner sets for each agent

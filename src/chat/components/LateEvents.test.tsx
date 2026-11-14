@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
-import type { AgentChatEvent } from '../../shared/chat-events'
-import type { ChangedFile } from '../../shared/files'
+import type { AgentChatEvent } from '../../shared/generated/AgentChatEvent'
+import type { ChangedFile } from '../../shared/generated/ChangedFile'
 import { FAKE_TIME } from '../../test-support/fixtures/core'
 import { workspaceFixtures } from '../../test-support/fixtures/workspaces'
 import {

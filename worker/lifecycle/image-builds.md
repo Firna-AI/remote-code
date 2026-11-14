@@ -31,8 +31,8 @@ Suspended orgs get no disk retention restart, including after an owner change.
 
 ## Runner version
 
-- A full build records the Worker's runner protocol version.
-  A refresh copies the version of the image that it refreshes.
+- Each full build and refresh records the Worker's runner protocol version.
+  Both install the newest sandbox release.
 - Each new computer allocation stores the runner version of its image snapshot before the provider call.
   This includes a first start, Try again, and a restored allocation.
   A missing image version counts as version 1.
@@ -45,6 +45,8 @@ refresh for an org admin and returns its ID. A request during a job gets
 its ID and schedules it again. Each alarm advances the job one step with
 `advanceBuildStep` in [`image-build-steps.ts`](image-build-steps.ts).
 Software and install commands run detached and stream their output.
+The software release includes the workspace CLI and MCP server.
+Builds need no separate tool source installation.
 D1 stores the step, output offsets, and log. Each row holds at most
 256 KiB of UTF-8 text, split between complete characters.
 
@@ -89,12 +91,13 @@ The line `[N output bytes omitted]` takes their place in the event order.
 
 - A build loads the chosen repositories, installs the image software, runs
   the install script with Bash, and saves a snapshot. A first build that
-  pins a matching ready software image starts from it and skips the
-  software step. Admission records the pin in the job insert. The pin stays
+  pins a matching ready software image starts from it and still installs
+  the newest release. Admission records the pin in the job insert. The pin stays
   until the job reaches `done`, including its cleanup. The
   [software image backend](../software-image/README.md) owns these images.
-  A refresh only loads
-  the repositories of the current image again, and saves a snapshot.
+  A refresh loads the repositories of the current image again, installs
+  the newest release, clears its command journal, and saves a snapshot.
+  It does not run the org install script.
 - The org image changes only when the new snapshot is ready. Each job
   deletes every live ledger computer of that org and build, and keeps its history and log.
   A failed Delete keeps cleanup scheduled until each computer is removed.
@@ -228,8 +231,9 @@ states the rule.
   `runImageAlarm`.
 - [`image-coordinator.ts`](image-coordinator.ts): `ImageCoordinator`.
 - [Software images](../software-image/README.md): the shared software builds and their cleanup.
-- [`image-software.ts`](image-software.ts): the runner archive check and
-  install/start commands.
+- [`image-software.ts`](image-software.ts): the release install and workspace startup commands.
+- [`software-release.ts`](software-release.ts): release metadata lookup and validation.
+- [`software-bootstrap.ts`](software-bootstrap.ts): verified downloads and startup activation locking.
 - [`image-runtime.ts`](image-runtime.ts): `IMAGE_NODE_RUNTIME`, the pinned
   private Node of the org image, and its paths. The
   [runtime guide](../../image/runtime.md#update-the-node-release) says how to

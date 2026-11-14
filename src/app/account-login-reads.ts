@@ -1,9 +1,9 @@
+import type { Agent } from '../shared/generated/Agent'
 import {
   ACCOUNT_PATHS,
   type AccountResponse,
   type AgentLoginStatus,
 } from '../shared/account'
-import type { Agent } from '../shared/agents'
 import type { AgentLogins } from './agent-logins'
 import { readAccount } from './api/read-core'
 import type { AppModel } from './app-model'

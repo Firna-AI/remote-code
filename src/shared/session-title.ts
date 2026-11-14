@@ -1,5 +1,5 @@
+import type { Attachment } from './generated/Attachment'
 import { hasOwnWords, textWithAttachmentNames } from './attachment-mentions'
-import type { Attachment } from './messages'
 
 /**
  * A title for a session or workspace, or null when no own words remain.

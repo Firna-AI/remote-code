@@ -1,7 +1,6 @@
 import { Buffer } from 'node:buffer'
 
 import { expect, it } from 'vitest'
-import { Repository } from '../../runner/src/repository'
 
 import { setupBackendTests } from './backend-test-hooks'
 import { SENDER_GITHUB_TOKEN } from './default-branch-credential-test-support'
@@ -26,12 +25,12 @@ it('pushes an empty root as the turn sender without staged files and fetches it 
     ).trim()
     expect(await fixture.git('rev-parse', 'FETCH_HEAD')).toBe(`${commit}\n`)
     await fixture.git('checkout', '--quiet', '-b', 'owner/first', 'FETCH_HEAD')
-    await expect(
-      new Repository(fixture.directory).snapshot('main'),
-    ).resolves.toMatchObject({
-      baseCommit: commit,
-      changes: { baseBranch: 'main', uncommittedFileCount: 1 },
-    })
+    expect(await fixture.git('merge-base', 'origin/main', 'HEAD')).toBe(
+      `${commit}\n`,
+    )
+    expect(await fixture.git('status', '--porcelain')).toBe(
+      'A  install-output.txt\n',
+    )
     expect(
       await fixture.git(
         'for-each-ref',
@@ -98,9 +97,9 @@ it('fetches normal history without a push', async () => {
     expect(result.exitCode, result.stderr).toBe(0)
     expect(await fixture.git('rev-parse', 'FETCH_HEAD')).toBe(`${commit}\n`)
     await fixture.git('checkout', '--quiet', '-b', 'owner/new', 'FETCH_HEAD')
-    await expect(
-      new Repository(fixture.directory).snapshot('main'),
-    ).resolves.toMatchObject({ baseCommit: commit })
+    expect(await fixture.git('merge-base', 'origin/main', 'HEAD')).toBe(
+      `${commit}\n`,
+    )
     expect(await fixture.git('rev-parse', 'main')).toBe(`${older}\n`)
     expect(await fixture.remoteGit('rev-parse', 'main')).toBe(`${commit}\n`)
     expect(

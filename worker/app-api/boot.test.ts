@@ -1,7 +1,7 @@
 import { afterAll, beforeAll, beforeEach, expect, it } from 'vitest'
-
+import type { AgentChoice } from '../../src/shared/generated/AgentChoice'
 import { ACCOUNT_PATHS, agentLoginPath } from '../../src/shared/account'
-import { MODELS_PATH, type AgentChoice } from '../../src/shared/agents'
+import { MODELS_PATH } from '../../src/shared/agents'
 import { API_PATHS } from '../../src/shared/api'
 import { GET_STARTED_PATH } from '../../src/shared/onboarding'
 import { readAccount } from '../../src/app/api/read-core'

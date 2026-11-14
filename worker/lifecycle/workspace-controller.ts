@@ -1,6 +1,7 @@
+import type { StartStep } from '../../src/shared/generated/StartStep'
+import type { WorkspaceStart } from '../../src/shared/generated/WorkspaceStart'
 import type { AppDependencies, AppEnv } from '../env'
 import { HttpError } from '../http'
-import type { StartStep, WorkspaceStart } from '../../src/shared/workspaces'
 import { requireWorkspaceOrg } from './access'
 import { runWorkspaceAlarm } from './workspace-alarm'
 import { WorkspaceEventJournal } from './durable-journal'

@@ -1,9 +1,9 @@
+import type { CommitAuthor } from '../../src/shared/generated/CommitAuthor'
 import {
   COMMIT_AUTHOR_VARIABLES,
   commitAuthor,
-  type CommitAuthor,
 } from '../../src/shared/commit-author'
-import { TOOL_ENV } from '../../tools/context'
+import { TOOL_ENV } from '../../src/shared/agent-tools'
 import { readUser } from '../data/users'
 import type { AppEnv } from '../env'
 import { environmentValues, type OrgEnvironment } from './org-environment'
@@ -13,7 +13,7 @@ import {
   type RepositoryLocation,
 } from './repository-locations'
 import { readWorkspaceToken } from './tokens'
-import type { WorkspaceRow } from './workspace-data'
+import type { WorkspaceRow } from './workspace-row'
 
 /**
  * The runner gives each agent process the turn ID and the turn's author. A

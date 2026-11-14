@@ -1,3 +1,4 @@
+import type { TranscriptDetail } from '../../shared/generated/TranscriptDetail'
 import { useCallback, useState } from 'react'
 import type { LucideIcon } from 'lucide-react'
 import {
@@ -13,7 +14,7 @@ import { linkItem } from '../../../docs/mockups/src/components/workspace/linkCop
 import { transcriptItems } from '../../../docs/mockups/src/components/workspace/transcriptCopy'
 import styles from '../../../docs/mockups/src/components/workspace/WorkspaceTabs.module.css'
 import { useLongPress } from '../../app/long-press'
-import type { TranscriptDetail } from '../../shared/sessions'
+
 import { opensMenu } from '../../shell/ui/menu-keys'
 import type { MenuEntry, MenuPoint } from '../ui/Menu'
 import { rowKey, type RowTab, type TabItemProps } from './tab-row'

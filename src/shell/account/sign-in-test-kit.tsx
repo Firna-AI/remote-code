@@ -1,4 +1,5 @@
 import { act } from 'react'
+import type { Agent } from '../../shared/generated/Agent'
 import { chatGptSignInCopy as copy } from '../../../docs/mockups/src/components/settings/chatGptSignInCopy'
 import type { AppModel } from '../../app/app-model'
 import type { ManualDelay } from '../../app/test-kit'
@@ -9,7 +10,6 @@ import {
   type PollCodexDeviceResponse,
   type StartCodexDeviceResponse,
 } from '../../shared/account'
-import type { Agent } from '../../shared/agents'
 import {
   byRole,
   queryByRole,

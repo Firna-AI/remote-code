@@ -1,6 +1,4 @@
-import type { GitHubSummary } from '../../../../src/shared/github'
-
-export type { GitHubSummary } from '../../../../src/shared/github'
+import type { GitHubSummary } from '../../../../src/shared/generated/GitHubSummary'
 
 /**
  * The GitHub state of the open workspace branch: its pull request and the

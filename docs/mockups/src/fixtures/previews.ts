@@ -1,4 +1,4 @@
-import type { ListeningPort } from '../../../../src/shared/ports'
+import type { ListeningPort } from '../../../../src/shared/generated/ListeningPort'
 import { previewPath } from '../../../../src/shared/previews'
 import { appDomain } from '../brand'
 import { orgs } from './orgs'

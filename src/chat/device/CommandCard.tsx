@@ -1,5 +1,6 @@
+import type { DeviceCommandRecord } from '../../shared/generated/DeviceCommandRecord'
 import { Laptop } from 'lucide-react'
-import type { DeviceCommandRecord } from '../../shared/device'
+
 import card from '../../../docs/mockups/src/components/chat/MacCommand.module.css'
 import {
   commandCopy,

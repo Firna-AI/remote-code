@@ -1,4 +1,5 @@
-import type { DeviceCommandRecord } from '../../src/shared/device'
+import type { DeviceCommandRecord } from '../../src/shared/generated/DeviceCommandRecord'
+
 import type { WorkspaceChat } from '../chat/backend'
 import type { ChatStorage } from '../chat/types'
 import type { AppEnv } from '../env'

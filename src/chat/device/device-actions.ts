@@ -1,8 +1,6 @@
+import type { DeviceCommandRecord } from '../../shared/generated/DeviceCommandRecord'
 import { ApiError } from '../../app/api/client'
-import type {
-  DeviceApprovalAction,
-  DeviceCommandRecord,
-} from '../../shared/device'
+import type { DeviceApprovalAction } from '../../shared/device'
 import type { ChatSnapshot } from '../state/chat-snapshot'
 import { showNotice, type ChatContext } from '../state/context'
 import type { DeviceApi } from './device-api'

@@ -1,5 +1,5 @@
-import { MACHINE_PATHS } from '../../src/shared/agent-tools'
-import { TOOL_TURN_HEADER } from '../../tools/context'
+import { MACHINE_PATHS, TOOL_TURN_HEADER } from '../../src/shared/agent-tools'
+
 import { saveGitHubTokens } from '../security/github-tokens'
 import { TEST_TIME } from '../test-support/harness'
 import type { backendFixture } from './backend-test-support'

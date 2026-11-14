@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest'
-import type { AgentChoice } from '../../shared/agents'
+import type { AgentChoice } from '../../shared/generated/AgentChoice'
 import type { ChangeModelResponse } from '../../shared/sessions'
 import { chatFor, newSessionRecord, opensSession } from './test-kit'
 

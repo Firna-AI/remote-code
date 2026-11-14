@@ -1,5 +1,5 @@
+import type { Agent } from '../../shared/generated/Agent'
 import { loginUsable } from '../../app/api/read-core'
-import type { Agent } from '../../shared/agents'
 import type { ChatSnapshot } from './chat-snapshot'
 import { sessionLoginOf } from './session-login'
 

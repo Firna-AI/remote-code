@@ -1,11 +1,11 @@
+import type { FileResponse } from '../../shared/generated/FileResponse'
+import type { Attachment } from '../../shared/generated/Attachment'
 import { ATTACHMENTS_DIRECTORY } from '../../shared/attachment-paths'
 import {
   filePaths,
   FILE_READ_MAX_BYTES,
-  type FileResponse,
   type FileTooLargeResponse,
 } from '../../shared/files'
-import type { Attachment } from '../../shared/messages'
 import { workspacePath } from '../../shared/workspaces'
 import { FAKE_ORIGIN } from '../../test-support/fixtures/core'
 import { toBase64 } from '../screenshots/strip-metadata'

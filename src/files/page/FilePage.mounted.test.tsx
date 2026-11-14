@@ -2,12 +2,10 @@
 
 import { act, useLayoutEffect, type ReactNode } from 'react'
 import { expect, it } from 'vitest'
-import {
-  filePaths,
-  type ChangesResponse,
-  type DiffResponse,
-  type FileResponse,
-} from '../../shared/files'
+import type { ChangesResponse } from '../../shared/generated/ChangesResponse'
+import type { DiffResponse } from '../../shared/generated/DiffResponse'
+import type { FileResponse } from '../../shared/generated/FileResponse'
+import { filePaths } from '../../shared/files'
 import { FakeApiServer } from '../../test-support/fake-api'
 import { FAKE_IDS } from '../../test-support/fixtures/core'
 import { testNavigation } from '../files-test-kit'

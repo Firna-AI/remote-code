@@ -1,5 +1,5 @@
+import type { RunnerLogin } from '../../src/shared/generated/RunnerLogin'
 import { MACHINE_PATHS } from '../../src/shared/agent-tools'
-import type { RunnerLogin } from '../../src/shared/runner'
 import type { HttpFetch } from '../env'
 import type { CodexTokens } from '../codex-auth/tokens'
 import { fakeCodexTasks } from '../codex-auth/tasks.test-support'

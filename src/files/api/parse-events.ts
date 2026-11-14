@@ -1,5 +1,5 @@
+import type { RunnerReportKind } from '../../shared/generated/RunnerReportKind'
 import type { FileEvent } from '../../shared/files'
-import type { RunnerReportKind } from '../../shared/runner'
 import {
   isObject,
   parseItems,

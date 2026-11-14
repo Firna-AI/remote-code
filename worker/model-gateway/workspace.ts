@@ -1,4 +1,5 @@
-import type { Session } from '../../src/shared/sessions'
+import type { Session } from '../../src/shared/generated/Session'
+
 import type { AgentLoginKind } from '../chat/login-kind'
 import type { WorkspaceChat } from '../chat/backend'
 import type { ChatOperation } from '../chat/operation'

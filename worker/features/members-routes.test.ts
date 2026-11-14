@@ -25,10 +25,7 @@ beforeAll(async () => {
 afterEach(async () => {
   await fixture?.dispose()
 })
-const configuration = {
-  CONDUCTIVE_RUNNER_ARCHIVE_URL: OUTER_SOFTWARE.url,
-  CONDUCTIVE_RUNNER_ARCHIVE_SHA256: OUTER_SOFTWARE.sha256,
-}
+const configuration = {}
 
 it('restores maintenance without a resume and purges real chat storage through the scheduled entry', async () => {
   const active = (fixture = await featureFixture(bundle, { configuration }))

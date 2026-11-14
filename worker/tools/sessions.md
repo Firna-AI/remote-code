@@ -7,9 +7,8 @@ a message, and the paging of the session list.
 [Session calls](../../docs/protocol/session-calls.md) state their
 requirements. [Agent tool access](../../docs/protocol/agent-tool-access.md)
 states the reach, the turn rule, and the rights of the sender.
-[agent-sessions.ts](../../src/shared/agent-sessions.ts) holds the request
-and reply types. [agent-session-paths.ts](../../src/shared/agent-session-paths.ts)
-holds the path builders.
+[Rust tool contracts](../../crates/cnd-runner-interface/src/tools/mod.rs) own the request and reply types.
+[agent-session-paths.ts](../../src/shared/agent-session-paths.ts) holds the path builders.
 
 The CLI and the MCP server offer these routes and the paging options, as
 [Workspace tool calls](../../tools/calls.md#sessions) says. The chat shows
@@ -102,8 +101,10 @@ says. The copy of a transcript gives that session's link.
 
 The tests use the production Worker, real D1, native workspace storage,
 and a real stored calling turn. `session-management.test-support.ts`
-builds their requests.
+builds their HTTP requests.
+The [Rust tools crate](../../crates/cnd-tools/README.md) tests CLI parsing and MCP calls.
 
+- `sessions.test.ts`: session creation, exact message text, request replay, transcripts, defaults, and Worker refusals.
 - `session-management-reads.test.ts`: exact session and message facts
   across workspaces, archived reads, and session list paging edges.
 - `session-management-writes.test.ts`: a rename of another workspace's

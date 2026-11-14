@@ -1,5 +1,5 @@
-import type { RunnerEvent } from './runner'
-import type { RunnerFileEvent } from './files'
+import type { RunnerEvent } from './generated/RunnerEvent'
+import type { RunnerFileEvent } from './generated/RunnerFileEvent'
 import {
   filterFileReport,
   filterOutput,

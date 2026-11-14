@@ -1,10 +1,10 @@
 import { Input } from '@firna/ui/input'
+import type { Agent } from '../../shared/generated/Agent'
 import { productName } from '../../../docs/mockups/src/brand'
 import { useControlSizes } from '../../../docs/mockups/src/components/common/touch'
 import styles from '../../../docs/mockups/src/components/settings/AgentConnectForm.module.css'
 import type { SecretForm } from '../../app/secret-form'
 import { useStore } from '../../app/store'
-import type { Agent } from '../../shared/agents'
 import {
   ENDPOINT_ADDRESS_ERROR,
   readEndpointAddress,

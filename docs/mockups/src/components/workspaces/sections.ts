@@ -9,7 +9,7 @@ import {
   archivedWorkspaceList,
   keptArchives,
 } from '../../fixtures/archivedWorkspaces'
-import type { GitHubSummary } from '../../fixtures/pullRequests'
+import type { GitHubSummary } from '../../../../../src/shared/generated/GitHubSummary'
 import {
   checkoutAutocomplete,
   workspaceList,

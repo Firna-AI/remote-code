@@ -1,0 +1,14 @@
+---
+source: crates/cnd-runner-interface/tests/fast_wire.rs
+expression: event
+---
+{
+  "type": "event",
+  "event": {
+    "type": "speed",
+    "speed": {
+      "state": "standard",
+      "cause": "fast_limit"
+    }
+  }
+}

@@ -1,3 +1,4 @@
+import { withSoftwareRelease } from '../software-release-test-support'
 import { TEST_TIME } from '../../test-support/harness'
 import { LifecycleBoat } from '../lifecycle-boat-test-support'
 import type { ImageRuntime } from '../image-builds'
@@ -13,10 +14,11 @@ export async function nativeImageRuntime(
   const dependencies = {
     now: () => TEST_TIME,
     randomToken: () => 'image-runtime-unused',
-    fetch: (request: Request) =>
+    fetch: withSoftwareRelease((request: Request) =>
       new URL(request.url).hostname === 'boat.dev'
         ? boat.fetch(request)
         : fixture.access.fetch(request),
+    ),
   }
   const runtime: ImageRuntime = {
     env: fixture.env,

@@ -3,7 +3,7 @@
 - **Severity:** Medium. **Likelihood:** Common. **Effort:** Small. **Confidence:** Medium. **Harder later:** No.
 - **Kind:** Outside the scope.
 - **Added:** 2026-11-10, from the quick mockup of option G of decision 10 of the own endpoint plan on branch `calummoore/cli-proxy-setup`.
-- **Location:** `retryMessage` in `worker/chat/send-message.ts`, which sends the message again with `previous.choice`, and the failure text of `failureCause` in `runner/src/providers/failure.ts`.
+- **Location:** `retryMessage` in `worker/chat/send-message.ts`, which sends the message again with `previous.choice`, and the failure text of `failureCause` in `runner/sdk-helper/src/providers/failure.ts`.
 - **Reason:** the own endpoint change does not change how Try again picks its model, and a fix changes what Try again does for every failed turn.
 
 - **Terms:**

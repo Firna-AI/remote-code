@@ -1,5 +1,6 @@
+import type { DeviceCommandRecord } from '../../src/shared/generated/DeviceCommandRecord'
 import { readDeviceRecord } from '../../src/shared/device-read'
-import type { DeviceCommandRecord } from '../../src/shared/device'
+
 import type { ChatData } from '../chat/types'
 import { readDeviceValue } from './storage'
 

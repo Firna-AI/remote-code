@@ -1,3 +1,5 @@
+import type { TurnEndReason } from '../generated/TurnEndReason'
+import type { MessageSender } from '../generated/MessageSender'
 import {
   memberStopped,
   stoppedUnnamed,
@@ -5,8 +7,6 @@ import {
 } from '../../../docs/mockups/src/components/chat/stopCopy'
 import type { StopSessionReference } from '../session-stop'
 import type { User } from '../api'
-import type { TurnEndReason } from '../chat-events'
-import type { MessageSender } from '../messages'
 import {
   turnFilesUnavailable,
   unlistedFiles,

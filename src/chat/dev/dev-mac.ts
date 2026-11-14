@@ -1,3 +1,5 @@
+import type { DeviceCommandRecord } from '../../shared/generated/DeviceCommandRecord'
+import type { DevicePairing } from '../../shared/generated/DevicePairing'
 import { safariOutput } from '../../../docs/mockups/src/fixtures/mac'
 import {
   DEVICE_CURRENT_PATH,
@@ -5,8 +7,6 @@ import {
   deviceApprovalPath,
   deviceCommandsPath,
   type DeviceApprovalAction,
-  type DeviceCommandRecord,
-  type DevicePairing,
   type DeviceSettings,
   type DeviceSettingsOutcome,
 } from '../../shared/device'

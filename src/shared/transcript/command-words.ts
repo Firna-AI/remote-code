@@ -1,8 +1,6 @@
-import {
-  deviceCommandSucceeded,
-  type DeviceCommandRecord,
-  type DeviceSender,
-} from '../device'
+import type { DeviceCommandRecord } from '../generated/DeviceCommandRecord'
+import type { DeviceSender } from '../generated/DeviceSender'
+import { deviceCommandSucceeded } from '../device'
 import { formatDuration } from './duration'
 
 export const commandCopy = {

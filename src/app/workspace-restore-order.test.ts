@@ -1,5 +1,6 @@
+import type { Workspace } from '../shared/generated/Workspace'
 import { describe, expect, test } from 'vitest'
-import type { Workspace } from '../shared/workspaces'
+
 import { FAKE_IDS, FAKE_TIME } from '../test-support/fixtures/core'
 import {
   archivedAt,

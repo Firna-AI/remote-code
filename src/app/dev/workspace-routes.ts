@@ -1,10 +1,10 @@
+import type { Workspace } from '../../shared/generated/Workspace'
 import {
   WORKSPACE_RESTORE_MS,
   workspacePath,
   workspacePaths,
   workspacesPath,
   type OrderedWorkspaceResponse,
-  type Workspace,
   type WorkspaceResponse,
   type WorkspacesResponse,
 } from '../../shared/workspaces'

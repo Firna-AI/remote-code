@@ -1,7 +1,7 @@
+import type { Session } from '../../src/shared/generated/Session'
 import { afterAll, beforeAll, beforeEach, expect, it } from 'vitest'
 import {
   sessionTranscriptPath,
-  type Session,
   type SessionTranscriptResponse,
 } from '../../src/shared/sessions'
 import { heldOperation } from '../test-support/held-operation'

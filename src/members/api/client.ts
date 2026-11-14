@@ -1,3 +1,4 @@
+import type { Workspace } from '../../shared/generated/Workspace'
 import type { EmptyRequest } from '../../shared/api'
 import {
   invitePath,
@@ -28,7 +29,6 @@ import {
 } from '../../shared/orgs'
 import {
   workspacesPath,
-  type Workspace,
   type WorkspacesResponse,
 } from '../../shared/workspaces'
 import { isObject, ResponseShapeError } from './json'

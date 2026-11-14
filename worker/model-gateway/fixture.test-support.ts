@@ -1,7 +1,7 @@
+import type { AgentChoice } from '../../src/shared/generated/AgentChoice'
+import type { RunnerProtocolVersion } from '../../src/shared/generated/RunnerProtocolVersion'
 import { agentLoginPath } from '../../src/shared/account'
-import type { AgentChoice } from '../../src/shared/agents'
 import type { ChatHistoryResponse } from '../chat/workspace-events'
-import type { RunnerProtocolVersion } from '../../src/shared/runner'
 import { RUNNER_SUPPORTED_LOGIN_KINDS } from '../../src/shared/runner'
 import {
   CLAUDE,

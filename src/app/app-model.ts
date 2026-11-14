@@ -1,4 +1,5 @@
-import type { AgentModel } from '../shared/agents'
+import type { AgentModel } from '../shared/generated/AgentModel'
+
 import { API_PATHS, type User } from '../shared/api'
 import { GET_STARTED_PATH, type GetStartedResponse } from '../shared/onboarding'
 import {

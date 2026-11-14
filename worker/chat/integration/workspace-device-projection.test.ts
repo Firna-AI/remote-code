@@ -9,7 +9,7 @@ import {
   workspacePaths,
   workspacesPath,
 } from '../../../src/shared/workspaces'
-import { TOOL_TURN_HEADER } from '../../../tools/context'
+import { TOOL_TURN_HEADER } from '../../../src/shared/agent-tools'
 import { deleteOrgPath } from '../../../src/shared/orgs'
 import { listToolWorkspaces } from '../../tools/workspace-data'
 import { closeSockets } from '../adapter-sockets.test-support'

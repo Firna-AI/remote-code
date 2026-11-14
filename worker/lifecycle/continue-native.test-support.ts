@@ -149,7 +149,7 @@ export async function continueNativeFixture(trackIgnored = false) {
   // fixture folders can also start with /home/user, in a checkout there.
   const map = (command: string) =>
     command
-      .replaceAll('HOME=/home/user ', `HOME=${home} `)
+      .replaceAll('HOME=/home/user ', `HOME=${shellQuote(home)} `)
       .replaceAll('/tmp/conductive-continue', join(root, 'continuations'))
       .replaceAll('/usr/local/bin/conductive-git-credential', helper)
       .replaceAll(

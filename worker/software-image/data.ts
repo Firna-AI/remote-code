@@ -1,4 +1,4 @@
-import type { ImageSoftwareArtifact } from '../lifecycle/image-software'
+import type { SoftwareRelease } from '../lifecycle/software-release'
 import { softwareImageName } from '../lifecycle/image-names'
 import type { SoftwareImage } from './types'
 
@@ -54,7 +54,7 @@ export async function insertSoftwareImage(
     id: string
     account: string
     version: string
-    artifact: ImageSoftwareArtifact
+    artifact: SoftwareRelease
     tokenDigest: string
     now: number
   },

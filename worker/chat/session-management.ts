@@ -1,4 +1,5 @@
-import type { Session } from '../../src/shared/sessions'
+import type { Session } from '../../src/shared/generated/Session'
+
 import type { TurnStopRequester } from '../../src/shared/session-stop'
 import type { ChatTransaction } from './store'
 import { stopTurn } from './sessions'

@@ -1,6 +1,6 @@
 import { afterAll, beforeAll, beforeEach, expect, it } from 'vitest'
-
-import type { Attachment, SendMessageResponse } from '../../src/shared/messages'
+import type { Attachment } from '../../src/shared/generated/Attachment'
+import type { SendMessageResponse } from '../../src/shared/messages'
 import { sessionPath, sessionPaths } from '../../src/shared/sessions'
 import { createHarness, type TestHarness } from '../test-support/harness'
 import { createFirstMessageFixture } from './first-message.test-support'

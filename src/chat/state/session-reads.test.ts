@@ -1,7 +1,8 @@
+import type { Workspace } from '../../shared/generated/Workspace'
 import { describe, expect, test } from 'vitest'
 import { flushMicrotasks } from '../../app/test-kit'
 import { sessionsPath } from '../../shared/sessions'
-import type { Workspace } from '../../shared/workspaces'
+
 import { FAKE_IDS } from '../../test-support/fixtures/core'
 import { workspaceFixtures } from '../../test-support/fixtures/workspaces'
 import { chatFor } from './test-kit'

@@ -1,6 +1,6 @@
 import { CircleSlash, FileText } from 'lucide-react'
-import type { TurnEndReason } from '../../shared/chat-events'
-import type { ChangedFile } from '../../shared/files'
+import type { TurnEndReason } from '../../shared/generated/TurnEndReason'
+import type { ChangedFile } from '../../shared/generated/ChangedFile'
 import { classes } from '../../../docs/mockups/src/components/common/classes'
 import { DiffStat } from '../../../docs/mockups/src/components/files/DiffStat'
 import { EndReasonLine } from '../../../docs/mockups/src/components/chat/EndReasonLine'

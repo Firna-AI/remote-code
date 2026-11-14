@@ -1,9 +1,9 @@
+import type { Workspace } from '../../shared/generated/Workspace'
 import { waitingEmail } from '../../../docs/mockups/src/fixtures/waitlist'
 import type { AgentLoginStatus } from '../../shared/account'
 import type { User } from '../../shared/api'
 import type { OrgSummary } from '../../shared/orgs'
 import type { RoutineRun } from '../../shared/routines'
-import type { Workspace } from '../../shared/workspaces'
 import { fakeGitHubSummary } from '../../test-support/fake-api'
 import {
   coreFixtures,

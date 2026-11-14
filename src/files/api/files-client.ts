@@ -1,10 +1,8 @@
-import {
-  filePaths,
-  type ChangesResponse,
-  type DiffResponse,
-  type FileResponse,
-  type FileTreeResponse,
-} from '../../shared/files'
+import type { ChangesResponse } from '../../shared/generated/ChangesResponse'
+import type { DiffResponse } from '../../shared/generated/DiffResponse'
+import type { FileResponse } from '../../shared/generated/FileResponse'
+import type { FileTreeResponse } from '../../shared/generated/FileTreeResponse'
+import { filePaths } from '../../shared/files'
 import {
   errorFromBody,
   errorFromThrown,

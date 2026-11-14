@@ -1,6 +1,6 @@
 import { Folder } from 'lucide-react'
+import type { FileEntry } from '../../shared/generated/FileEntry'
 import { FileIcon } from '../../files/panel/file-icons'
-import type { FileEntry } from '../../shared/files'
 
 /**
  * The icon of an entry in the list of `@` and on its chip: the icon that

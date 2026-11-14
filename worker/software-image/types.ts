@@ -4,7 +4,6 @@ type SoftwareImageState = 'building' | 'ready' | 'failed' | 'deleting'
 type SoftwareImagePhase =
   | 'create'
   | 'allocating'
-  | 'tools'
   | 'software'
   | 'journal'
   | 'snapshot'

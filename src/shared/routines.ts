@@ -1,7 +1,9 @@
-import type { Agent, AgentChoice } from './agents'
-import { orgPath, type Timestamp } from './api'
-import type { MessageSender } from './messages'
-import type { WorkspaceState } from './workspaces'
+import type { WorkspaceState } from './generated/WorkspaceState'
+import type { Agent } from './generated/Agent'
+import type { AgentChoice } from './generated/AgentChoice'
+import type { Timestamp } from './generated/Timestamp'
+import type { MessageSender } from './generated/MessageSender'
+import { orgPath } from './api'
 
 export function routinesPath(orgId: string): string {
   return `${orgPath(orgId)}/routines`

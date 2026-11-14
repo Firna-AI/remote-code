@@ -1,0 +1,16 @@
+---
+source: crates/cnd-runner-interface/tests/wire_2.rs
+description: Current protocol JSON. Optional fields stay absent; nullable fields stay null.
+expression: message
+---
+{
+  "type": "model",
+  "commandId": "command-4",
+  "sessionId": "session-1",
+  "choice": {
+    "agent": "codex",
+    "model": "test-model",
+    "effort": "xhigh",
+    "fast": false
+  }
+}

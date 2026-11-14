@@ -1,7 +1,7 @@
 import { beforeAll, expect, it } from 'vitest'
 
-import { MACHINE_PATHS } from '../../src/shared/agent-tools'
-import { TOOL_TURN_HEADER } from '../../tools/context'
+import { MACHINE_PATHS, TOOL_TURN_HEADER } from '../../src/shared/agent-tools'
+
 import { createApp } from '../application'
 import { outerWorkerBundle } from '../chat/integration/outer-runtime.test-support'
 import { isRecord } from '../http'

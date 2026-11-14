@@ -2,8 +2,7 @@ import { expect, it } from 'vitest'
 
 import { setupBackendTests } from '../lifecycle/backend-test-hooks'
 import { isRecord } from '../http'
-import { SOFTWARE } from '../lifecycle/backend-test-support'
-import { TOOLS_OUTPUT } from './test-support'
+import { SOFTWARE_RELEASE as SOFTWARE } from '../lifecycle/software-release-test-support'
 import { boatRoute } from '../sandbox/routes'
 import { heldOperation } from '../test-support/held-operation'
 import { requestSoftwareImage } from './build'
@@ -125,7 +124,7 @@ it('fences concurrent command polls without duplicate saved output or two active
   expect(await earlier).toMatchObject({ state: 'building', output: '' })
   const imagesNow = await softwareImages(images.env.DB, 'boat')
   expect(imagesNow).toHaveLength(1)
-  expect(imagesNow[0].output).toBe(`${TOOLS_OUTPUT}installing...\nnext\n`)
+  expect(imagesNow[0].output).toBe('installing...\nnext\n')
   expect(boat.starts).toHaveLength(1)
 })
 

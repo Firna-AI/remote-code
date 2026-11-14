@@ -1,3 +1,4 @@
+import type { AgentModel } from '../../shared/generated/AgentModel'
 // @vitest-environment happy-dom
 
 import { describe, expect, test, vi } from 'vitest'
@@ -10,7 +11,7 @@ import {
   type AccountResponse,
   type AgentLoginStatus,
 } from '../../shared/account'
-import { MODELS_PATH, type AgentModel } from '../../shared/agents'
+import { MODELS_PATH } from '../../shared/agents'
 import { ENDPOINT_ADDRESS_ERROR } from '../../shared/endpoint-address'
 import { byRole } from '../../test-support/dom-queries'
 import { FakeApiServer } from '../../test-support/fake-api'

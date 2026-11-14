@@ -1,12 +1,10 @@
+import type { TranscriptDetail } from '../../shared/generated/TranscriptDetail'
 // @vitest-environment happy-dom
 import { act } from 'react'
 import { describe, expect, it, vi } from 'vitest'
 import { testServices } from '../../app/test-kit'
 import { chatHistoryPath } from '../../shared/events'
-import {
-  sessionTranscriptPath,
-  type TranscriptDetail,
-} from '../../shared/sessions'
+import { sessionTranscriptPath } from '../../shared/sessions'
 import { byRole, queryByRole } from '../../test-support/dom-queries'
 import { FakeApiServer } from '../../test-support/fake-api'
 import { FAKE_IDS, FAKE_ORIGIN } from '../../test-support/fixtures/core'

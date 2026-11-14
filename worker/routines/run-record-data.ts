@@ -1,4 +1,4 @@
-import type { AgentChoice } from '../../src/shared/agents'
+import type { AgentChoice } from '../../src/shared/generated/AgentChoice'
 import type { RoutineRunTrigger } from '../../src/shared/routines'
 import type { AppDependencies } from '../env'
 import { readRunChoice, readRunTrigger } from './stored-run'

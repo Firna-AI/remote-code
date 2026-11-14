@@ -17,6 +17,8 @@ page.
   keeps inline and block fences longer than their content's backticks.
 - [Lost data](transcript/lost-data.ts) maps refusal event types to the same
   product names for the browser line and the copied transcript.
+- [Workspace tool types](../../crates/cnd-runner-interface/src/tools/mod.rs) own the Rust requests, replies, workspace and session records, and Mac command records. `generated/` contains their TypeScript.
+- [Agent tool runtime](agent-tools.ts) owns the machine paths, turn environment names, turn header, and workspace MCP registration.
 - [Agent words](agents.ts) supply the effort labels, model lookup, and model
   labels for the chat, the new-workspace picker, and the mockups.
 - [Duration](transcript/duration.ts) formats elapsed chat and command times.

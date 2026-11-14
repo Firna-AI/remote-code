@@ -1,6 +1,7 @@
+import type { Session } from '../generated/Session'
+import type { UserMessage } from '../generated/UserMessage'
 import type { ChatEvent } from '../chat-events'
-import type { UserMessage } from '../messages'
-import type { Session } from '../sessions'
+
 import { fakeMacRequest } from '../../test-support/fixtures/devices'
 import { SessionMarkdown, type TranscriptDocument } from './session-markdown'
 

@@ -1,13 +1,10 @@
+import type { Workspace } from '../../shared/generated/Workspace'
 import { orgSuspendedReason } from '../../../docs/mockups/src/components/orgs/suspension'
 import { orgPath } from '../../shared/api'
 import type { WorkspaceEvent } from '../../shared/events'
 import { leaveOrgPath } from '../../shared/orgs'
 import type { Section } from '../../shared/sections'
-import {
-  workspacePath,
-  type Workspace,
-  type WorkspaceResponse,
-} from '../../shared/workspaces'
+import { workspacePath, type WorkspaceResponse } from '../../shared/workspaces'
 import type { FakeWorkspaceEvents } from '../../test-support/fake-events'
 import { orgSuspendedCode } from '../suspension'
 import { ID, match, RouteError } from './router'

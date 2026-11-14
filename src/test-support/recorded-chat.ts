@@ -1,4 +1,5 @@
-import type { ChatEvent, ToolCall } from '../shared/chat-events'
+import type { ToolCall } from '../shared/generated/ToolCall'
+import type { ChatEvent } from '../shared/chat-events'
 import type { WorkspaceEventEnvelope } from '../shared/events'
 import { sessionLink } from '../shared/session-link'
 import type { TurnStopRequester } from '../shared/session-stop'

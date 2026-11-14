@@ -1,4 +1,4 @@
-import type { Agent } from './agents'
+import type { Agent } from './generated/Agent'
 import { isPublicEndpointHost } from './endpoint-host'
 
 export const ENDPOINT_ADDRESS_ERROR = {

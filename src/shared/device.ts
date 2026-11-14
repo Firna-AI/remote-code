@@ -1,3 +1,6 @@
+import type { DeviceCommandResult } from './generated/DeviceCommandResult.js'
+import type { DevicePairing } from './generated/DevicePairing.js'
+import type { DeviceCommandRecord } from './generated/DeviceCommandRecord.js'
 export const DEVICE_FRAME_LIMIT_BYTES = 1_000_000
 /** Combined UTF-8 bytes of stdout and stderr. */
 export const DEVICE_OUTPUT_LIMIT_BYTES = 65_536
@@ -39,79 +42,14 @@ export function deviceApprovalPath(
 ): string {
   return `${deviceCommandPath(orgId, workspaceId, requestKey)}/approval`
 }
-
-/** No sender, owner, device, or host can be selected by a sandbox. */
-export interface DeviceCommandInput {
-  requestId: string
-  command: string
-  folder: string
-  reason: string
-  timeoutSeconds?: number
-  longerTimeoutReason?: string
-}
-export type DeviceCommandState =
-  | 'waiting'
-  | 'running'
-  | 'completed'
-  | 'denied'
-  | 'unavailable'
-  | 'timed-out'
-  | 'failed'
-
-export interface DeviceCommandResult {
-  stdout: string
-  stderr: string
-  exitCode: number | null
-  timedOut: boolean
-  truncated: boolean
-}
-export interface DevicePairing {
-  deviceId: string
-  connectionId: string
-}
 export interface DeviceCommandRef {
   workspaceId: string
   requestId: string
-}
-/** A device prompt needs identity labels, not the full account record. */
-export interface DeviceSender {
-  id: string
-  githubLogin: string
-  displayName: string | null
-  avatarUrl: string | null
-}
-export interface DeviceCommandRecord {
-  requestId: string
-  /** The base64url SHA-256 storage key. Use this value in command URLs. */
-  requestKey: string
-  orgId: string
-  workspaceId: string
-  workspaceName: string | null
-  sessionId: string
-  turnId: string
-  sender: DeviceSender
-  device: DevicePairing | null
-  deviceName: string | null
-  command: string
-  folder: string
-  reason: string
-  timeoutSeconds: number
-  longerTimeoutReason: string | null
-  state: DeviceCommandState
-  result: DeviceCommandResult | null
-  error: { code: string; message: string } | null
-  createdAt: number
-  startedAt: number | null
-  updatedAt: number
 }
 
 /** Process completion alone does not mean that the command succeeded. */
 export function deviceCommandSucceeded(request: DeviceCommandRecord): boolean {
   return request.state === 'completed' && request.result?.exitCode === 0
-}
-
-export interface DeviceCommandResponse {
-  request: DeviceCommandRecord
 }
 export interface DeviceCommandsResponse {
   requests: readonly DeviceCommandRecord[]

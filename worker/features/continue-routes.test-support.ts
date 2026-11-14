@@ -6,7 +6,6 @@ import { record } from '../chat/inputs'
 import { OUTER_MACHINE_ORIGIN } from '../chat/integration/outer-runtime.test-support'
 import {
   OUTER_ORG,
-  OUTER_SOFTWARE,
   OUTER_WORKSPACE,
 } from '../chat/integration/outer-seed.test-support'
 import { repositoryPull } from '../github/fake-pull'
@@ -21,8 +20,6 @@ export async function continueRoutesFixture(bundle: string) {
   const secret = 'continue-webhook-secret'
   const fixture = await featureFixture(bundle, {
     configuration: {
-      CONDUCTIVE_RUNNER_ARCHIVE_URL: OUTER_SOFTWARE.url,
-      CONDUCTIVE_RUNNER_ARCHIVE_SHA256: OUTER_SOFTWARE.sha256,
       GITHUB_APP_PRIVATE_KEY: privateKey
         .export({ type: 'pkcs1', format: 'pem' })
         .toString(),

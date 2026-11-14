@@ -2,7 +2,7 @@ import { afterEach, expect, it, vi } from 'vitest'
 
 import { createApp } from '../application'
 import { setupBackendTests } from '../lifecycle/backend-test-hooks'
-import { SOFTWARE } from '../lifecycle/backend-test-support'
+import { SOFTWARE_RELEASE as SOFTWARE } from '../lifecycle/software-release-test-support'
 import { readBuildJob } from '../lifecycle/build-data'
 import { IMAGE_BUILD_TIME_LIMIT_MS } from '../lifecycle/job-time-limit'
 import { startImageBuild } from '../lifecycle/image-builds'

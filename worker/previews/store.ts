@@ -1,4 +1,5 @@
-import { previewPath, type Preview } from '../../src/shared/previews'
+import type { Preview } from '../../src/shared/generated/Preview'
+import { previewPath } from '../../src/shared/previews'
 import type { WorkspaceTarget } from './types'
 import { sandboxAccessPredicate } from '../data/sandbox-access'
 

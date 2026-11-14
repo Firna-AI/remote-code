@@ -1,8 +1,6 @@
-import type { AgentChatEvent } from '../../src/shared/chat-events'
-import type {
-  RunnerMessageDuringTurn,
-  RunnerTurn,
-} from '../../src/shared/runner'
+import type { AgentChatEvent } from '../../src/shared/generated/AgentChatEvent'
+import type { RunnerMessageDuringTurn } from '../../src/shared/generated/RunnerMessageDuringTurn'
+import type { RunnerTurn } from '../../src/shared/generated/RunnerTurn'
 import type { FakeRunner } from '../test-support/fake-runner'
 import { TEST_TIME } from '../test-support/harness'
 import { CLAUDE, WORKSPACE_ID, type ChatFixture } from './harness.test-support'

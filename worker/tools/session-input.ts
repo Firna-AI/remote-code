@@ -1,7 +1,6 @@
-import type {
-  AgentCreateSessionRequest,
-  AgentSendMessageRequest,
-} from '../../src/shared/agent-sessions'
+import type { AgentCreateSessionRequest } from '../../src/shared/generated/AgentCreateSessionRequest'
+import type { AgentSendMessageRequest } from '../../src/shared/generated/AgentSendMessageRequest'
+
 import {
   effort,
   identifier,

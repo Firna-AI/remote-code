@@ -1,9 +1,9 @@
+import type { ListeningPort } from '../shared/generated/ListeningPort'
 import rows from '../../docs/mockups/src/components/tools/PortForm.module.css'
 import {
   portFormCopy,
   serverDescription,
 } from '../../docs/mockups/src/components/tools/previewCopy'
-import type { ListeningPort } from '../shared/ports'
 import styles from './PreviewOpenForm.module.css'
 
 /**

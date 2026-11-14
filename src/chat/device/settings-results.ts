@@ -1,5 +1,5 @@
+import type { DevicePairing } from '../../shared/generated/DevicePairing'
 import type {
-  DevicePairing,
   DeviceSettings,
   DeviceSettingsOutcome,
   DeviceWorkspaceWindow,

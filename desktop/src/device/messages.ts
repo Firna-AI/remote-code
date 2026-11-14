@@ -1,3 +1,5 @@
+import type { DeviceCommandRecord } from '../../../src/shared/generated/DeviceCommandRecord.js'
+import type { DevicePairing } from '../../../src/shared/generated/DevicePairing.js'
 import {
   DEVICE_FRAME_LIMIT_BYTES,
   DEVICE_HEARTBEAT_MS,
@@ -5,8 +7,6 @@ import {
 } from '../../../src/shared/device.ts'
 import type {
   DeviceApprovalAction,
-  DeviceCommandRecord,
-  DevicePairing,
   DeviceSettingsAction,
   WorkerToDevice,
 } from '../../../src/shared/device.ts'

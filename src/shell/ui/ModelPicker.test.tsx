@@ -2,7 +2,8 @@
 
 import { useState } from 'react'
 import { describe, expect, test } from 'vitest'
-import type { AgentChoice, AgentModel } from '../../shared/agents'
+import type { AgentChoice } from '../../shared/generated/AgentChoice'
+import type { AgentModel } from '../../shared/generated/AgentModel'
 import {
   accessibleName,
   byRole,

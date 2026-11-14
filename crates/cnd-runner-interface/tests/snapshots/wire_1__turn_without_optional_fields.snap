@@ -1,0 +1,52 @@
+---
+source: crates/cnd-runner-interface/tests/wire_1.rs
+description: Current protocol JSON. Optional fields stay absent; nullable fields stay null.
+expression: message
+---
+{
+  "type": "turn",
+  "commandId": "command-1",
+  "sessionId": "session-1",
+  "turnId": "turn-1",
+  "message": {
+    "id": "message-1",
+    "sessionId": "session-1",
+    "sender": {
+      "id": "member-1",
+      "githubLogin": "member",
+      "displayName": null,
+      "avatarUrl": null
+    },
+    "text": "Read the file.",
+    "attachments": [
+      {
+        "id": "attachment-1",
+        "name": "sample.txt",
+        "path": "attachments/sample.txt",
+        "kind": "file",
+        "mediaType": "text/plain",
+        "sizeBytes": 3
+      }
+    ],
+    "choice": {
+      "agent": "claude",
+      "model": "test-model",
+      "effort": "high",
+      "fast": false
+    },
+    "createdAt": 1730000000000,
+    "state": "sent"
+  },
+  "attachments": [
+    {
+      "attachmentId": "attachment-1",
+      "path": "/repo/attachments/sample.txt"
+    }
+  ],
+  "credential": {
+    "agent": "claude",
+    "kind": "token",
+    "token": "temporary-token"
+  },
+  "commitAuthor": null
+}

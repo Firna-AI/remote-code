@@ -1,5 +1,5 @@
 import { expect, it } from 'vitest'
-import type { FileEntry } from '../../shared/files'
+import type { FileEntry } from '../../shared/generated/FileEntry'
 import { toolFixtures } from '../../test-support/fixtures/tools'
 import { pathLabel } from './file-labels'
 import { applyTreeDelta, treeFromSnapshot } from './tree-model'

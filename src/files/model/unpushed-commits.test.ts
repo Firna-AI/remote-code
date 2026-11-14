@@ -1,6 +1,6 @@
 import { expect, it, onTestFinished } from 'vitest'
-
-import { filePaths, type ChangesResponse } from '../../shared/files'
+import type { ChangesResponse } from '../../shared/generated/ChangesResponse'
+import { filePaths } from '../../shared/files'
 import { FakeApiServer } from '../../test-support/fake-api'
 import { FAKE_IDS, FAKE_TIME } from '../../test-support/fixtures/core'
 import { toolFixtures } from '../../test-support/fixtures/tools'

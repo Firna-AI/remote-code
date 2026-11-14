@@ -1,6 +1,7 @@
+import type { Workspace } from '../shared/generated/Workspace'
 import { useCallback, useState } from 'react'
 import { nameLabel } from '../shared/name-label'
-import type { Workspace } from '../shared/workspaces'
+
 import type { MembersApi } from './api/client'
 import { useOwnerChoices } from './OwnerChoices'
 import { OwnerButton, ReadOnlyOwner } from './OwnerButton'

@@ -1,11 +1,8 @@
-import type {
-  AgentChatEvent,
-  ChatEvent,
-  RunnerEventRefused,
-  ToolCall,
-} from '../../shared/chat-events'
+import type { AgentChatEvent } from '../../shared/generated/AgentChatEvent'
+import type { ToolCall } from '../../shared/generated/ToolCall'
+import type { ChangedFile } from '../../shared/generated/ChangedFile'
+import type { ChatEvent, RunnerEventRefused } from '../../shared/chat-events'
 import type { WorkspaceEventEnvelope } from '../../shared/events'
-import type { ChangedFile } from '../../shared/files'
 import { FAKE_TIME } from '../../test-support/fixtures/core'
 import { workspaceFixtures } from '../../test-support/fixtures/workspaces'
 

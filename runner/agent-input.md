@@ -20,8 +20,8 @@ with `git ls-files --others` and no ignore rules. The changes report
 does not take them, so Changes leaves them out.
 
 [The context folder](../docs/protocol/repository-folders.md#the-context-folder)
-states its use and limits. A new org image build installs the runner with this
-startup step and the instruction text below.
+states its use and limits. The runner and its instruction text follow the
+[sandbox software update rules](../docs/protocol/sandbox-software.md#updates).
 
 ## Agent instructions
 
@@ -73,8 +73,9 @@ chat never shows the sender line.
 - The branch line exists only in the text that reaches the agent. The
   stored message, its events, and the titles from messages use only the
   text that the member wrote.
-- Each sandbox keeps the runner of the org image that it starts from. An
-  older runner reads no `branches`, so its sessions get no branch line.
+- Until an update applies, an older runner reads no `branches`, so its
+  sessions get no branch line. Existing sessions keep their saved instructions
+  after an update.
 
 A message with attached files adds one read instruction after the
 member's text, then one JSON line per file. Each line gives its original
@@ -88,15 +89,10 @@ guide gives the exact instruction and the metadata source.
 
 ## Key code
 
-- `src/context-folder.ts`: `prepareContextFolder` adds the local exclude
-  rule and makes the context folders before startup reports.
-  `contextFolderFiles` lists the files of the folder for the file tree.
-- `src/instructions.ts`: `agentInstructions`, with Claude's base rules.
-- `src/instruction-state.ts`: the built text with its branches, the parser
-  of saved branches, and the reader of the branches of older saved text.
-- `src/engine-input.ts`: the instructions and the saved pair of a session
-  at its first input.
-- `src/providers/message.ts`: `providerMessage`, the sender line and the
-  branch line.
-- `src/providers/instructions.test.ts` and `src/providers/branches.test.ts`:
-  the saved text, the sender line, and the branch line of both agents.
+- [setup.rs](../crates/cnd-runner/src/repository/setup.rs) prepares the context folder and local Git exclusion.
+- [instructions.rs](../crates/cnd-runner/src/engine/instructions.rs) builds session instructions and reads legacy branches.
+- [input.rs](../crates/cnd-runner/src/engine/input.rs) keeps session instructions and the turn's original context.
+- [message.ts](sdk-helper/src/providers/message.ts) formats sender lines, branch lines, and attachments.
+- [instructions.test.ts](sdk-helper/src/providers/instructions.test.ts) and
+  [branches.test.ts](sdk-helper/src/providers/branches.test.ts) check the helper input text.
+- [context_tests.rs](../crates/cnd-runner/tests/repository/context_tests.rs) checks ordinary and linked Git worktrees.

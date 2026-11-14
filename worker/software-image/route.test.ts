@@ -3,8 +3,6 @@ import { expect, it } from 'vitest'
 import { createApp } from '../application'
 import type { AppEnv } from '../env'
 import { setupBackendTests } from '../lifecycle/backend-test-hooks'
-import { SOFTWARE } from '../lifecycle/backend-test-support'
-import { TOOLS_OUTPUT } from './test-support'
 import { TEST_TIME } from '../test-support/harness'
 import { sha256Hex } from './digest'
 
@@ -17,8 +15,6 @@ async function routeFixture() {
   const digest = await sha256Hex(token)
   const env: AppEnv = {
     ...images.env,
-    CONDUCTIVE_RUNNER_ARCHIVE_URL: SOFTWARE.url,
-    CONDUCTIVE_RUNNER_ARCHIVE_SHA256: SOFTWARE.sha256,
     CONDUCTIVE_DEPLOY_TOKEN_SHA256: digest,
     CF_VERSION_METADATA: {
       id: 'worker-version',
@@ -104,7 +100,7 @@ it('advances the current runner build and returns only private state and new out
   expect(await first.json()).toMatchObject({
     state: 'building',
     phase: 'software',
-    output: `${TOOLS_OUTPUT}installing...\n`,
+    output: 'installing...\n',
   })
   expect(await (await request()).json()).toMatchObject({
     state: 'building',
@@ -130,7 +126,7 @@ it('returns the same failure to its deploy run and starts again for another depl
   expect(await failed.json()).toMatchObject({
     state: 'failed',
     error: 'The software image build failed.',
-    keptOutput: `${TOOLS_OUTPUT}installing...\n`,
+    keptOutput: 'installing...\n',
   })
   expect(await (await request()).json()).toMatchObject({
     state: 'failed',

@@ -17,7 +17,7 @@ async function withoutOrgImage() {
   return fixture
 }
 
-it('pins a ready software image and runs the first build without the software step', async () => {
+it('pins a ready software image and installs the newest release in the first build', async () => {
   const fixture = await withoutOrgImage()
   const { images, org, user, boat } = fixture
   const name = await seedReadySoftwareImage(images.env.DB)
@@ -35,12 +35,12 @@ it('pins a ready software image and runs the first build without the software st
   expect(boat.starts[0].from).toBe(name)
   expect(
     boat.commandRequests.filter((command) => command.detached),
-  ).toHaveLength(1)
+  ).toHaveLength(2)
   const build = await readBuild(images.env.DB, org.id, id)
   expect(build.build.state).toBe('succeeded')
   const log = build.log.map((event) => event.text).join('')
   expect(log).toContain('Running the install script.')
-  expect(log).not.toContain('Installing the cloud computer software.')
+  expect(log).toContain('Installing the cloud computer software.')
 })
 
 it.each(['missing', 'other-version', 'other-account'] as const)(
@@ -98,6 +98,6 @@ it.each(['build', 'refresh'] as const)(
     await finishImageBuild(fixture, id)
     expect(
       boat.commandRequests.filter((command) => command.detached),
-    ).toHaveLength(kind === 'build' ? 2 : 0)
+    ).toHaveLength(kind === 'build' ? 2 : 1)
   },
 )

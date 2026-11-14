@@ -1,0 +1,12 @@
+---
+source: crates/cnd-runner-interface/tests/helper_wire.rs
+expression: output
+---
+{
+  "type": "event",
+  "event": {
+    "type": "failed",
+    "code": "agent_exited",
+    "message": "The agent process ended."
+  }
+}

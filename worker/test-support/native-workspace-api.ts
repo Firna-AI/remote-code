@@ -1,3 +1,6 @@
+import type { ChangesResponse } from '../../src/shared/generated/ChangesResponse'
+import type { FileTreeResponse } from '../../src/shared/generated/FileTreeResponse'
+import type { Attachment } from '../../src/shared/generated/Attachment'
 import type { WorkspaceChat } from '../chat/backend'
 import type { WorkspaceController } from '../lifecycle/workspace-controller-types'
 import type { WorkspaceEventPublication } from '../lifecycle/workspace-platform'
@@ -13,8 +16,6 @@ import type {
   WorkspaceEvent,
   WorkspaceEventEnvelope,
 } from '../chat/workspace-events'
-import type { ChangesResponse, FileTreeResponse } from '../../src/shared/files'
-import type { Attachment } from '../../src/shared/messages'
 import type { AttachmentStorageInput } from '../chat/attachment-storage'
 import type { NativeByteChunk } from './native-attachment-controls'
 import type { NativeQuery } from './native-d1'

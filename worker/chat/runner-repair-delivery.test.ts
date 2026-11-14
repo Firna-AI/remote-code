@@ -1,5 +1,5 @@
 import { afterAll, beforeAll, beforeEach, expect, it } from 'vitest'
-import type { WorkspaceToRunner } from '../../src/shared/runner'
+import type { WorkspaceToRunner } from '../../src/shared/generated/WorkspaceToRunner'
 import { FakeRunner } from '../test-support/fake-runner'
 import { createHarness, type TestHarness } from '../test-support/harness'
 import { createChatFixture, WORKSPACE_ID } from './harness.test-support'

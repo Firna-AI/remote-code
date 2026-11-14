@@ -1,4 +1,4 @@
-import type { AgentChoice } from '../../src/shared/agents'
+import type { AgentChoice } from '../../src/shared/generated/AgentChoice'
 import type { RoutineRunTrigger } from '../../src/shared/routines'
 import { choice } from '../chat/inputs'
 import { isRecord } from '../http'

@@ -1,5 +1,5 @@
+import type { UserMessage } from '../../src/shared/generated/UserMessage'
 import type { User } from '../../src/shared/api'
-import type { UserMessage } from '../../src/shared/messages'
 import type { AppEnv } from '../env'
 import { sessionTitleFrom } from '../../src/shared/session-title'
 import { HttpError } from '../http'

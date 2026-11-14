@@ -1,4 +1,4 @@
-import type { GitHubSummary } from './github'
+import type { GitHubSummary } from './generated/GitHubSummary'
 
 /** Each GitHub state. The `satisfies` check keeps the list in step. */
 const summaries = {

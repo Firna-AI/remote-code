@@ -1,5 +1,6 @@
+import type { AgentModel } from '../../src/shared/generated/AgentModel'
+import type { Agent } from '../../src/shared/generated/Agent'
 import type { EndpointModelList } from '../../src/shared/account'
-import type { Agent, AgentModel } from '../../src/shared/agents'
 
 /** Only the signed-in account projects discovered IDs into app IDs. */
 export function endpointModelList(

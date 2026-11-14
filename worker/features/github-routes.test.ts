@@ -16,7 +16,6 @@ import {
 } from '../chat/integration/outer-runtime.test-support'
 import {
   OUTER_ORG,
-  OUTER_SOFTWARE,
   OUTER_WORKSPACE,
 } from '../chat/integration/outer-seed.test-support'
 import { RepositoryGitHub } from '../github/fake-repository'
@@ -48,8 +47,6 @@ it('shares chat history with GitHub reads, retries pending reads, and refreshes 
         .export({ type: 'pkcs1', format: 'pem' })
         .toString(),
       GITHUB_WEBHOOK_SECRET: secret,
-      CONDUCTIVE_RUNNER_ARCHIVE_URL: OUTER_SOFTWARE.url,
-      CONDUCTIVE_RUNNER_ARCHIVE_SHA256: OUTER_SOFTWARE.sha256,
     },
     outbound: (request, fallback) => {
       const url = new URL(request.url)

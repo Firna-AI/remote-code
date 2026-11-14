@@ -1,5 +1,5 @@
 import { CircleAlert, FileText, ImageIcon, Paperclip } from 'lucide-react'
-import type { Attachment } from '../../shared/messages'
+import type { Attachment } from '../../shared/generated/Attachment'
 import {
   attachFilesLabel,
   folderBody,

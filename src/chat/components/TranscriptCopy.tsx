@@ -1,7 +1,8 @@
+import type { TranscriptDetail } from '../../shared/generated/TranscriptDetail'
 import { useCallback, useContext, type ReactNode } from 'react'
 import { ToastContext, ToastProvider, useToast } from '@firna/ui/toast'
 import { transcriptToasts } from '../../../docs/mockups/src/components/workspace/transcriptCopy'
-import type { TranscriptDetail } from '../../shared/sessions'
+
 import type { ChatController } from '../state/controller'
 import type { CopyServices } from '../transcript-copy'
 

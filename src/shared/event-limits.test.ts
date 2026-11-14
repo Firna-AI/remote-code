@@ -1,6 +1,5 @@
 import { expect, it } from 'vitest'
-
-import type { RunnerEvent } from './runner'
+import type { RunnerEvent } from './generated/RunnerEvent'
 import { boundChatEvent } from './event-limits'
 
 it('retains earlier omission counts when bounding an older runner excerpt again', () => {

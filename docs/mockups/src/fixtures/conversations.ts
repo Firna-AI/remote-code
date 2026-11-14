@@ -2,8 +2,8 @@
  * Chat transcripts. Text in backticks renders as inline code.
  */
 
+import type { TurnEndReason } from '../../../../src/shared/generated/TurnEndReason'
 import type { TableCells } from '../../../../src/markdown/table-rows'
-import type { TurnEndReason } from '../../../../src/shared/chat-events'
 import type { LostReason, LostWhat } from '../components/chat/lostCopy'
 import type { StandardSpeedCause } from '../components/chat/speedCopy'
 import { agentStopConversations } from './agentStopConversations'

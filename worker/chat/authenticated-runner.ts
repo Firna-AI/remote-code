@@ -1,4 +1,4 @@
-import type { WorkspaceToRunner } from '../../src/shared/runner'
+import type { WorkspaceToRunner } from '../../src/shared/generated/WorkspaceToRunner'
 import { CONNECTION_CHECK_MS } from '../security/connection-access'
 import { RunnerAccessDenied } from './login-access'
 import type {

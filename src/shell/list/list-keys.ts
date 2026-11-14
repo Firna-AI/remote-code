@@ -1,10 +1,11 @@
+import type { Workspace } from '../../shared/generated/Workspace'
 import { routes } from '../../app/router'
 import { workspaceForShortcut } from '../../app/shortcuts/navigation'
 import {
   shortcutDigits,
   type ShortcutCommandId,
 } from '../../shared/shortcut-commands'
-import type { Workspace } from '../../shared/workspaces'
+
 import {
   useShortcutOffers,
   type CommandOffer,

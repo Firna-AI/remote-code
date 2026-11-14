@@ -1,5 +1,5 @@
+import type { AgentChoice } from '../../src/shared/generated/AgentChoice'
 import type { RunnerLifecycleEvent } from './runner-lifecycle'
-import type { AgentChoice } from '../../src/shared/agents'
 import type {
   WorkspaceLifecycleEndpoint,
   PendingTurn,

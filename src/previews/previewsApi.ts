@@ -1,10 +1,7 @@
+import type { OpenPreviewRequest } from '../shared/generated/OpenPreviewRequest'
+import type { Preview } from '../shared/generated/Preview'
 import type { EmptyRequest } from '../shared/api'
-import {
-  previewPath,
-  previewsPath,
-  type OpenPreviewRequest,
-  type Preview,
-} from '../shared/previews'
+import { previewPath, previewsPath } from '../shared/previews'
 import {
   isRecord,
   requestJson,

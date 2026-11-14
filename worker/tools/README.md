@@ -162,45 +162,16 @@ The create call reports that failure, as
 An org suspension refuses the shared workspace token rule before agent tool calls.
 The same rule prevents Mac commands and their later approvals and results.
 
-## Image installer
+## Release tools
 
-`workspaceToolsCommands` builds the install commands from source assets.
-It splits the install into ordered commands under `WORKSPACE_TOOLS_COMMAND_BYTES`, 64 KiB.
-It measures each command with its `sudo` wrapper, which escapes each quote again.
-Linux refuses one program argument of 128 KiB or more, and the sandbox runs each command as one shell argument.
-A command over that size never starts.
-`installWorkspaceTools` runs those commands in order with an authorized image callback.
-It stops at the first failed command.
-The launcher is written in the last command.
-The software image version hashes those same commands with their privilege wrapper.
-The [asset module](image-assets.ts) exports `WORKSPACE_TOOL_SOURCES`.
-Static Vite `?raw` imports embed the allowed sources in the Worker bundle.
-The asset module has no runtime filesystem dependency.
-The callback can bind `SandboxProvider.runCommand` to the image-build sandbox.
-The installer returns only after each command succeeds.
-A failed or timed-out command throws a fixed error, and no later command runs.
-The builder must stop the build before it saves a snapshot when installation fails.
-
-The installer also accepts an optional root folder.
-The root folder defaults to `/`.
-Each path that the installer writes starts with the root folder.
-The launcher's program, secrets, and Node paths also start with the root folder.
-A test can pass a temporary folder.
-Image builds must use the default root.
-The default root gives the production paths in [Image assets](../../tools/README.md#image-assets).
-
-The installer writes only program source and the launcher.
-It writes no credentials into the image.
-The launcher starts Node only by the full path from [`imageNodeExecutable`](../lifecycle/image-runtime.ts).
-That path names the private Node that each image build installs, as [The private Node runtime](../../image/runtime.md) says.
-The launcher reports an error when no executable file is at that path.
-It never uses `PATH` or a system Node folder.
-It removes `NODE_OPTIONS` after it reads the rooted secrets file and before it starts Node.
-The installer adds no Node runtime.
+The [Rust tools crate](../../crates/cnd-tools/README.md) supplies the CLI and MCP server.
+The sandbox release includes both in its `conductive` program.
+The [system installer](../../image/install-system.sh) links
+`/usr/local/bin/conductive` to `/opt/conductive/current/conductive`.
+Image builds install this release through the normal software step.
+They write no separate tool source files or launcher.
 `WORKSPACE_TOOLS_MCP` supplies the executable and arguments for agent registration.
 The runner supplies credentials and active turn context at runtime.
-The installed launcher preserves explicitly supplied origin, workspace token, and turn ID while it loads the saved env file.
-Only an absent runtime value falls back to that file.
 
 ## Production composition
 
@@ -215,8 +186,7 @@ Session gets, message gets, and session management call the target object's RPCs
 [section-composition.ts](section-composition.ts) runs the app's section action as the sender.
 Preview calls reach the target object's `agentPreviewCall` with the app origin.
 
-Each org build that needs the software step calls `installWorkspaceTools` with `WORKSPACE_TOOL_SOURCES`
-before it installs the rest of the image software.
+Each org build installs the newest sandbox release through the software step.
 The two runner providers register [`WORKSPACE_TOOLS_MCP`](../../src/shared/agent-tools.ts) beside `computer`.
 The [runner](../../runner/README.md) supplies the machine origin, workspace token,
 and active turn ID at runtime. The image stores no such credential.
@@ -228,10 +198,13 @@ No git credential endpoint is implemented here.
 
 Run `npm run test -- worker/tools` from the repository root.
 The handler tests use the existing real local D1 harness.
-The CLI and MCP tests call `runToolProcess` and reach this handler.
+The tests call the HTTP routes directly and need no Rust toolchain.
+[handler.command-inputs.test.ts](handler.command-inputs.test.ts) checks workspace creation and resource replies.
+[handler.resource-reads.test.ts](handler.resource-reads.test.ts) checks token-only resource lists.
+[handler.management.test.ts](handler.management.test.ts) checks management route inputs and replies.
 Workspace handler tests inject the lifecycle and active-turn services.
-Session CLI and MCP tests use production composition, native chat storage, and a stored calling turn.
-Their request bridge lives in [session-test-support.ts](session-test-support.ts).
+[sessions.test.ts](sessions.test.ts) uses production composition, native chat storage, and a stored calling turn.
+CLI parsing, reply validation, and MCP protocol tests live in the Rust tools crate.
 The production services live in [composition.ts](composition.ts).
 The real-object route tests live in [worker/features](../features/).
 [Tests](workspaces.md#tests) lists the tests of the workspace calls, and [Tests](sessions.md#tests) those of session management.
@@ -240,6 +213,8 @@ The real-object route tests live in [worker/features](../features/).
 ## Key code
 
 - [handler.ts](handler.ts) owns the public machine handler and token gate.
+- [input.ts](input.ts) narrows workspace creation inputs and stored model choices.
+- [workspace-replies.ts](workspace-replies.ts) narrows the created workspace reply and stored sender fields.
 - [create.ts](create.ts) builds the stable first-message ID and tries a replay. It then resolves the owner, sender, section, and model choice.
 - [lists.ts](lists.ts) reads the four lists and resolves the listed default choice.
 - [store.ts](store.ts) reads the token's workspace, members, owner defaults, sections, and repository admission in D1.
@@ -248,13 +223,13 @@ The real-object route tests live in [worker/features](../features/).
 - [workspace-data.ts](workspace-data.ts) queries the workspace list and the details of one workspace.
 - [workspace-write-composition.ts](workspace-write-composition.ts) runs a rename, a move, or an archive as the sender.
 - [workspace-create-composition.ts](workspace-create-composition.ts) completes a create and its replay.
-- [agent-workspaces.ts](../../src/shared/agent-workspaces.ts) holds the workspace request and reply types and their paths.
+- [agent-workspaces.ts](../../src/shared/agent-workspaces.ts) holds the workspace path builders.
 - [services.ts](services.ts) defines the lifecycle and active-turn integration boundary.
 - [session-routes.ts](session-routes.ts) parses the machine session routes and read query options, and sends management to `manageSession`.
 - [session-page.ts](session-page.ts) reads the session list `limit` and `offset`.
 - [session-summary.ts](session-summary.ts) builds one session entry and its state.
 - [session-read-workspace.ts](session-read-workspace.ts) holds the trusted session list, get, message, and transcript read RPCs.
-- [agent-sessions.ts](../../src/shared/agent-sessions.ts) holds the session request and reply types and the transcript byte budget.
+- [agent-sessions.ts](../../src/shared/agent-sessions.ts) holds the transcript byte budget.
 - [session-input.ts](session-input.ts) narrows session create and send inputs while preserving message text.
 - [session-write-composition.ts](session-write-composition.ts) preserves admission while applying the normal open/resume policy.
 - [message-text.ts](message-text.ts) builds the canonical sending-session footer and selects title input.
@@ -262,7 +237,6 @@ The real-object route tests live in [worker/features](../features/).
 - [session-access.ts](session-access.ts) reads a target workspace inside the calling org, including archives.
 - [section-routes.ts](section-routes.ts) and [preview-routes.ts](preview-routes.ts) match the section and preview routes and read their inputs.
 - [section-composition.ts](section-composition.ts) calls the app's `featureSectionWrite` as the sender and shapes its reply.
-- [agent-sections.ts](../../src/shared/agent-sections.ts) and [agent-previews.ts](../../src/shared/agent-previews.ts) hold the section and preview reply types and paths.
-- [image.ts](image.ts) installs the CLI and MCP source into the image.
-- [image-assets.ts](image-assets.ts) embeds the allowed sources as Worker-safe text assets.
+- [agent-sections.ts](../../src/shared/agent-sections.ts) and [agent-previews.ts](../../src/shared/agent-previews.ts) hold the section and preview paths.
+- [Rust tool contracts](../../crates/cnd-runner-interface/src/tools/mod.rs) own the request and reply types. The generator writes their TypeScript under `src/shared/generated/`.
 - [Sandbox tools](../../tools/README.md) describe the commands and runtime environment.

@@ -1,3 +1,4 @@
+import type { Session } from '../../shared/generated/Session'
 import type {
   ComponentPropsWithRef,
   HTMLAttributes,
@@ -5,7 +6,7 @@ import type {
   RefCallback,
 } from 'react'
 import { nameLabel } from '../../shared/name-label'
-import type { Session } from '../../shared/sessions'
+
 import type { WorkspaceTab, WorkspaceView } from '../../shared/workspace-view'
 import { rowTabs, tabKey } from '../state/tab-order'
 

@@ -1,0 +1,17 @@
+[Unit]
+Description=Conductive preview relay
+Requires=conductive-preview-relay.socket
+After=network-online.target conductive-preview-relay.socket
+Wants=network-online.target
+
+[Service]
+Type=exec
+User=user
+WorkingDirectory=/home/user
+ExecStart=/opt/conductive/current/system/preview-relay-start.sh
+Restart=always
+RestartSec=2
+KillMode=control-group
+
+[Install]
+WantedBy=multi-user.target

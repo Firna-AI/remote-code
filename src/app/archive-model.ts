@@ -1,8 +1,5 @@
-import {
-  workspacePaths,
-  type Workspace,
-  type WorkspaceResponse,
-} from '../shared/workspaces'
+import type { Workspace } from '../shared/generated/Workspace'
+import { workspacePaths, type WorkspaceResponse } from '../shared/workspaces'
 import { readWorkspaceResponse } from './api/read-workspaces'
 import type { OrgModel } from './org-model'
 

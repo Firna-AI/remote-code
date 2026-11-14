@@ -1,3 +1,4 @@
+import type { Workspace } from '../../shared/generated/Workspace'
 import { Spinner } from '@firna/ui/spinner'
 import { useSharedUiTheme } from '@firna/ui/theme'
 import { EmptyState } from '../../../docs/mockups/src/components/common/EmptyState'
@@ -11,7 +12,7 @@ import type {
 import type { ApiError } from '../../app/api/client'
 import { useServices } from '../../app/services'
 import { formatDay } from '../../app/time'
-import type { Workspace } from '../../shared/workspaces'
+
 import { ActionButton } from '../ui/actions'
 import type { Action } from '../ui/useAction'
 import { barBody, keptBody, problemOf } from './notice-copy'

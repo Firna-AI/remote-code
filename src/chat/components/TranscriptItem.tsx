@@ -1,5 +1,5 @@
 import { CircleAlert } from 'lucide-react'
-import type { UserMessage } from '../../shared/messages'
+import type { UserMessage } from '../../shared/generated/UserMessage'
 import { ContinuedLine } from '../../../docs/mockups/src/components/chat/ContinuedLine'
 import {
   StopLine,

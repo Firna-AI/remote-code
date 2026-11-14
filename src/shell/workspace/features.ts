@@ -1,3 +1,4 @@
+import type { Workspace } from '../../shared/generated/Workspace'
 import { createContext, useContext, useMemo, type ReactNode } from 'react'
 import type { SandboxPanelState } from '../../../docs/mockups/src/components/workspace/sandboxNoticeState'
 import type { ArchiveAction } from '../../app/archive-model'
@@ -5,7 +6,7 @@ import type { WorkspaceStream } from '../../app/events'
 import type { ChatController } from '../../chat/state/controller'
 import type { User } from '../../shared/api'
 import type { OrgSummary } from '../../shared/orgs'
-import type { Workspace } from '../../shared/workspaces'
+
 import type { SubscribeWorkspaceEvents } from '../../terminal/tool-parts/workspace'
 import type { Action } from '../ui/useAction'
 import type { Viewport } from '../ui/viewport'

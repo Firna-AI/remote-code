@@ -1,4 +1,4 @@
-import type { MessageSender } from '../../shared/messages'
+import type { MessageSender } from '../../shared/generated/MessageSender'
 import {
   routinePath,
   routinesPath,

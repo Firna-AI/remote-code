@@ -3,7 +3,6 @@ import { expect, it } from 'vitest'
 import { workspacePaths } from '../../src/shared/workspaces'
 import { joinedMember } from '../operator/suspension-test-support'
 import { setupBackendTests } from './backend-test-hooks'
-import { SOFTWARE } from './backend-test-support'
 import { handleLifecycleRequest } from './browser'
 import { createCompletedWorkspace } from './completed-creation-test-support'
 import { FIRST_MESSAGE } from './durable-test-support'
@@ -43,7 +42,6 @@ it('accepts another member activity without extending a suspended owner sandbox 
     },
     { ...fixture.runtime, images: fixture.images },
     {
-      software: SOFTWARE,
       acceptFirstMessage: async () => {
         throw new Error('This request does not create a workspace.')
       },

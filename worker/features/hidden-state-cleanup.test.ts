@@ -2,10 +2,7 @@ import { afterEach, beforeAll, expect, it } from 'vitest'
 
 import { deleteOrgPath } from '../../src/shared/orgs'
 import { outerWorkerBundle } from '../chat/integration/outer-runtime.test-support'
-import {
-  OUTER_ORG,
-  OUTER_SOFTWARE,
-} from '../chat/integration/outer-seed.test-support'
+import { OUTER_ORG } from '../chat/integration/outer-seed.test-support'
 import {
   featureFixture,
   featureState,
@@ -24,10 +21,7 @@ afterEach(async () => {
 
 it('purges a hidden failed-create draft and its retained cleanup sandbox with the org', async () => {
   const active = (fixture = await featureFixture(bundle, {
-    configuration: {
-      CONDUCTIVE_RUNNER_ARCHIVE_URL: OUTER_SOFTWARE.url,
-      CONDUCTIVE_RUNNER_ARCHIVE_SHA256: OUTER_SOFTWARE.sha256,
-    },
+    configuration: {},
   }))
   await active.env.DB.batch([
     active.env.DB.prepare(

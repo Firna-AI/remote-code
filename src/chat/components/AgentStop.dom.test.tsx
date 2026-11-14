@@ -1,3 +1,4 @@
+import type { Workspace } from '../../shared/generated/Workspace'
 // @vitest-environment happy-dom
 
 import { act } from 'react'
@@ -6,7 +7,7 @@ import { routes } from '../../app/router'
 import type { WorkspaceEvent } from '../../shared/events'
 import { sessionLink } from '../../shared/session-link'
 import { sessionsPath } from '../../shared/sessions'
-import type { Workspace } from '../../shared/workspaces'
+
 import { FAKE_IDS, FAKE_ORIGIN } from '../../test-support/fixtures/core'
 import { workspaceFixtures } from '../../test-support/fixtures/workspaces'
 import { holdAnimationFrames, mount, waitFor } from '../../test-support/mount'

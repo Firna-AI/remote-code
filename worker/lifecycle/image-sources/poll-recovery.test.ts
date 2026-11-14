@@ -11,12 +11,10 @@ import {
 import { readBuildJob } from '../build-data'
 import { advanceImageBuild } from '../image-builds'
 import { heldOperation } from '../../test-support/held-operation'
-import { WORKSPACE_TOOLS_DIRECTORY } from '../../tools/image'
 import { nativeImageRuntime } from './image-runtime-test-support'
 import { localSourceFixture } from './local-source-test-support'
 import { INSTALLATION_TOKEN } from './native-github-test-support'
 import { readSourceJob } from './source-data'
-import { TOOLS_COMMAND_COUNT } from '../../tools/image-commands.test-support'
 
 const privateKey = generateKeyPairSync('rsa', { modulusLength: 2048 })
   .privateKey.export({ type: 'pkcs1', format: 'pem' })
@@ -91,13 +89,11 @@ it('keeps a native source fetch after a temporary status error and resumes witho
           ?.tokenCiphertext,
       ).toBeNull()
       order.push(
-        !detached && command.includes(WORKSPACE_TOOLS_DIRECTORY)
-          ? 'tools'
-          : !detached
-            ? 'cleanup'
-            : command.includes('/tmp/conductive-install.sh')
-              ? 'install'
-              : 'software',
+        !detached
+          ? 'cleanup'
+          : command.includes('/tmp/conductive-install.sh')
+            ? 'install'
+            : 'software',
       )
     }
     claim.release()
@@ -127,12 +123,7 @@ it('keeps a native source fetch after a temporary status error and resumes witho
         ['mint', 'claim', 'revoke', 'finalize'].includes(event),
       ),
     ).toEqual(['mint', 'claim', 'revoke', 'finalize'])
-    expect(order).toEqual([
-      ...Array<string>(TOOLS_COMMAND_COUNT).fill('tools'),
-      'software',
-      'install',
-      'cleanup',
-    ])
+    expect(order).toEqual(['software', 'install', 'cleanup'])
   } finally {
     claim.release()
     await fixture.dispose()

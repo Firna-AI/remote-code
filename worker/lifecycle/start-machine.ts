@@ -2,7 +2,7 @@ import { requireActiveStartUsers } from './start-access'
 import { providerState } from './provider-state'
 import type { AppDependencies, AppEnv } from '../env'
 import type { SandboxProvider } from '../sandbox/provider'
-import type { WorkspaceRow } from './workspace-data'
+import type { WorkspaceRow } from './workspace-row'
 import { allocateWorkspace } from './start-allocation'
 import { releaseImageLease } from './image-leases'
 import {

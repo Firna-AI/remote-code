@@ -1,4 +1,5 @@
-import type { StartStep, WorkspaceStart } from '../../src/shared/workspaces'
+import type { StartStep } from '../../src/shared/generated/StartStep'
+import type { WorkspaceStart } from '../../src/shared/generated/WorkspaceStart'
 import { RESTORE_POLL_MS, type DurableLifecycleState } from './durable-types'
 
 export function withPreparedStart(

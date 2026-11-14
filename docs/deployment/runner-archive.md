@@ -1,85 +1,76 @@
-# Runner archive and software image
+# Conductive releases and software image
 
-This page belongs to [Deployment inputs](../deployment.md). It says how
-each image build gets the runner archive, and how each deploy from `main`
-publishes the archive and builds the software image.
+This page belongs to [Deployment inputs](../deployment.md). It describes
+release publication and the software image of each deploy from `main`.
 
-## The runner archive
+## Conductive release files
 
-Each new image build installs the runner archive into the org image. A
-refresh keeps the installed runner and updates the repositories.
-Publish the runner archive from the same commit as the Worker before any image build.
-[The runner archive](../../image/README.md#the-runner-archive) says how to make
-and publish it.
+Every image build and refresh installs the newest Conductive release.
+The Worker reads the newest-version JSON before admission and command
+composition. `CONDUCTIVE_RELEASE_SERVER` can replace the default base
+`https://runner.conductive.build`. No archive URL or digest variable is needed.
+A workspace read and a history read need no release lookup.
 
-Each deploy from `main` publishes the archive of its commit when the
-archive is new. It sets both variables to that archive, as
-[The archive in each deploy](#the-archive-in-each-deploy) says. To supply
-an archive by hand:
+The static Rust program runs the agent runner, CLI, MCP server, preview
+relay, Git credential helper, and updater. It embeds its version and a
+schema-versioned parts list. The parts are `node`, `system`, and `sdk-helper`.
+Each part has a name, an absolute HTTPS URL, and a SHA-256 digest.
+The private Node archive stays at its official `nodejs.org` URL. The deploy
+reads its URL and digest from the Worker's pinned runtime settings.
+The Rust runner uses Node only for the SDK helper.
 
-1. Package the archive, as
-   [Developer scripts](../../image/developer-scripts.md#package-the-archive)
-   says.
-2. Publish the exact archive at its public HTTPS URL. For R2, upload it
-   through the S3 API, because `wrangler r2 object put` refuses files over
-   300 MiB.
-3. Set `CONDUCTIVE_RUNNER_ARCHIVE_URL` to that URL. It can hold no user
-   name, password, query, or fragment.
-4. Set `CONDUCTIVE_RUNNER_ARCHIVE_SHA256` to the digest of the same file.
-   The Worker accepts upper or lower case.
+[The release crate](../../crates/cnd-release/README.md#quick-start) gives local
+packaging commands. Publish a release from the same commit as the Worker,
+so their runner protocols agree. Publish every immutable file before the
+newest-version JSON. Use a separate release server for manual test releases.
 
-More facts:
+### The release in each deploy
 
-- `runnerSoftware` in `worker/configuration.ts` reads and checks both
-  values, as the `software` option of a build or a refresh. For a missing
-  or invalid value, it gives `503 runner_software_unavailable`.
-- Only a build or a refresh needs the two values. A workspace read, a
-  history read, and the start of the app need no archive setting.
-- Image builds and refreshes run through the Worker routes that the
-  [Worker README](../../worker/README.md#routes) lists.
-- The archive holds no Node. Each build downloads one pinned Node release
-  from `nodejs.org` into the image, as
-  [The private Node runtime](../../image/runtime.md) says. That download needs
-  no deployment input.
+The R2 bucket `conductive-runner` serves release files at
+`https://runner.conductive.build/`. The deploy builds the static program for
+`x86_64-unknown-linux-musl`. Its version is `0.0.<count>`, where `<count>`
+is the commit count of `main`. The checkout includes the full history.
 
-### The archive in each deploy
+The deploy writes these keys:
 
-The archives live in the R2 bucket `conductive-runner`. R2 is the file
-storage of Cloudflare. The bucket serves each archive under
-`https://runner.conductive.build/`. Each deploy from `main` takes these
-steps for the archive:
+- SDK helper: `releases/download/sdk-helper/sdk-helper-<sha256>.tar.gz`.
+- System: `releases/download/system/system-<sha256>.tar.gz`.
+- Program: `releases/download/conductive/<version>/<sha256>/conductive-<version>-x86_64-unknown-linux-musl.tar.gz`.
+- Parts: `releases/download/conductive/<version>/<sha256>/parts-<version>-x86_64-unknown-linux-musl.json`.
+- Newest-version JSON: `releases/latest/conductive/x86_64-unknown-linux-musl`.
 
-1. It packages the archive with
-   `--base-url https://runner.conductive.build/`. The archive URL is then
-   `https://runner.conductive.build/runner-<sha256>.tar.gz`, where
-   `<sha256>` is the SHA-256 digest of the archive.
-2. It asks R2's S3 API whether the bucket holds an archive of that name. It
-   uploads the archive only when the name is new.
-3. It checks the size of the file at the public URL, also when the
-   archive already existed. A missing file or a wrong size stops the run
-   before the migrations.
-4. It deploys the Worker with both variables set to that archive.
+Each `<sha256>` names the digest of that file's bytes. The program archive
+holds `conductive`. The parts JSON has schema version 1 and a `parts` array
+of `name`, `url`, and `sha256` objects. Immutable files have a one-year cache
+time. The newest-version JSON has content type `application/json` and
+`Cache-Control: max-age=60`.
 
-- The same source and packages give the same digest. So an unchanged
-  runner makes no new upload.
-- Old archives stay in the bucket.
-- The upload uses R2's S3 API with the AWS CLI, because
-  `wrangler r2 object put` refuses files over 300 MiB. The archive is about
-  320 MiB.
-- The S3 key pair comes from the deploy token, as
-  [Cloudflare documents](https://developers.cloudflare.com/r2/api/tokens/).
-  The key ID is the ID of the token. The secret key is the SHA-256 digest
-  of the token value.
-- The run masks that secret key in its log.
-- A new archive reaches the next build of each org image. A refresh keeps
-  the installed runner. So an existing image keeps its runner until its
-  next build.
+The newest-version JSON uses the `cli-release-interface` format. It has
+`binary`, `version`, `target`, `asset_name`, `download_url`, and `sha256`.
+The URL is the absolute public program archive URL. The digest is required.
+`HttpReleaseClient` reads it without a release server process.
+
+1. Package `sdk-helper` and `system`, then embed all three parts and the
+   version in the musl program build.
+2. Upload each missing immutable file through R2's S3 API with the AWS CLI.
+   Check each file's public size, including files that already exist.
+3. Apply migrations, deploy the Worker, and pass its health check.
+4. Read the current newest-version JSON directly from R2, outside the cache.
+   Publish the candidate only for a higher version. A missing JSON permits
+   the first release. A failed read or invalid current JSON stops publication.
+5. Check the new JSON's public size with a version query that bypasses the
+   previous cache entry. Then request the software image.
+
+The S3 key pair comes from the deploy token, as
+[Cloudflare documents](https://developers.cloudflare.com/r2/api/tokens/).
+The key ID is the token ID. The secret key is the SHA-256 digest of the token.
+The run masks it in the log. Old immutable files stay in the bucket.
 
 ### The software image
 
 Each deploy from `main` asks the Worker for the
 [software image](../protocol/org-image.md#the-software-image) of its new
-version. The software image holds the base image, the runner archive, and
+version. The software image holds the base image, the Conductive release, and
 the rest of the app's own sandbox software.
 
 1. Before the Worker upload, the deploy makes 32 random bytes as its
@@ -87,7 +78,7 @@ the rest of the app's own sandbox software.
    masks it in the log.
 2. It sets `CONDUCTIVE_DEPLOY_TOKEN_SHA256` to the SHA-256 digest of the
    token, with `--var`.
-3. After the health check, it calls `POST /v1/deploy/software-image` on
+3. After the health check and release publication, it calls `POST /v1/deploy/software-image` on
    the machine hostname every 10 seconds, for up to 15 minutes. Each call
    sends the token and its digest. Each call moves the build on, and
    answers with its state and its new output.

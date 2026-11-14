@@ -7,7 +7,6 @@ import { readBuildJob } from './build-data'
 import { shellQuote } from './commands'
 import { advanceImageBuild, startImageBuild } from './image-builds'
 import { localSavedScriptFixture } from './saved-script-test-support'
-import { WORKSPACE_TOOLS_DIRECTORY } from '../tools/image'
 
 const backendFixture = setupBackendTests()
 
@@ -23,7 +22,6 @@ it('removes sensitive command output before requesting an image snapshot', async
       .bind(`printf '%s\\n' ${shellQuote(sensitive)}`, org.id)
       .run()
     boat.beforeCommand = async (command, detached) => {
-      if (!detached && command.includes(WORKSPACE_TOOLS_DIRECTORY)) return
       const install = local.contains(command, 'install')
       if (detached && !install) return
       if (install) await local.writeBuildEnvironment(boat.starts.at(-1)?.env)

@@ -1,13 +1,11 @@
+import type { ChangedFile } from '../../shared/generated/ChangedFile'
+import type { DiffResponse } from '../../shared/generated/DiffResponse'
+import type { FileResponse } from '../../shared/generated/FileResponse'
 import {
   filesFor,
   seedScriptDiff,
 } from '../../../docs/mockups/src/fixtures/maskedFiles'
 import type { WorkspaceEventEnvelope } from '../../shared/events'
-import type {
-  ChangedFile,
-  DiffResponse,
-  FileResponse,
-} from '../../shared/files'
 
 /**
  * The fake value of a secret org env var that two paths of the masked

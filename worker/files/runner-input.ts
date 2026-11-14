@@ -1,7 +1,5 @@
-import type {
-  RunnerFileEvent,
-  RunnerFileRevisionPart,
-} from '../../src/shared/files'
+import type { RunnerFileEvent } from '../../src/shared/generated/RunnerFileEvent'
+import type { RunnerFileRevisionPart } from '../../src/shared/generated/RunnerFileRevisionPart'
 import { isRecord } from '../http'
 import { invalidFileResponse } from './errors'
 import { natural, parseFileEvent } from './parsers'

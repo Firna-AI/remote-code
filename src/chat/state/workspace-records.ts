@@ -1,8 +1,6 @@
-import type {
-  OrderedWorkspaceResponse,
-  Workspace,
-  WorkspaceStart,
-} from '../../shared/workspaces'
+import type { Workspace } from '../../shared/generated/Workspace'
+import type { WorkspaceStart } from '../../shared/generated/WorkspaceStart'
+import type { OrderedWorkspaceResponse } from '../../shared/workspaces'
 import { afterRestore, isArchived } from './archive-view'
 import type { ChatSnapshot } from './chat-snapshot'
 import type { ChatContext } from './context'

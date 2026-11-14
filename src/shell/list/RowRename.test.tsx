@@ -1,14 +1,11 @@
+import type { Workspace } from '../../shared/generated/Workspace'
 // @vitest-environment happy-dom
 
 import { act } from 'react'
 import { describe, expect, test, vi } from 'vitest'
 import { routes } from '../../app/router'
 import { rightClick } from '../../chat/components/tab-row-test-kit'
-import {
-  workspacePath,
-  workspacesPath,
-  type Workspace,
-} from '../../shared/workspaces'
+import { workspacePath, workspacesPath } from '../../shared/workspaces'
 import { byRole, queryByRole } from '../../test-support/dom-queries'
 import { FakeApiServer } from '../../test-support/fake-api'
 import { FAKE_IDS } from '../../test-support/fixtures/core'

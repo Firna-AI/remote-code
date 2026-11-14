@@ -1,5 +1,6 @@
+import type { Workspace } from '../../shared/generated/Workspace'
 import { useState } from 'react'
-import type { Workspace } from '../../shared/workspaces'
+
 import type { MembersApi } from '../api/client'
 import { OwnerPicker } from '../OwnerPicker'
 import type { DevOptions } from './devOptions'

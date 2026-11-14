@@ -1,6 +1,6 @@
+import type { Workspace } from '../shared/generated/Workspace'
 import type {
   OrderedWorkspaceResponse,
-  Workspace,
   WorkspaceResponse,
 } from '../shared/workspaces'
 import type { ShellEvent } from './api/read-events'

@@ -5,7 +5,7 @@ import {
   useSyncExternalStore,
   type ReactNode,
 } from 'react'
-import type { FileEntry } from '../../shared/files'
+import type { FileEntry } from '../../shared/generated/FileEntry'
 import { mentionable } from './mention-rows'
 
 /**

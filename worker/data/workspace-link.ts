@@ -1,5 +1,5 @@
+import type { Workspace } from '../../src/shared/generated/Workspace'
 import { routes } from '../../src/app/router'
-import type { Workspace } from '../../src/shared/workspaces'
 
 /** Older saved records can omit workspace links and the GitHub summary. */
 export type WorkspaceSnapshot = Omit<

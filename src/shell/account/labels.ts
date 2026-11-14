@@ -1,5 +1,5 @@
+import type { Agent } from '../../shared/generated/Agent'
 import type { AgentLoginStatus } from '../../shared/account'
-import type { Agent } from '../../shared/agents'
 
 /** The connected login kinds. Both agents support own endpoints. */
 export type LoginKind = Extract<AgentLoginStatus, { connected: true }>['kind']

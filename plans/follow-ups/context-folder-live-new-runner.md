@@ -9,7 +9,7 @@
 - **Terms:**
   - **Context folder:** the folder `.context` at the top of the workspace's repository folder. Git ignores it. Attached files go to its folder `attachments`.
   - **Runner:** the agent runner, the program of the app in each cloud computer. It runs the agents and reports the files of the workspace.
-  - **Org image:** the prepared cloud computer image of an org. Each build installs the newest runner. A refresh keeps the installed runner.
+  - **Org image:** the prepared cloud computer image of an org. Each build installs the newest runner. Existing computers receive newer runners through automatic software updates at a later start.
   - **Local exclude file:** the ignore file of one Git repository, `info/exclude` in its Git folder. Git does not track it.
   - **Read line:** the line that the runner adds after the words of the member in each message with files.
 - **Background:**
@@ -22,18 +22,18 @@
   - The safe name keeps ASCII letters, digits, dots, underscores, and hyphens. One hyphen replaces each run of other characters. The extension is in lowercase. So `Context Check.TXT` becomes `Context-Check.txt`.
   - Before the first file of each copy, the Worker writes `.context/attachments/.gitignore` with the one rule `*`.
   - At each start, before its first file report, a new runner adds the line `/.context/` once to the local exclude file (decision 243). Then it makes `.context/` and `.context/attachments/`.
-  - The runner runs as the user `user`, as `image/conductive-runner.service` says. So that user owns both folders. The provider must then write the copied files into folders that it did not make.
+  - The runner runs as the user `user`, as `image/release/conductive-runner.service` says. So that user owns both folders. The provider must then write the copied files into folders that it did not make.
   - The agent instructions of a new session give the absolute path of the context folder. They say that Git ignores it, and that attached files arrive in its attachments folder. They tell agents to keep notes, screenshots, and files for other sessions there.
   - A session keeps the instructions that it started with. So only a new session shows this text.
   - After the words of the member, each message with files gets one read line, then one line for each file (decision 244). The user chose the read line "The sender attached these files. Read each file before you answer."
-  - Each file line holds one JSON object with `name`, `mediaType`, `path`, and `sizeBytes`. The path is absolute. `runner/src/providers/instructions.test.ts` holds the exact text that the runner sends.
+  - Each file line holds one JSON object with `name`, `mediaType`, `path`, and `sizeBytes`. The path is absolute. `runner/sdk-helper/src/providers/instructions.test.ts` holds the exact text that the runner sends.
   - Codex also gets each image as image input. For a message with an image, its read line adds "Each image is also in this message."
   - Changes leaves out each file that Git ignores. All files still lists each file of the context folder, also the ignored ones.
   - The Worker tests use fake upload servers that model no folders. So they do not prove that the real provider makes the missing digest folder, or that it can write into the folders of the runner.
   - The runner tests use a temporary repository, not a real cloud computer.
 - **Task:**
   1. Wait until the `Deploy` run of the merge commit passes.
-  2. Sign in at `https://app.conductive.build` as the admin of a test org. On the Cloud computer tab of the org settings, press **Build computer**. Wait until the build succeeds. A refresh does not count, because it keeps the old runner.
+  2. Sign in at `https://app.conductive.build` as the admin of a test org. On the Cloud computer tab of the org settings, press **Build computer**. Wait until the build succeeds. Check the installed release and context-folder behavior before continuing. Existing computers can also receive this runner through an automatic update.
   3. Create a new workspace from that image. Send its first message to a Claude model, with no file. Wait until the workspace is ready.
   4. Open the Terminal tab. Run these commands, and check each result:
      - `pwd` prints the repository folder, such as `/home/user/code/<name>`. This item calls it `<repository folder>`.
@@ -71,6 +71,6 @@
 - **Needs:** The merged change, deployed to `conductive.build` by the `Deploy` workflow. The admin of a test org with one repository that has the GitHub App. Claude and Codex logins of that account. A device that can make the test files and compute a SHA-256.
 - **Done when:** Every check of steps 4 and 8 to 15 passes on the deployed app. A failed check gets its own follow-up item, and this item stays open until a rerun of that check passes. Then delete this item.
 - **Related:**
-  - `plans/follow-ups/context-attachments-live-older-runner.md` checks attached files with an older runner. It needs an org image that no build changed since the deploy. So run it before step 2 when both items use the same org.
+  - `plans/follow-ups/context-attachments-live-older-runner.md` checks attached files with an older runner. It needs a running protocol 2 runner from before context-folder support, with no intervening software activation. Run it before changing that workspace.
   - `plans/follow-ups/agent-instructions-deployed-smoke-test.md` also checks the agent instructions of new sessions on a new org image. One session can run both items, and each keeps its own checks.
-  - `plans/follow-ups/runner-archive-from-deploy-check.md` checks that a new image build installs the runner archive of the deploy. A failure there also fails step 2.
+  - `plans/follow-ups/runner-archive-from-deploy-check.md` checks that a new image build installs the verified sandbox release of the deploy. A failure there also fails step 2.

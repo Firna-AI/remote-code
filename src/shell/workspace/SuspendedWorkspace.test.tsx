@@ -1,7 +1,8 @@
+import type { WorkspaceState } from '../../shared/generated/WorkspaceState'
 // @vitest-environment happy-dom
 
 import { describe, expect, test, vi } from 'vitest'
-import type { WorkspaceState } from '../../shared/workspaces'
+
 import { requestLines } from '../../app/test-kit'
 import { queryByRole } from '../../test-support/dom-queries'
 import { FakeApiServer } from '../../test-support/fake-api'

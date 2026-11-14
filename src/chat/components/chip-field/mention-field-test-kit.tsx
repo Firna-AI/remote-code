@@ -1,5 +1,5 @@
 import { act, useState } from 'react'
-import type { FileEntry } from '../../../shared/files'
+import type { FileEntry } from '../../../shared/generated/FileEntry'
 import { accessibleName, byRole } from '../../../test-support/dom-queries'
 import { filesAfterHistory, startFiles } from '../../../files/files-test-kit'
 import type { FakeApiServer } from '../../../test-support/fake-api'

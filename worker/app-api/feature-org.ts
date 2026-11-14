@@ -1,6 +1,6 @@
 import type { GitHubRepository } from '../../src/shared/account'
 import type { OrgSummary } from '../../src/shared/orgs'
-import { runnerSoftware } from '../configuration'
+import { latestSoftwareRelease } from '../lifecycle/software-release'
 import { requireActiveUser, suspendedUserError } from '../data/user-access'
 import type { AppDependencies, AppEnv } from '../env'
 import { HttpError, requiredString } from '../http'
@@ -71,7 +71,7 @@ export async function createShellOrg(
         orgId: id,
         userId: context.user.id,
         kind: 'build',
-        software: runnerSoftware(env),
+        software: await latestSoftwareRelease(env, dependencies.fetch),
       },
     )
   } catch {

@@ -1,12 +1,9 @@
+import type { DiffResponse } from '../../shared/generated/DiffResponse'
+import type { FileEntry } from '../../shared/generated/FileEntry'
+import type { FileResponse } from '../../shared/generated/FileResponse'
+import type { FileTreeResponse } from '../../shared/generated/FileTreeResponse'
 import { autocompleteHook } from '../../../docs/mockups/src/fixtures/fileContents'
-import {
-  filePaths,
-  type DiffResponse,
-  type FileEntry,
-  type FileResponse,
-  type FileTooLargeResponse,
-  type FileTreeResponse,
-} from '../../shared/files'
+import { filePaths, type FileTooLargeResponse } from '../../shared/files'
 import { decodeUtf8 } from '../../shared/utf8'
 import type { FakeApiServer } from '../../test-support/fake-api'
 import { FAKE_IDS } from '../../test-support/fixtures/core'

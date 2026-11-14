@@ -1,0 +1,7 @@
+---
+source: crates/cnd-runner-interface/tests/fast_wire.rs
+expression: session
+---
+{
+  "fast": true
+}

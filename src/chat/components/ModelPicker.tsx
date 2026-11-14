@@ -1,14 +1,10 @@
+import type { AgentModel } from '../../shared/generated/AgentModel'
 import { useCallback, useRef, useState } from 'react'
 import { Button } from '@firna/ui/button'
 import { ChevronDown } from 'lucide-react'
-import {
-  effortLabels,
-  findModel,
-  modelLabel,
-  type Agent,
-  type AgentChoice,
-  type AgentModel,
-} from '../../shared/agents'
+import type { Agent } from '../../shared/generated/Agent'
+import type { AgentChoice } from '../../shared/generated/AgentChoice'
+import { effortLabels, findModel, modelLabel } from '../../shared/agents'
 import { useControlSizes } from '../../../docs/mockups/src/components/common/touch'
 import { pickerButtonStyle } from '../../../docs/mockups/src/components/chat/pickerButton'
 import styles from '../../../docs/mockups/src/components/chat/ModelPicker.module.css'

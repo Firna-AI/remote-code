@@ -1,4 +1,4 @@
-import type { Agent } from '../../src/shared/agents'
+import type { Agent } from '../../src/shared/generated/Agent'
 import type { TurnTokenCheck } from './types'
 
 type TurnRefusal = Extract<TurnTokenCheck, { ok: false }>['reason']

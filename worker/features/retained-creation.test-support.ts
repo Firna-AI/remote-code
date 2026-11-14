@@ -7,7 +7,6 @@ import { record, string } from '../chat/inputs'
 import {
   OUTER_ORG,
   OUTER_REPOSITORY,
-  OUTER_SOFTWARE,
   OUTER_WORKSPACE,
 } from '../chat/integration/outer-seed.test-support'
 import { closeSockets } from '../chat/adapter-sockets.test-support'
@@ -23,10 +22,7 @@ import {
 } from './fixture.test-support'
 import type { Workspace } from './checkpoint-entry.test-support'
 
-export const RETAINED_CONFIGURATION = {
-  CONDUCTIVE_RUNNER_ARCHIVE_URL: OUTER_SOFTWARE.url,
-  CONDUCTIVE_RUNNER_ARCHIVE_SHA256: OUTER_SOFTWARE.sha256,
-}
+export const RETAINED_CONFIGURATION = {}
 
 export async function retainedCreationFixture(bundle: string) {
   const fixture = await featureFixture(bundle, {

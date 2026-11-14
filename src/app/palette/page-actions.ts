@@ -1,5 +1,6 @@
+import type { Workspace } from '../../shared/generated/Workspace'
 import type { User } from '../../shared/api'
-import type { Workspace } from '../../shared/workspaces'
+
 import { mayArchive, type OrgAccess } from '../permissions'
 import type { OfferedActionId } from './commands'
 

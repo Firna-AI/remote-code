@@ -1,9 +1,9 @@
+import type { DeviceCommandRecord } from '../../../src/shared/generated/DeviceCommandRecord.js'
 import { hostname } from 'node:os'
 import { resolve } from 'node:path'
 import { app, Notification, powerMonitor } from 'electron'
 import type { Cookie, Session } from 'electron'
 
-import type { DeviceCommandRecord } from '../../../src/shared/device.ts'
 import { DESKTOP_SESSION_COOKIE } from '../../../worker/security/desktop-contract.js'
 import { deviceClock } from './clock.js'
 import { createDeviceConnection } from './connection.js'

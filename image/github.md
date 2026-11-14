@@ -22,10 +22,11 @@ name and email rules.
 
 ## Git credential helper
 
-`install.sh` installs `git-credential-helper.sh` as
-`/usr/local/bin/conductive-git-credential`. This wrapper keeps the
-caller's `CONDUCTIVE_TURN_ID`, loads the sandbox variables, and runs
-`git-credential-helper.mjs` with the private Node.
+The release installer links `/usr/local/bin/conductive-git-credential` to
+`/opt/conductive/current/conductive`. This executable name selects
+`conductive git-credential`. The Rust helper keeps the caller's
+`CONDUCTIVE_TURN_ID` and loads the saved machine origin and workspace token
+from `/run/ascii-secrets/env.sh` in a child shell.
 
 - In Git credential mode, the helper answers only a `get` request for `https` on `github.com`. It
   ignores every other request.
@@ -49,8 +50,8 @@ The Worker serves that route on the machine hostname, as the
 
 ### GitHub CLI
 
-`install.sh` installs `github-cli.sh` as `/usr/local/bin/gh`.
-It installs the `gh` package when `/usr/bin/gh` is missing.
+The release installer links `github-cli.sh` as `/usr/local/bin/gh`.
+The image build installs the `gh` package.
 The wrapper asks `conductive-git-credential token` for a fresh token.
 That mode reads no stdin and returns only the token.
 The wrapper sets `GH_TOKEN` for `/usr/bin/gh`, then replaces itself with that program.
@@ -71,9 +72,9 @@ An invalid or ended turn gets no token.
 [GitHub tokens](../docs/protocol/github-tokens.md) states the access rules.
 The wrapper saves no token and changes no shell profile or login file.
 
-An org must build its image again to get this wrapper.
-An existing workspace keeps its installed software, also after a resume.
-Create a new workspace from the rebuilt image to get the change.
+A release update installs the wrapper. A workspace downloads updates in
+the background and applies them at a later start, as
+[Release updates](README.md#release-updates) describes.
 
 ### GitHub App permissions
 
@@ -89,15 +90,11 @@ and [permission update steps](https://docs.github.com/en/apps/maintaining-github
 
 ## Development
 
-Run the credential helper test with
-`npm run test -- worker/lifecycle/git-credential-helper.test.ts`. It
-installs copies of the shipped launcher and helper, with a saved variables
-file, in a temporary folder under `.context/`. It maps only
-`/opt/conductive` and `/run/ascii-secrets` to that folder, and it refuses
-a launcher that uses any other absolute path. It runs the launcher with
-`/bin/sh`, and checks the outgoing credential request and its turn ID.
-Both shell fixtures decode their files from the command of
-`installImageSoftware` through one shared test helper.
+Run `cargo test -p cnd-credential` from the repository root.
+The tests check Git output, token mode, turn context, ignored operations,
+safe refusal text, and a real local HTTPS request with no body.
+They also check redirect refusal and invalid machine origins.
+The [credential crate](../crates/cnd-credential/README.md) gives its boundaries.
 
 Run the GitHub CLI wrapper tests with
 `npm run test -- worker/lifecycle/github-cli.test.ts`.

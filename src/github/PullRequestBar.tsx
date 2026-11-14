@@ -1,5 +1,5 @@
 import { CircleAlert } from 'lucide-react'
-import type { Timestamp } from '../shared/api'
+import type { Timestamp } from '../shared/generated/Timestamp'
 import { ActionButton } from './ActionButton'
 import {
   Branches,

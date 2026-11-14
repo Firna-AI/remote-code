@@ -1,9 +1,9 @@
+import type { RunnerEvent } from './generated/RunnerEvent'
 import {
   TOOL_DETAIL_MAX_BYTES,
   TURN_COMPLETED_FILES_MAX_BYTES,
   TURN_COMPLETED_MAX_FILES,
 } from './chat-events'
-import type { RunnerEvent } from './runner'
 
 const encoder = new TextEncoder()
 

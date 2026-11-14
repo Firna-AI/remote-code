@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest'
-import type { WorkspaceStart } from '../../shared/workspaces'
+import type { WorkspaceStart } from '../../shared/generated/WorkspaceStart'
 import { FakeApiServer } from '../../test-support/fake-api'
 import { FAKE_TIME } from '../../test-support/fixtures/core'
 import { renderScreen, startedApp, textOf } from '../test-render'

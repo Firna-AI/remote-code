@@ -1,5 +1,6 @@
+import type { ListeningPort } from '../../shared/generated/ListeningPort'
 import type { WorkspaceEvent } from '../../shared/events'
-import type { ListeningPort, PortsUpdated } from '../../shared/ports'
+import type { PortsUpdated } from '../../shared/ports'
 import {
   count,
   items,

@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react'
-import type { GitHubSummary } from '../../fixtures/pullRequests'
+import type { GitHubSummary } from '../../../../../src/shared/generated/GitHubSummary'
 import type { ActivityStatus } from '../../fixtures/workspaces'
 import a11y from '../common/a11y.module.css'
 import { classes } from '../common/classes'

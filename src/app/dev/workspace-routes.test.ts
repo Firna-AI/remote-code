@@ -1,10 +1,10 @@
+import type { Workspace } from '../../shared/generated/Workspace'
+import type { WorkspaceState } from '../../shared/generated/WorkspaceState'
 import { afterEach, expect, test, vi } from 'vitest'
 import {
   WORKSPACE_RESTORE_MS,
   workspacePath,
   workspacePaths,
-  type Workspace,
-  type WorkspaceState,
 } from '../../shared/workspaces'
 import { FakeApiServer } from '../../test-support/fake-api'
 import { FakeWorkspaceEvents } from '../../test-support/fake-events'

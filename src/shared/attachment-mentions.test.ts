@@ -1,5 +1,5 @@
 import { expect, it } from 'vitest'
-import type { Attachment } from './messages'
+import type { Attachment } from './generated/Attachment'
 import { mentionParts } from './mention-text'
 import {
   attachmentForMention,

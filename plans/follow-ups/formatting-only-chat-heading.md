@@ -57,6 +57,6 @@ prepared heading value. The review confirmed the paths by reading the
 code and did not run a reproduction.
 
 The runner sends live text in batches of 40 ms, from
-`runner/src/turn-output.ts`. A bold-only prefix can appear for one update.
+`crates/cnd-runner/src/engine/output.rs`. A bold-only prefix can appear for one update.
 `WorkFold` shows the work of ended turns, so the message-line case needs
 a complete message with this unusual text.

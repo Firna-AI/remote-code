@@ -1,7 +1,7 @@
+import type { RunnerReportKind } from '../shared/generated/RunnerReportKind'
 import { detectedServers } from '../../docs/mockups/src/fixtures/previews'
 import type { RunnerEventRefused } from '../shared/chat-events'
 import type { WorkspaceEvent, WorkspaceEventEnvelope } from '../shared/events'
-import type { RunnerReportKind } from '../shared/runner'
 import type { FakeWorkspaceEvents } from './fake-events'
 import { FAKE_IDS, FAKE_TIME } from './fixtures/core'
 import { toolFixtures } from './fixtures/tools'

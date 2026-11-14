@@ -1,10 +1,9 @@
-import type {
-  AgentListWorkspacesRequest,
-  AgentListWorkspacesResponse,
-  AgentWorkspaceDetail,
-  AgentWorkspaceListEntry,
-} from '../../src/shared/agent-workspaces'
-import type { WorkspaceState } from '../../src/shared/workspaces'
+import type { AgentListWorkspacesRequest } from '../../src/shared/generated/AgentListWorkspacesRequest'
+import type { AgentListWorkspacesResponse } from '../../src/shared/generated/AgentListWorkspacesResponse'
+import type { AgentWorkspaceDetail } from '../../src/shared/generated/AgentWorkspaceDetail'
+import type { AgentWorkspaceListEntry } from '../../src/shared/generated/AgentWorkspaceListEntry'
+import type { WorkspaceState } from '../../src/shared/generated/WorkspaceState'
+
 import { workspaceRestoreUntil } from '../../src/shared/workspaces'
 import { requireActiveOrg } from '../data/user-access'
 import { workspaceLink } from '../data/workspace-link'

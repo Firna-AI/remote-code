@@ -1,6 +1,6 @@
+import type { DeviceCommandRecord } from '../../src/shared/generated/DeviceCommandRecord.js'
 import { createHash } from 'node:crypto'
 
-import type { DeviceCommandRecord } from '../../src/shared/device.ts'
 import type { DeviceClock } from '../src/device/clock.js'
 import type { DeviceFiles } from '../src/device/files.js'
 

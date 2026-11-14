@@ -1,7 +1,7 @@
+import type { RunnerFileCommand } from '../../src/shared/generated/RunnerFileCommand'
 import { warnWorker } from '../warnings'
 import { errorSummary, WarningId } from '../warning-values'
 import type { WorkspaceEventEnvelope } from './workspace-events'
-import type { RunnerFileCommand } from '../../src/shared/runner-files'
 import { HttpError } from '../http'
 import { RunnerConnections } from './runner-connections'
 import type { NativeBrowserConnections } from './browser-connections'

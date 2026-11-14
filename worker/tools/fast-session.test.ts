@@ -1,21 +1,25 @@
 import { afterAll, beforeAll, expect, it } from 'vitest'
 
-import { record, text } from '../../tools/input'
+import { record, string } from '../chat/inputs'
+import {
+  agentSessionsPath,
+  agentSessionMessagesPath,
+} from '../../src/shared/agent-session-paths'
 import { outerWorkerBundle } from '../chat/integration/outer-runtime.test-support'
 import { CLAUDE } from '../chat/harness.test-support'
 import { OUTER_WORKSPACE } from '../chat/integration/outer-seed.test-support'
 import {
-  sessionToolFixture,
-  type SessionToolFixture,
-} from './session-test-support'
+  agentWriteFixture,
+  type AgentWriteFixture,
+} from '../features/agent-session-writes.test-support'
 
-let fixture: SessionToolFixture
+let fixture: AgentWriteFixture
 let bundle: string
 beforeAll(async () => {
   bundle = await outerWorkerBundle('worker/features/entry.test-support.ts')
 })
 beforeAll(async () => {
-  fixture = await sessionToolFixture(bundle, {
+  fixture = await agentWriteFixture(bundle, {
     configuration: {
       CONDUCTIVE_MODELS: JSON.stringify([
         { ...CLAUDE, label: 'Claude', efforts: ['high'], fast: true },
@@ -33,39 +37,26 @@ it('requires fast for a tool session create and keeps session speed on a send wi
   )
     .bind(CLAUDE.model)
     .run()
-  const plain = await fixture.cli(['create'])
-  expect(plain.status, plain.stderr.join('')).toBe(0)
-  expect(record(JSON.parse(plain.stdout[0]))).toMatchObject({
+  const plain = await fixture.post(agentSessionsPath(), {})
+  expect(plain.status).toBe(201)
+  expect(await plain.json()).toMatchObject({
     session: { choice: { fast: false } },
   })
-  const fast = await fixture.cli(['create', '--fast', 'true'])
-  expect(fast.status, fast.stderr.join('')).toBe(0)
-  const created = record(JSON.parse(fast.stdout[0]))
+  const fast = await fixture.post(agentSessionsPath(), { fast: true })
+  expect(fast.status).toBe(201)
+  const created = record(await fast.json())
   expect(created).toMatchObject({ session: { choice: { fast: true } } })
-  const sessionId = text(record(created.session).id)
-  const sent = await fixture.cli([
-    'send',
-    '--session',
-    sessionId,
-    '--message',
-    'Keep fast',
-  ])
-  expect(sent.status, sent.stderr.join('')).toBe(0)
-  expect(record(JSON.parse(sent.stdout[0]))).toMatchObject({
+  const sessionId = string(record(created.session).id)
+  const path = agentSessionMessagesPath('current', sessionId)
+  const sent = await fixture.post(path, { text: 'Keep fast' })
+  expect(sent.status).toBe(202)
+  expect(await sent.json()).toMatchObject({
     session: { workspaceId: OUTER_WORKSPACE, choice: { fast: true } },
     message: { choice: { fast: true } },
   })
-  const off = await fixture.cli([
-    'send',
-    '--session',
-    sessionId,
-    '--message',
-    'Standard',
-    '--fast',
-    'false',
-  ])
-  expect(off.status, off.stderr.join('')).toBe(0)
-  expect(record(JSON.parse(off.stdout[0]))).toMatchObject({
+  const off = await fixture.post(path, { text: 'Standard', fast: false })
+  expect(off.status).toBe(202)
+  expect(await off.json()).toMatchObject({
     session: { choice: { fast: false } },
     message: { choice: { fast: false } },
   })

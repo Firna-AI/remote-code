@@ -1,4 +1,4 @@
-import type { RunnerEvent } from '../../src/shared/runner'
+import type { RunnerEvent } from '../../src/shared/generated/RunnerEvent'
 import { isRecord } from '../http'
 
 export interface RunnerEventIdentity {

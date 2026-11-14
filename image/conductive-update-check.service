@@ -1,0 +1,10 @@
+[Unit]
+Description=Download newer Conductive software
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+User=root
+ExecStart=/opt/conductive/current/conductive update check
+Nice=10

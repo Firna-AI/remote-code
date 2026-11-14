@@ -3,7 +3,7 @@
 - **Severity:** Low. **Effort:** Small. **Confidence:** High. **Harder later:** No.
 - **Kind:** Needs decision.
 - **Added:** 2026-11-09, from branch `calummoore/session-transcript-copy`, a new problem of the options check of the plan `plans/copy-session-transcripts.md`.
-- **Location:** `runner/src/providers/tool.ts:27`, `src/shared/chat-events.ts:10`, `docs/protocol/chat-and-events.md:102`, and `docs/mockups/src/components/chat/lostCopy.ts:67` and `:72`.
+- **Location:** `runner/sdk-helper/src/providers/tool.ts:27`, `src/shared/chat-events.ts:10`, `docs/protocol/chat-and-events.md:102`, and `docs/mockups/src/components/chat/lostCopy.ts:67` and `:72`.
 - **Reason:** The mismatch is already on `main`, and the transcript change does not change these lines.
 
 - **Source:** Review.
@@ -11,8 +11,8 @@
 - **Terms:**
   - **Tool detail:** the `detail` field of a tool call in a chat event, the type `ToolCall` in `src/shared/chat-events.ts`. It holds at most 64 KiB, and `omittedDetailBytes` counts the part that the runner cut.
 - **Background:**
-  - The runner maps each tool call of Claude and of Codex with `mapTool` in `runner/src/providers/tool.ts`.
-  - `mapTool` puts the `description` argument of the call into `detail`, such as "Run the tests". It sends no output of the tool. A tool result changes only the state of the call, in `runner/src/providers/claude-events.ts`.
+  - The runner maps each tool call of Claude and of Codex with `mapTool` in `runner/sdk-helper/src/providers/tool.ts`.
+  - `mapTool` puts the `description` argument of the call into `detail`, such as "Run the tests". It sends no output of the tool. A tool result changes only the state of the call, in `runner/sdk-helper/src/providers/claude-events.ts`.
   - The comment of `TOOL_DETAIL_MAX_BYTES` says that "A 64 KiB excerpt keeps tool output below the event budget".
   - `docs/protocol/chat-and-events.md` says that the line of a fold shows "the total size of the output that the runner left out".
   - The chat says "1.2 MB left out" for one call and "1.2 MB of output left out" for a run, from `leftOutOfCall` and `leftOutOfRun` in `docs/mockups/src/components/chat/lostCopy.ts`.

@@ -1,5 +1,5 @@
+import type { AgentChoice } from '../../src/shared/generated/AgentChoice'
 import { requireActiveOrg } from '../data/user-access'
-import type { AgentChoice } from '../../src/shared/agents'
 import type { User } from '../../src/shared/api'
 import type { WorkspaceStartJob } from './start-types'
 import { HttpError } from '../http'

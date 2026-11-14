@@ -96,11 +96,10 @@ Use the port of your server when it reports a different one.
 
 An older cloud computer can show only the **Port** field.
 Use the manual steps there.
-If Preview says it needs newer cloud computer software, ask an admin to run **Build computer**.
-After that build succeeds, create a new workspace.
-An existing workspace keeps its installed software after a resume.
+If Preview says it needs newer cloud computer software, an automatic update brings the required preview support at a later start.
+An existing workspace also gets the server list with an automatic software update.
 
-- [Prepare a new cloud computer for the server list](/docs/cloud-computer#apply-setup-changes)
+- [Understand cloud computer software updates](/docs/cloud-computer#apply-setup-changes)
 
 The preview opens inside the workspace.
 Use **Open** to show the app in a new browser tab when it works better there.

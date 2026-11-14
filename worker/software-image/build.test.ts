@@ -1,8 +1,7 @@
 import { expect, it } from 'vitest'
 
 import { setupBackendTests } from '../lifecycle/backend-test-hooks'
-import { SOFTWARE } from '../lifecycle/backend-test-support'
-import { TOOLS_OUTPUT } from './test-support'
+import { SOFTWARE_RELEASE as SOFTWARE } from '../lifecycle/software-release-test-support'
 import { SAVED_IMAGE_NAME } from '../lifecycle/image-names'
 import { requestSoftwareImage } from './build'
 import { softwareImages } from './data'
@@ -16,7 +15,7 @@ it('resumes commands with saved offsets, publishes once, and creates a secret-fr
   boat.commandOutput = 'first\n'
   const first = await requestSoftwareImage(images, SOFTWARE, digest)
   expect(first.state).toBe('building')
-  expect(first.output).toBe(`${TOOLS_OUTPUT}first\n`)
+  expect(first.output).toBe('first\n')
   expect(boat.starts).toHaveLength(1)
   expect(boat.starts[0]).toMatchObject({ noEnv: true, ttlSeconds: 1800 })
   expect(boat.starts[0].env).toEqual({})
@@ -28,7 +27,7 @@ it('resumes commands with saved offsets, publishes once, and creates a secret-fr
   expect(attempt).toMatchObject({
     phase: 'software',
     stdoutOffset: 6,
-    output: `${TOOLS_OUTPUT}first\n`,
+    output: 'first\n',
   })
   boat.commandOutput += 'last\n'
   boat.commandRunning = false

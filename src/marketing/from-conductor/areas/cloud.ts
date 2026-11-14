@@ -69,7 +69,7 @@ export const cloudFeatures: readonly ParityFeature[] = [
     area: 'cloud',
     name: 'Managed Git identity',
     status: 'available',
-    note: 'Git and the GitHub CLI use the message sender’s GitHub account, and commits name that person. The terminal uses the workspace owner’s account. Updating older workspaces, which name the owner in commits, is in progress.',
+    note: 'Git and the GitHub CLI use the message sender’s GitHub account, and commits name that person. The terminal uses the workspace owner’s account. Older workspaces name the owner in agent commits until an automatic software update applies at a later start.',
   },
   {
     id: 'organization-environment-and-secrets',

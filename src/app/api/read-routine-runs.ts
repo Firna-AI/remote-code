@@ -1,4 +1,4 @@
-import type { Agent } from '../../shared/agents'
+import type { Agent } from '../../shared/generated/Agent'
 import type {
   RoutinePullRequestEvent,
   RoutineRun,

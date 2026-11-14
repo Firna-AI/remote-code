@@ -1,0 +1,18 @@
+[Unit]
+Description=Conductive agent runner
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=exec
+User=user
+WorkingDirectory=/home/user
+ExecStartPre=+/bin/sh -c 'if [ -e /run/conductive/workspace-ready ]; then exec /opt/conductive/current/conductive update apply; fi'
+ExecStart=/opt/conductive/current/system/runner-start.sh
+ExecStartPost=+/usr/bin/systemctl --no-block start conductive-update-check.service
+Restart=on-failure
+RestartSec=2
+KillMode=control-group
+
+[Install]
+WantedBy=multi-user.target

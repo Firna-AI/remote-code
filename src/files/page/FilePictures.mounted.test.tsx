@@ -2,7 +2,8 @@
 
 import { act } from 'react'
 import { expect, it } from 'vitest'
-import { filePaths, type FileEntry } from '../../shared/files'
+import type { FileEntry } from '../../shared/generated/FileEntry'
+import { filePaths } from '../../shared/files'
 import { FakeApiServer } from '../../test-support/fake-api'
 import { FAKE_IDS } from '../../test-support/fixtures/core'
 import { envelopeAfter } from '../files-test-kit'

@@ -1,4 +1,4 @@
-import type { Attachment } from './messages'
+import type { Attachment } from './generated/Attachment'
 import { mentionParts, type Mention } from './mention-text'
 
 export function attachmentForMention(

@@ -1,11 +1,9 @@
+import type { DeviceCommandRecord } from '../../src/shared/generated/DeviceCommandRecord.js'
 import { EventEmitter } from 'node:events'
 import { onTestFinished, vi } from 'vitest'
 import { WebSocket } from 'ws'
 
-import type {
-  DeviceCommandRecord,
-  WorkerToDevice,
-} from '../../src/shared/device.ts'
+import type { WorkerToDevice } from '../../src/shared/device.ts'
 import { createPermissionStore } from '../src/device/permissions.js'
 import type { ProcessEvents } from '../src/device/process.js'
 import { runCommand } from '../src/device/runner.js'

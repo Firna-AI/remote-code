@@ -1,5 +1,7 @@
-import type { Agent, AgentChoice } from './agents'
-import type { Timestamp, User } from './api'
+import type { Agent } from './generated/Agent'
+import type { AgentChoice } from './generated/AgentChoice'
+import type { Timestamp } from './generated/Timestamp'
+import type { User } from './api'
 import type { ShortcutPreferences } from './shortcuts'
 
 export interface SessionResponse {

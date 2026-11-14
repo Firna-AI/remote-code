@@ -1,6 +1,7 @@
+import type { Session } from '../../shared/generated/Session'
+import type { AgentChoice } from '../../shared/generated/AgentChoice'
 import { createApiClient } from '../../app/api/client'
-import type { AgentChoice } from '../../shared/agents'
-import { sessionsPath, type Session } from '../../shared/sessions'
+import { sessionsPath } from '../../shared/sessions'
 import {
   workspaceViewPath,
   type TemporaryTab,

@@ -1,4 +1,5 @@
-import type { Session } from '../../shared/sessions'
+import type { Session } from '../../shared/generated/Session'
+
 import type {
   TemporaryTab,
   WorkspaceTab,

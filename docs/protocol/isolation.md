@@ -165,8 +165,8 @@ logins, as [Tokens and secrets](tokens-and-secrets.md) says.
 - No agent login reaches a sandbox, whatever the version pin of its
   workspace (decision 120). The [model gateway](model-gateway.md) adds the
   login of the starter to each model request of the turn.
-- The runner of a sandbox comes from its org image. A workspace accepts
-  only a runner of a supported protocol version, as
+- The runner follows the [sandbox software update rules](sandbox-software.md#updates).
+  A workspace accepts only a runner of a supported protocol version, as
   [Runner versions](version-pins.md#runner-versions) says.
 - An own endpoint login never reaches a sandbox. The gateway keeps its
   address and its key in the Worker (gateway decision 10).

@@ -1,7 +1,5 @@
-import type {
-  Attachment,
-  AttachmentUploadTarget,
-} from '../../src/shared/messages'
+import type { Attachment } from '../../src/shared/generated/Attachment'
+import type { AttachmentUploadTarget } from '../../src/shared/messages'
 import type { AppEnv } from '../env'
 import { randomToken } from '../security/crypto'
 import { warnWorker } from '../warnings'

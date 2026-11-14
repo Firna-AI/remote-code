@@ -1,13 +1,11 @@
+import type { BranchChangedFile } from '../../src/shared/generated/BranchChangedFile'
+import type { ChangeKind } from '../../src/shared/generated/ChangeKind'
+import type { ChangesResponse } from '../../src/shared/generated/ChangesResponse'
+import type { FileEntry } from '../../src/shared/generated/FileEntry'
+import type { FileTreeChange } from '../../src/shared/generated/FileTreeChange'
+import type { FileTreeResponse } from '../../src/shared/generated/FileTreeResponse'
 import { isFilePath } from '../../src/shared/file-path'
-import type {
-  BranchChangedFile,
-  ChangeKind,
-  ChangesResponse,
-  FileEntry,
-  FileEvent,
-  FileTreeChange,
-  FileTreeResponse,
-} from '../../src/shared/files'
+import type { FileEvent } from '../../src/shared/files'
 import { isRecord } from '../http'
 import { invalidFileResponse } from './errors'
 

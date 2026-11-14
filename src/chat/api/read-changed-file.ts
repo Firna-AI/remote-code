@@ -1,4 +1,5 @@
-import type { ChangedFile, ChangeKind } from '../../shared/files'
+import type { ChangedFile } from '../../shared/generated/ChangedFile'
+import type { ChangeKind } from '../../shared/generated/ChangeKind'
 import { count, oneOf, optional, record, text } from './json'
 
 const readChange = oneOf<ChangeKind>({

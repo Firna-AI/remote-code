@@ -1,3 +1,4 @@
+import type { Workspace } from '../../shared/generated/Workspace'
 // @vitest-environment happy-dom
 
 import { act } from 'react'
@@ -14,7 +15,7 @@ import {
 import { workspaceFixtures } from '../../test-support/fixtures/workspaces'
 import { mountScreen } from '../test-mount'
 import { startedApp } from '../test-render'
-import type { Workspace } from '../../shared/workspaces'
+
 import type { MenuAnchor } from '../ui/menu-place'
 import type { DropTarget } from './drop-target'
 import type { RowMenu } from './row-menu'

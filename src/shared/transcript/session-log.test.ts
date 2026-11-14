@@ -1,5 +1,6 @@
 import { expect, it } from 'vitest'
-import type { AgentChatEvent, RunnerEventRefused } from '../chat-events'
+import type { AgentChatEvent } from '../generated/AgentChatEvent'
+import type { RunnerEventRefused } from '../chat-events'
 import {
   readStoredEvents,
   type StreamEnvelope,

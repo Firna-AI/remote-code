@@ -1,0 +1,9 @@
+---
+source: crates/cnd-runner-interface/tests/fast_wire.rs
+expression: workspace
+---
+{
+  "repositoryId": "repo",
+  "firstMessage": "Work",
+  "fast": true
+}

@@ -12,7 +12,6 @@ import { productionMembersHooks } from '../members/composition'
 import { deleteOrg } from '../members/deletion'
 import { restoreOrg } from '../members/restore'
 import { cleanupDeletedOrgs } from '../members/cleanup'
-import { SOFTWARE } from './backend-test-support'
 import type { NativeCommitView } from '../test-support/native-commit'
 import { boatRoute } from '../sandbox/routes'
 import { computerRecords } from './computer-ledger.test-support'
@@ -168,8 +167,6 @@ it('restores archive timers after Org Restore and purges archived disks with Del
   await fixture.setTime(TEST_TIME + 12 * 86_400_000)
   const archived = await saved.archive()
   const { env, dependencies } = fixture.runtime
-  env.CONDUCTIVE_RUNNER_ARCHIVE_URL = SOFTWARE.url
-  env.CONDUCTIVE_RUNNER_ARCHIVE_SHA256 = SOFTWARE.sha256
   const hooks = productionMembersHooks(env, dependencies)
   await deleteOrg(
     env,

@@ -1,3 +1,5 @@
+import type { DeviceCommandRecord } from '../../shared/generated/DeviceCommandRecord'
+import type { DevicePairing } from '../../shared/generated/DevicePairing'
 import type { ApiClient } from '../../app/api/client'
 import {
   DEVICE_CURRENT_PATH,
@@ -6,8 +8,6 @@ import {
   deviceCommandsPath,
   type DeviceApprovalAction,
   type DeviceApprovalRequest,
-  type DeviceCommandRecord,
-  type DevicePairing,
   type DeviceSettingsRequest,
 } from '../../shared/device'
 import {

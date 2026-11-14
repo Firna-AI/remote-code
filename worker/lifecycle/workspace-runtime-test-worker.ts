@@ -1,3 +1,4 @@
+import type { UserMessage } from '../../src/shared/generated/UserMessage'
 import { Workspace } from '../workspace'
 import { providerForAccount } from '../sandbox/client'
 import { DEFAULT_PROVIDER_ACCOUNT } from '../sandbox/account-identity'
@@ -11,7 +12,6 @@ import type { StoredWorkspaceStartJob } from './start-job-codec'
 import { START_JOB_KEY } from './start-storage'
 import { DISK_KEEPALIVE_MS, IDLE_MS } from './durable-types'
 import type { FirstWorkspaceMessage } from './workspace-runtime'
-import type { UserMessage } from '../../src/shared/messages'
 import {
   failAfterFirstMessageAdmission,
   holdMachineCheckpoint,

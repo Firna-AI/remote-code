@@ -1,5 +1,5 @@
+import type { Workspace } from '../shared/generated/Workspace'
 import type { Section } from '../shared/sections'
-import type { Workspace } from '../shared/workspaces'
 
 export interface SectionGroup {
   section: Section

@@ -1,0 +1,12 @@
+---
+source: crates/cnd-runner-interface/tests/helper_wire.rs
+expression: output
+---
+{
+  "type": "event",
+  "event": {
+    "type": "delta",
+    "messageId": "answer-1",
+    "text": "hé\nllo"
+  }
+}

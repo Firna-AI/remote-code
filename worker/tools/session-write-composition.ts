@@ -1,7 +1,6 @@
-import type {
-  AgentSessionResume,
-  AgentSessionWriteResponse,
-} from '../../src/shared/agent-sessions'
+import type { AgentSessionResume } from '../../src/shared/generated/AgentSessionResume'
+import type { AgentSessionWriteResponse } from '../../src/shared/generated/AgentSessionWriteResponse'
+
 import { sessionLink } from '../../src/shared/session-link'
 import { resumesAtOpen } from '../../src/app/first-start'
 import { HttpError } from '../http'

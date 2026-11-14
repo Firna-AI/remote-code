@@ -1,6 +1,6 @@
 import { expect, it, vi } from 'vitest'
 
-import type { AgentChoice } from '../../src/shared/agents'
+import type { AgentChoice } from '../../src/shared/generated/AgentChoice'
 import { parseAgentEvent } from './agent-events'
 import { createRunnerLimitsFixture } from './runner-limits.test-support'
 import { choice, context } from './runner-fixtures.test-support'

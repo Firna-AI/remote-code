@@ -1,8 +1,9 @@
 import { expect, it } from 'vitest'
 import { TEST_TIME } from '../test-support/harness'
+import { lifecycleCommandBody } from './command-test-support'
 import { SOFTWARE } from './backend-test-support'
 import { setupBackendTests } from './backend-test-hooks'
-import { readBuildJob, readBuildHistory } from './build-data'
+import { readBuildJob, readBuildHistory, updateBuildJob } from './build-data'
 import { startImageBuild, advanceImageBuild } from './image-builds'
 import { refreshImagesForPush, runImageAlarm } from './image-timers'
 import { finishImageBuild as finish } from './image-test-support'
@@ -12,17 +13,10 @@ import { readOrgImage } from './org-image-data'
 
 const backendFixture = setupBackendTests()
 
-it('refreshes the captured repositories and revision with push throttling and a durable daily deadline', async () => {
+it('refreshes captured repositories and revision with new software and push throttling', async () => {
   const fixture = await backendFixture()
   try {
-    const { images, org, user, runtime, boat } = fixture
-    const good = await startImageBuild(images, {
-      orgId: org.id,
-      userId: user.id,
-      kind: 'build',
-      software: SOFTWARE,
-    })
-    await finish(fixture, good)
+    const { images, org, runtime, boat } = fixture
     await runtime.env.DB.batch([
       runtime.env.DB.prepare(
         'UPDATE repositories SET selected = 0 WHERE id = ?',
@@ -66,7 +60,11 @@ it('refreshes the captured repositories and revision with push throttling and a 
         defaultBranch: 'main',
       },
     ])
-    expect(boat.commands).toHaveLength(0)
+    expect(boat.commands).toHaveLength(2)
+    expect(lifecycleCommandBody(boat.commands[0])).toContain(
+      'update check --bootstrap',
+    )
+    expect(boat.commands.join('\n')).not.toContain('echo changed-install')
     expect(
       fixture.sourceCalls
         .at(-1)
@@ -79,6 +77,15 @@ it('refreshes the captured repositories and revision with push throttling and a 
         software: SOFTWARE,
       }),
     ).toEqual([])
+  } finally {
+    await fixture.dispose()
+  }
+})
+
+it('keeps a push pending during a build and restores the durable daily deadline', async () => {
+  const fixture = backendFixture()
+  const { images, org, user } = fixture
+  try {
     await fixture.setTime(TEST_TIME + 1_801_000)
     const busy = await startImageBuild(images, {
       orgId: org.id,
@@ -88,6 +95,8 @@ it('refreshes the captured repositories and revision with push throttling and a 
     })
     await advanceImageBuild(images, org.id, busy)
     await advanceImageBuild(images, org.id, busy)
+    // The timer scenario starts after software installation.
+    await updateBuildJob(images.env.DB, busy, 'snapshot')
     expect(
       await refreshImagesForPush(images, {
         githubRepositoryId: 1,
@@ -111,16 +120,31 @@ it('refreshes the captured repositories and revision with push throttling and a 
       buildId: null,
       nextAt: TEST_TIME + 88_201_000,
     })
-    await fixture.setTime(TEST_TIME + 88_201_000)
-    if (!next) throw new Error('Missing scheduled daily timer')
-    await runImageAlarm(images, next)
-    expect(
-      (await readBuildHistory(runtime.env.DB, org.id)).builds[0],
-    ).toMatchObject({ kind: 'refresh', state: 'running' })
-    expect(fixture.scheduled.at(-1)?.buildId).not.toBe(null)
   } finally {
     await fixture.dispose()
   }
+})
+
+it('starts a daily refresh from its saved deadline', async () => {
+  const fixture = backendFixture()
+  const { runtime, org, images } = fixture
+  await runtime.env.DB.prepare(
+    'UPDATE org_images SET next_image_refresh_at = ? WHERE org_id = ?',
+  )
+    .bind(TEST_TIME + 88_201_000, org.id)
+    .run()
+  const next = {
+    orgId: org.id,
+    software: SOFTWARE,
+    buildId: null,
+    nextAt: TEST_TIME + 88_201_000,
+  }
+  await fixture.setTime(TEST_TIME + 88_201_000)
+  await runImageAlarm(images, next)
+  expect(
+    (await readBuildHistory(runtime.env.DB, org.id)).builds[0],
+  ).toMatchObject({ kind: 'refresh', state: 'running' })
+  expect(fixture.scheduled.at(-1)?.buildId).not.toBe(null)
 })
 
 it('uses an active admin for automatic refreshes and leaves timers unchanged when no admin remains active', async () => {
@@ -144,6 +168,9 @@ it('uses an active admin for automatic refreshes and leaves timers unchanged whe
     startedByUserId: admin.id,
     kind: 'refresh',
   })
+  // The admin scenario starts its sandbox at the snapshot phase.
+  await advanceImageBuild(images, org.id, pushId)
+  await updateBuildJob(runtime.env.DB, pushId, 'snapshot')
   await finish(fixture, pushId)
   const daily = fixture.scheduled.at(-1)
   if (!daily) throw new Error('Missing daily refresh schedule')
@@ -155,6 +182,8 @@ it('uses an active admin for automatic refreshes and leaves timers unchanged whe
     startedByUserId: admin.id,
     kind: 'refresh',
   })
+  await advanceImageBuild(images, org.id, dailyId)
+  await updateBuildJob(runtime.env.DB, dailyId, 'snapshot')
   await finish(fixture, dailyId)
   const noAdminAt = TEST_TIME + 172_800_000
   await fixture.setTime(noAdminAt)

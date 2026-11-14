@@ -1,10 +1,11 @@
+import type { DevicePairing } from '../../src/shared/generated/DevicePairing'
 import {
   deviceNumber,
   deviceObject,
   deviceRequired,
   readDevicePairing,
 } from '../../src/shared/device-read'
-import type { DevicePairing } from '../../src/shared/device'
+
 import type { ChatStorage } from '../chat/types'
 import { readDeviceValue, writeDeviceValue } from './storage'
 

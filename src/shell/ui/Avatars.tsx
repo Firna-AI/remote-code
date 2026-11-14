@@ -1,7 +1,7 @@
 import { Avatar } from '@firna/ui/avatar'
 import { useSharedUiTheme } from '@firna/ui/theme'
+import type { MessageSender } from '../../shared/generated/MessageSender'
 import { orgInitials, personInitials } from '../../app/people'
-import type { MessageSender } from '../../shared/messages'
 import type { OrgSummary } from '../../shared/orgs'
 
 /** The initials that the rail shows: the saved ones, else from the name. */

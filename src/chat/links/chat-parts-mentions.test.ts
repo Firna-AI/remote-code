@@ -1,7 +1,7 @@
 import { describe, expect, test } from 'vitest'
+import type { FileEntry } from '../../shared/generated/FileEntry'
+import type { Attachment } from '../../shared/generated/Attachment'
 import { attachmentPath } from '../../shared/attachment-paths'
-import type { FileEntry } from '../../shared/files'
-import type { Attachment } from '../../shared/messages'
 import { FAKE_IDS } from '../../test-support/fixtures/core'
 import { chatParts, type ChatPart, type MentionLookup } from './chat-parts'
 

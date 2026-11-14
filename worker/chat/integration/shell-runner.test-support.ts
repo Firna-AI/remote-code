@@ -1,6 +1,5 @@
 import { WebSocket } from 'miniflare'
-
-import type { RunnerEvent } from '../../../src/shared/runner'
+import type { RunnerEvent } from '../../../src/shared/generated/RunnerEvent'
 import { SocketInbox } from '../adapter-sockets.test-support'
 import type { OuterRuntime } from './outer-runtime.test-support'
 import { requestRunner } from './runner-socket.test-support'

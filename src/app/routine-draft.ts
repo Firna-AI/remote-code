@@ -1,4 +1,4 @@
-import type { AgentChoice } from '../shared/agents'
+import type { AgentChoice } from '../shared/generated/AgentChoice'
 import type { Repository } from '../shared/org-settings'
 import type {
   CreateRoutineRequest,

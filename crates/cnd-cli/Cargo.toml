@@ -1,0 +1,46 @@
+[package]
+name = "cnd-cli"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+rust-version.workspace = true
+description = "Conductive cloud computer commands"
+publish = false
+
+[[bin]]
+name = "conductive"
+path = "src/main.rs"
+
+[dependencies]
+cnd-runner = { workspace = true }
+cnd-credential = { workspace = true }
+cnd-relay = { workspace = true }
+cnd-tools = { workspace = true }
+cnd-release = { workspace = true }
+cli-updater = { workspace = true }
+cli-release-interface = { workspace = true }
+internal-error = { workspace = true }
+clap = { version = "4.6.7", features = ["derive"] }
+thiserror = "2.0.21"
+serde_json = "1.0.154"
+async-trait = "0.1.92"
+tokio = { version = "1.54.1", features = ["rt-multi-thread", "macros"] }
+flate2 = "1.1.11"
+tar = "0.4.46"
+tracing = "0.1.44"
+tracing-subscriber = "0.3.23"
+serde = { version = "1.0.229", features = ["derive"] }
+uuid = { version = "1.29.2", features = ["v4"] }
+rustix = { version = "1.1.6", features = ["process"] }
+
+[build-dependencies]
+cnd-release = { workspace = true }
+
+[lints]
+workspace = true
+
+[dev-dependencies]
+tempfile = "3.27.0"
+tokio = { version = "1.54.1", features = ["process", "io-util", "net", "test-util"] }
+unimock = "0.6.8"

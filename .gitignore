@@ -4,6 +4,9 @@
 # Dependencies
 node_modules/
 
+# Rust build output
+target/
+
 # Mokly build output
 mokly-static/
 .mokly-export-reservations/

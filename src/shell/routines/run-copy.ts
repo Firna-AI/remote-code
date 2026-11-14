@@ -1,3 +1,4 @@
+import type { MessageSender } from '../../shared/generated/MessageSender'
 import {
   eventLabels,
   scheduleLabels,
@@ -5,7 +6,6 @@ import {
 import { personName } from '../../app/people'
 import { routes } from '../../app/router'
 import { API_PATHS } from '../../shared/api'
-import type { MessageSender } from '../../shared/messages'
 import type { RoutineRun, RoutineRunTrigger } from '../../shared/routines'
 import { agentNames } from '../account/labels'
 

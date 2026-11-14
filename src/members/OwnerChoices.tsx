@@ -1,6 +1,7 @@
+import type { Workspace } from '../shared/generated/Workspace'
 import { useCallback, useRef, useState } from 'react'
 import type { OrgMember } from '../shared/members'
-import type { Workspace } from '../shared/workspaces'
+
 import { errorMessage, type MembersApi } from './api/client'
 import { personName } from './people'
 import { useMountedRef } from './useMounted'

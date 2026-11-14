@@ -1,4 +1,4 @@
-import type { AgentChatEvent } from '../chat-events'
+import type { AgentChatEvent } from '../generated/AgentChatEvent'
 import {
   agentKey,
   endKey,

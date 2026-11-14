@@ -1,5 +1,5 @@
 import { MACHINE_PATHS } from '../../src/shared/agent-tools'
-import { TOOL_TURN_HEADER } from '../../tools/context'
+import { TOOL_TURN_HEADER } from '../../src/shared/agent-tools'
 import { HttpError } from '../http'
 import { readJsonObject } from '../http/json-body'
 import { requireCallingToolTurn } from './calling-turn'

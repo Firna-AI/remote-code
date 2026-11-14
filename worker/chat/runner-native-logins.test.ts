@@ -1,9 +1,8 @@
 import type { WebSocket } from 'miniflare'
 import { expect, it } from 'vitest'
-
+import type { RunnerHello } from '../../src/shared/generated/RunnerHello'
 import { MACHINE_PATHS } from '../../src/shared/agent-tools'
 import { chatHistoryPath } from '../../src/shared/events'
-import type { RunnerHello } from '../../src/shared/runner'
 import { sessionPaths, sessionsPath } from '../../src/shared/sessions'
 import { saveAccountLogin } from '../app-api/account-data'
 import {

@@ -1,0 +1,12 @@
+---
+source: crates/cnd-runner-interface/tests/wire_1.rs
+assertion_line: 17
+description: Current protocol JSON. Optional fields stay absent; nullable fields stay null.
+expression: message
+---
+{
+  "type": "hello",
+  "protocolVersion": 2,
+  "workspaceId": "workspace-1",
+  "streamId": "stream-1"
+}

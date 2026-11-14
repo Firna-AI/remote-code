@@ -1,10 +1,11 @@
+import type { WorkspaceState } from '../../src/shared/generated/WorkspaceState'
 import { expect } from 'vitest'
 
 import {
   operatorOverviewPath,
   type OperatorOverview,
 } from '../../src/shared/operator'
-import type { WorkspaceState } from '../../src/shared/workspaces'
+
 import { TEST_TIME, type TestHarness } from '../test-support/harness'
 
 export async function overview(

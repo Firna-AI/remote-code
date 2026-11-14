@@ -1,3 +1,5 @@
+import type { StartStep } from '../../src/shared/generated/StartStep'
+import type { WorkspaceStart } from '../../src/shared/generated/WorkspaceStart'
 import {
   withStartStep,
   withStartFailure,
@@ -9,7 +11,6 @@ import {
   withPreparedStart,
 } from './durable-start'
 import type { SendMessageRequest } from '../../src/shared/messages'
-import type { StartStep, WorkspaceStart } from '../../src/shared/workspaces'
 import { reconciledLifecycle } from './durable-reconciliation'
 import { advanceDiskRetentionState } from './disk-retention-state'
 import {

@@ -1,7 +1,7 @@
 import { expect, it } from 'vitest'
 
 import { COMMIT_AUTHOR_VARIABLES } from '../../src/shared/commit-author'
-import { TOOL_ENV } from '../../tools/context'
+import { TOOL_ENV } from '../../src/shared/agent-tools'
 import type { WorkspaceValues } from './platform-storage'
 import { isRecord } from '../http'
 import { TEST_TIME } from '../test-support/harness'
@@ -109,10 +109,11 @@ it('captures fresh resume settings, preserves the ready computer capture, and pi
   const workspace = await readWorkspace(runtime.env.DB, org.id, id)
   const actor = platform.endpoint()
   const resumes: Request[] = []
+  const fetch = runtime.dependencies.fetch
   runtime.dependencies.fetch = async (request) => {
     if (new URL(request.url).pathname.endsWith('/resume'))
       resumes.push(request.clone())
-    return boat.fetch(request)
+    return fetch(request)
   }
   boat.statusChunkSize = 17
   await actor.lifecycleStopped()

@@ -1,4 +1,5 @@
 import { API_PATHS, type Org } from '../../src/shared/api'
+import { withSoftwareRelease } from '../lifecycle/software-release-test-support'
 import type { FakeGitHub } from './fake-github'
 
 export async function createTestOrg(
@@ -16,7 +17,7 @@ export async function createTestOrg(
 ): Promise<Org> {
   const original = client.github.fetch
   const installationId = 9_000_000_001
-  client.github.fetch = async (request) => {
+  client.github.fetch = withSoftwareRelease(async (request) => {
     const path = new URL(request.url).pathname
     if (path === '/user/installations')
       return Response.json({
@@ -43,7 +44,7 @@ export async function createTestOrg(
         ],
       })
     return original(request)
-  }
+  })
   try {
     const response = await client.request(API_PATHS.orgs, session, {
       method: 'POST',

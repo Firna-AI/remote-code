@@ -1,0 +1,9 @@
+---
+source: crates/cnd-runner-interface/tests/helper_wire.rs
+expression: output
+---
+{
+  "type": "response",
+  "requestId": "3",
+  "result": "deferred"
+}

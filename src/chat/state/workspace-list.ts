@@ -1,8 +1,9 @@
+import type { Workspace } from '../../shared/generated/Workspace'
 import { workspacesWait } from '../../app/org-waits'
 import { Refresher } from '../../app/refresh'
 import { Resource } from '../../app/resource'
 import { valueOf, type Readable } from '../../app/store'
-import type { Workspace } from '../../shared/workspaces'
+
 import type { ChatApi } from '../api/client'
 import type { StreamTimers } from '../stream/workspace-stream'
 

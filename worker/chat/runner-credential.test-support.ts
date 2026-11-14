@@ -1,7 +1,6 @@
 import type { Miniflare } from 'miniflare'
 import { expect } from 'vitest'
-
-import type { RunnerCommand } from '../../src/shared/runner'
+import type { RunnerCommand } from '../../src/shared/generated/RunnerCommand'
 import type { Workspace } from '../workspace'
 import type { ChatFixture } from './harness.test-support'
 import { WORKSPACE_ID } from './harness.test-support'

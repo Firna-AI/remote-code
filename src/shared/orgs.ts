@@ -1,4 +1,5 @@
-import { orgPath, type Org, type Timestamp } from './api'
+import type { Timestamp } from './generated/Timestamp'
+import { orgPath, type Org } from './api'
 
 export interface OrgSummary extends Org {
   /** Custom initials shown in the rail. Older replies may omit them. */

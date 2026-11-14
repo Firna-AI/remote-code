@@ -1,6 +1,5 @@
 import { resolve, sep } from 'node:path'
-
-import type { AgentChoice } from '../src/shared/agents'
+import type { AgentChoice } from '../src/shared/generated/AgentChoice'
 
 export class CheckError extends Error {}
 
@@ -99,6 +98,7 @@ export function liveConfiguration(env: NodeJS.ProcessEnv, root: string) {
     agent,
     model: required(env, 'LIVE_MODEL'),
     effort: 'low',
+    fast: false,
   }
   return {
     appOrigin,
@@ -114,7 +114,7 @@ export function liveConfiguration(env: NodeJS.ProcessEnv, root: string) {
     boatOrg: required(env, 'LIVE_BOAT_ORG'),
     boatApi: boatApi.href,
     login: required(env, 'LIVE_AGENT_LOGIN'),
-    software: env.LIVE_SOFTWARE_DIR ?? '/opt/conductive/software',
+    software: env.LIVE_SOFTWARE_DIR ?? '/opt/conductive/current',
   }
 }
 

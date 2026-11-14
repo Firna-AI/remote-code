@@ -1,6 +1,6 @@
+import type { DeviceCommandRecord } from '../../src/shared/generated/DeviceCommandRecord'
+import type { DevicePairing } from '../../src/shared/generated/DevicePairing'
 import type {
-  DeviceCommandRecord,
-  DevicePairing,
   DeviceSettingsResponse,
   WorkerToDevice,
 } from '../../src/shared/device'

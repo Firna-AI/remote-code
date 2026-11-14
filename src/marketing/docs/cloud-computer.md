@@ -123,6 +123,7 @@ Conductive writes these settings at each start.
 The owner's author takes priority over a `user.name` or `user.email` setting.
 An `author` or `committer` setting in the repository or in the global Git settings takes priority over the owner's author.
 In a workspace with older cloud computer software, agent commits name the workspace owner.
+An older workspace gets the turn sender as commit author when an automatic software update applies.
 A Git command can still set its own author, for example with `--author`.
 The author of a commit does not prove who made it.
 
@@ -136,17 +137,32 @@ A failed build keeps the last successful setup.
 Existing workspaces keep their files.
 
 Adding a repository starts a build automatically.
-A build includes the current Conductive cloud computer software.
-An existing workspace keeps its software after a resume.
-**Continue** keeps that same computer and software for the workspace's next task.
+Each build installs the newest release of Conductive's own cloud computer software.
+**Continue** keeps that same computer and the software installed by the org's install script for the workspace's next task.
 A new build does not replace the existing computer.
 
-Ask an admin to run **Build computer**.
-After it succeeds, create a new workspace to use the updated software.
-This also gives the new workspace the server list in **Preview**.
-The same steps give it the current workspace tools for managing workspaces, sessions, sections, and private previews across the org.
+Conductive's own software updates itself in existing cloud computers.
+Fixes need no new workspace or manual install.
+The software checks for a newer release when it starts, including at each cloud computer start, and every hour while it runs.
+It downloads a newer release in the background.
+A start never waits for a download.
+A downloaded release applies at the software's next start.
+Conductive does not restart the software during a session to apply an update.
+
+A failed check or download leaves the current release in use.
+Conductive checks each downloaded file against its expected digest and refuses a broken release.
+The previous release stays available.
+If a new release fails to start, the next start uses the previous release.
+An older cloud computer without the update program gets it at its next start.
+
+An automatic software update gives an existing workspace the server list in **Preview**.
+The workspace tools update with Conductive's own software.
+They manage workspaces, sessions, sections, and private previews across the org.
 The tools also read chats and messages there.
-Resuming an existing workspace does not update its installed tools.
+
+Installing updated agent software in an older computer does not change its protection for saved agent logins.
+Ask an admin to run **Build computer**.
+After it succeeds, create a new workspace for the new protection.
 
 - [Understand agent login protection](/docs/security#protect-agent-and-github-logins)
 
@@ -175,6 +191,7 @@ Other members must ask an admin to change the setup or retry a build.
 Conductive refreshes the prepared repositories after default-branch pushes and with a daily timer.
 Push refreshes run at most once per 30 minutes.
 A refresh fetches repository commits without running the install script.
+A refresh also installs the newest release of Conductive's own cloud computer software.
 
 Use a new build when changed dependencies need the install script again.
 Existing workspaces keep their own files and branch.

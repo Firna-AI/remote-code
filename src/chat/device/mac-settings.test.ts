@@ -1,8 +1,8 @@
+import type { DevicePairing } from '../../shared/generated/DevicePairing'
 import { describe, expect, it, vi } from 'vitest'
 import { createApiClient, type FetchLike } from '../../app/api/client'
 import {
   DEVICE_CURRENT_PATH,
-  type DevicePairing,
   type DeviceSettings,
   type DeviceSettingsOutcome,
 } from '../../shared/device'

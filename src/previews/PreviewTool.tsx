@@ -1,7 +1,8 @@
+import type { Preview } from '../shared/generated/Preview'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { CircleAlert } from 'lucide-react'
 import { useWorkspaceStore } from '../app/workspace-store'
-import type { Preview } from '../shared/previews'
+
 import { ToolButton } from '../terminal/tool-parts/ToolButtons'
 import { ToolRoot } from '../terminal/tool-parts/ToolRoot'
 import { ToolMessage, ToolWaiting } from '../terminal/tool-parts/ToolStates'

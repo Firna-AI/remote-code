@@ -1,56 +1,34 @@
 # Runner service
 
-This guide belongs to the [agent runner](../README.md). The
-[runner commands](../README.md#commands) build the bundles that it installs.
+The [agent runner](../README.md) runs as an unprivileged systemd service.
+The [release installer](../../image/install.md#release-installation) installs
+its unit. Installation enables services and starts none.
 
-Each build of the org image installs the runner as a systemd service. The
-install script needs root, because it writes a systemd unit.
+The unit is [conductive-runner.service](../../image/release/conductive-runner.service).
+It runs as `user`, after the network and the local update-apply unit.
+Its launcher is [runner-start.sh](../../image/runner-start.sh).
+The launcher loads `/run/ascii-secrets/env.sh` and checks the workspace-ready
+marker, workspace identity, and disk-retention setting.
+It maps sandbox settings to the [runner configuration](../configuration.md).
+It then runs `/opt/conductive/current/conductive runner` in the repository folder.
 
-1. Get the full path of the private Node 24 from
-   [the image software](../../image/runtime.md).
-   Its `npm` command must sit beside it, as in the official Node archive.
-   The runner also needs Git.
-2. Install the runner packages and build the bundles with the
-   [runner commands](../README.md#commands).
-3. Set `CONDUCTIVE_NODE` to that full executable path. As root, run
-   `sh runner/scripts/install.sh <user> [<folder>]`. The user runs the
-   agents. The folder is `/opt/conductive-runner` by default.
+The Rust executable selects its private Node and SDK helper from its own
+resolved release folder. Agent children cannot mix parts after `current` changes.
+The state file stays at `~/.conductive/runner-state.json` across release changes.
+The Rust reader accepts the Node state format.
 
-The install script does these steps:
+The runner requests a background update check after each start.
+The check timer also runs after boot and every hour.
+A start never waits for its download.
+The next start applies a complete newer release before the runner works.
 
-- It requires the service user and the explicit private Node path.
-- It copies the three bundles, `runner/package.json`,
-  `runner/package-lock.json`, and `runner/service/start.sh` into the
-  folder.
-- It runs the adjacent npm command with the configured Node and
-  `ci --omit=dev --ignore-scripts`. The runtime packages sit beside the
-  bundles.
-- It writes `/etc/systemd/system/conductive-runner.service` with the user,
-  the folder, and the configured private Node path.
-- It reloads systemd and enables the service. It does not start the
-  service.
+A new runner confirms its release only after its first valid `welcome`.
+Its startup hook calls the resolved executable's `update started` through
+noninteractive sudo. A process start alone clears no pending marker.
+A later apply restores the previous executable and system files when a
+new release remains unconfirmed. That previous release can still run Node.
 
-Boat restarts the enabled services after each resume and fork. So the
-runner starts in each sandbox that starts from the org image.
-
-[`conductive-runner.service`](conductive-runner.service) is the template of
-the unit. The unit has these settings:
-
-- The service runs as the user, in the home folder of the user, after
-  `network-online.target`.
-- The unit passes the private Node path to the startup wrapper as an
-  argument. Sandbox env changes keep that argument unchanged.
-- systemd starts the service again 2 seconds after it ends, for any
-  reason.
-- `UMask=0077` makes the new files of the runner and its agents private to
-  the user.
-- A stop sends `SIGTERM` to the runner and its agent processes. The runner
-  closes its agents, ends its running turns, and closes its connection. Then
-  it exits with code 0. After 15 seconds, systemd ends each remaining
-  process.
-
-[`start.sh`](start.sh) exports each variable of `/run/ascii-secrets/env.sh`,
-the file where Boat writes the variables of the sandbox. Then it starts
-`runner.mjs` from the folder with the full Node path in its service
-argument. The image builder owns that path and its download. When the
-secrets file is missing, the start fails, and systemd tries again.
+The service restarts after failure, with a two-second delay.
+SIGTERM closes helper processes and ends running turns before the connection closes.
+`KillMode=control-group` keeps its child processes in the service group.
+[Workspace startup](../../image/start.md) gives the build and retention gates.

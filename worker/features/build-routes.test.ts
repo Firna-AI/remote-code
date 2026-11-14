@@ -25,12 +25,9 @@ afterEach(async () => {
   await fixture?.dispose()
 })
 
-it('mounts build history, logs and admin starts and installs workspace tools in the real image coordinator', async () => {
+it('mounts build history, logs and admin starts and installs the release in the real image coordinator', async () => {
   const active = (fixture = await featureFixture(bundle, {
-    configuration: {
-      CONDUCTIVE_RUNNER_ARCHIVE_URL: OUTER_SOFTWARE.url,
-      CONDUCTIVE_RUNNER_ARCHIVE_SHA256: OUTER_SOFTWARE.sha256,
-    },
+    configuration: {},
   }))
   const builds = orgSettingsPaths.builds(OUTER_ORG)
   const history = await active.request(builds)
@@ -58,7 +55,6 @@ it('mounts build history, logs and admin starts and installs workspace tools in 
     previousRepositoryLocations: [],
     software: OUTER_SOFTWARE,
     previousImageName: 'outer-image',
-    previousRunnerProtocolVersion: null,
     now: await active.actor(`org-image:${OUTER_ORG}`).testAlarmTime(),
   })
   await active.env.DB.batch([
@@ -74,7 +70,7 @@ it('mounts build history, logs and admin starts and installs workspace tools in 
   await active.actor(`org-image:${OUTER_ORG}`).advanceStartAlarm()
   expect(
     active.boat.commands.some((command) =>
-      command.includes('/opt/conductive/agent-tools/tools/main.ts'),
+      command.includes('update check --bootstrap'),
     ),
   ).toBe(true)
   const build = await active.request(buildPath(OUTER_ORG, 'software-build'))

@@ -26,8 +26,7 @@ import {
   type ContinueOptions,
 } from './continue-types'
 import { handleGitCredential } from './machine'
-import { MACHINE_PATHS } from '../../src/shared/agent-tools'
-import { TOOL_TURN_HEADER } from '../../tools/context'
+import { MACHINE_PATHS, TOOL_TURN_HEADER } from '../../src/shared/agent-tools'
 
 export async function continueFixture(harness: TestHarness) {
   const chat = await createChatFixture(harness)

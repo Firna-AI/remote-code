@@ -1,5 +1,31 @@
 # Changelog
 
+## [0.18.0](https://github.com/Firna-AI/conductive/compare/v0.17.0...v0.18.0) (2026-11-14)
+
+
+### Features
+
+* **files:** show the saved lists while a sandbox starts ([#364](https://github.com/Firna-AI/conductive/issues/364)) ([ed0fb94](https://github.com/Firna-AI/conductive/commit/ed0fb94946f08ffb3e538b96dc7354d6fed158f2))
+
+
+### Bug Fixes
+
+* **chat:** colour Mac commands ([#356](https://github.com/Firna-AI/conductive/issues/356)) ([a182c40](https://github.com/Firna-AI/conductive/commit/a182c40ed7a63fa1e0bb35e37215b17a1b3387a8))
+* **chat:** hide +0 on turn file chips without line changes ([#362](https://github.com/Firna-AI/conductive/issues/362)) ([b56cb68](https://github.com/Firna-AI/conductive/commit/b56cb686c593f9166da66e519ea893afd5133ce6))
+* **chat:** put the caret at the end of a kept draft on focus ([#357](https://github.com/Firna-AI/conductive/issues/357)) ([450a3eb](https://github.com/Firna-AI/conductive/commit/450a3eb8b35b45e8a3bd97e2a6592cc31579ced8))
+* **marketing:** mark chat skill selection in progress ([#363](https://github.com/Firna-AI/conductive/issues/363)) ([b714557](https://github.com/Firna-AI/conductive/commit/b7145572b9a5f1fd879545ac33738ae7a0d911ec))
+* **marketing:** reflect chat, terminal, and file startup progress ([#367](https://github.com/Firna-AI/conductive/issues/367)) ([7355693](https://github.com/Firna-AI/conductive/commit/7355693077577ba3d524b8a0aa54736ef38bd2fc))
+* **marketing:** reflect larger attachment upload progress ([#372](https://github.com/Firna-AI/conductive/issues/372)) ([76172c6](https://github.com/Firna-AI/conductive/commit/76172c6d24a21ab3ebfa65a4bc437da246973461))
+* **marketing:** reflect saved file lists during startup ([#370](https://github.com/Firna-AI/conductive/issues/370)) ([f5baad3](https://github.com/Firna-AI/conductive/commit/f5baad305be0886f0123ba81196aeb8625abe068))
+* **marketing:** reflect session link and secret plans ([#375](https://github.com/Firna-AI/conductive/issues/375)) ([0fca3ff](https://github.com/Firna-AI/conductive/commit/0fca3ffa8b847d227ae193e075e7339e70dd4bff))
+* **marketing:** reflect terminal scrollback work ([#368](https://github.com/Firna-AI/conductive/issues/368)) ([a3b4072](https://github.com/Firna-AI/conductive/commit/a3b40728547676ce558fad6affb514b98248644a))
+* **sidebar:** use a cog for org settings ([#360](https://github.com/Firna-AI/conductive/issues/360)) ([9db90d7](https://github.com/Firna-AI/conductive/commit/9db90d7b6a8ff51a1711040513a4a78060a05d01))
+
+
+### Performance Improvements
+
+* **lifecycle:** answer a workspace create sooner ([#365](https://github.com/Firna-AI/conductive/issues/365)) ([a86b8f4](https://github.com/Firna-AI/conductive/commit/a86b8f4845e8b1246de12b007c8e543b7352bfec))
+
 ## [0.17.0](https://github.com/Firna-AI/conductive/compare/v0.16.0...v0.17.0) (2026-11-13)
 
 
